@@ -22,7 +22,7 @@
 
         /* Estilos del logo */
         .logo {
-            width: 150px; /* Tamaño del logo */
+            width: 120px; /* Tamaño del logo */
         }
 
         /* Estilos del botón "Continuar" */
@@ -34,7 +34,13 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: opacity 0.3s; /* Agregamos una transición de opacidad */
+        }
+
+        /* Cambia la opacidad del botón al ocultarlo */
+        .continue-button.hidden {
+            opacity: 0;
+            display: none; /* Oculta el botón por completo */
         }
 
         /* Cambia el estilo del botón al pasar el cursor sobre él */
@@ -44,7 +50,7 @@
 
         /* Estilos de los botones de opciones (inicialmente ocultos) */
         .option-button {
-            display: none; /* Inicialmente ocultos */
+            opacity: 0; /* Inicialmente ocultos con opacidad 0 */
             background-color: #007bff;
             color: #fff;
             font-size: 16px;
@@ -52,8 +58,13 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: opacity 0.3s; /* Agregamos una transición de opacidad */
             margin-top: 5px;
+        }
+
+        /* Cambia la opacidad de los botones al mostrarlos */
+        .show .option-button {
+            opacity: 1;
         }
     </style>
 </head>
@@ -68,14 +79,14 @@
 
     <script>
         function mostrarOpciones() {
-            // Oculta el botón "Continuar"
-            document.querySelector('.continue-button').style.display = 'none';
+            // Oculta el botón "Continuar" de forma gradual
+            const continueButton = document.querySelector('.continue-button');
+            continueButton.style.opacity = 0;
+            continueButton.style.display = 'none';
 
-            // Muestra los botones de opciones
-            const optionButtons = document.querySelectorAll('.option-button');
-            optionButtons.forEach(button => {
-                button.style.display = 'block';
-            });
+            // Muestra los botones de opciones agregando una clase al cuerpo
+            const body = document.body;
+            body.classList.add('show');
         }
     </script>
 </body>
