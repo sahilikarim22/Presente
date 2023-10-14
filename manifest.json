@@ -1,0 +1,55 @@
+{
+    "name": "Presente",
+    "short_name": "Presente",
+    "icons": [
+      {
+        "src": "/src/imagenes/appIcon/40.png",
+        "type": "image/png",
+        "sizes": "40x40"
+      },
+      {
+        "src": "/src/imagenes/appIcon/58.png",
+        "type": "image/png",
+        "sizes": "58x58"
+      },
+      {
+        "src": "/src/imagenes/appIcon/80.png",
+        "type": "image/png",
+        "sizes": "80x80"
+      },
+      {
+        "src": "/src/imagenes/appIcon/114.png",
+        "type": "image/png",
+        "sizes": "114x114"
+      },
+      {
+        "src": "/src/imagenes/appIcon/120.png",
+        "type": "image/png",
+        "sizes": "120x120"
+      },
+      {
+        "src": "/src/imagenes/appIcon/180.png",
+        "type": "image/png",
+        "sizes": "180x180"
+      },
+      {
+        "src": "/src/imagenes/appIcon/192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/src/imagenes/appIcon/512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/index.html",
+    "scope": ".",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#fff",
+    "theme_color": "#3f51b5",
+    "description": "Sistema de control de asistencia para la UCAB",
+    "dir": "ltr",
+    "lang": "es"
+  }
