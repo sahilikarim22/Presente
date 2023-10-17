@@ -1,6 +1,6 @@
 const adminController = {
     getAdmin: (req, res) => {
-      res.render('index', { title: 'Proyecto Node.js con EJS' });
+      res.render('admin/index', { title: 'Proyecto Node.js con EJS' });
     },
   };
   
