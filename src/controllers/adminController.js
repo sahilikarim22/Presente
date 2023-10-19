@@ -3,5 +3,9 @@ const adminController = {
       res.render('admin/index', { title: 'Proyecto Node.js con EJS' });
     },
   };
+
+ 
   
-  module.exports = adminController;
+  // exportar modulos
+  
+  module.exports =  adminController;

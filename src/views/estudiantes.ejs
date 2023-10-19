@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Estudiante</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/iconos.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
+                <h3>Daniela Gómez</h3>
+                <h5>Estudiante</h5>
+                <button id="abrirModal" class="btn btn-primary">Unirse a Curso</button>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-6">
+                <h5 class="card-title">Mis Cursos</h5>
+            </div>
+            <div class="col-6">
+                <h5 class="card-title">Porcentaje de asistencias</h5>
+            </div>
+            <div class="col-12">
+                <div class="card card-background">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <p class="card-text fw-bold">Álgebra Lineal</p>
+                                <p class="card-text fw-bold">Clases: 20</p>
+                                <p class="card-text text-danger fw-bold">Faltas: 5</p>
+                            </div>
+                            <div class="col-4 text-end elPorcentaje">
+                                <h5 class="card-title fs-4 text-white">75%</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <div class="card card-background">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <p class="card-text fw-bold">Álgebra Lineal</p>
+                                <p class="card-text fw-bold">Clases: 20</p>
+                                <p class="card-text text-danger fw-bold">Faltas: 5</p>
+                            </div>
+                            <div class="col-4 text-end elPorcentaje">
+                                <h5 class="card-title fs-4 text-white">75%</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-12">
+                <div class="card card-background">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <p class="card-text fw-bold">Álgebra Lineal</p>
+                                <p class="card-text fw-bold">Clases: 20</p>
+                                <p class="card-text text-danger fw-bold">Faltas: 5</p>
+                            </div>
+                            <div class="col-4 text-end elPorcentaje">
+                                <h5 class="card-title text-white">75%</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+    <div id="modalAgregar" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-uppercase">Ingrese el NRC del Curso</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="ModalTituloCampo" for="nrc">NRC:</label>
+                        <input type="text" id="nrc" class="form-control inputModal">
+                    </div>
+                   
+                </div>
+                <div class="modal-footer text-center justify-content-center mx-auto">
+                    <button id="guardar" class="btn botonGuardar">Guardar</button>
+                    <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!--Footer -->
+    <footer>
+        <ul>
+            <li class="home2"><a href="#"><i class="fas fa-home"></i></a></li>
+        </ul>
+    </footer>
+
+
+
+
+
+
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/popper/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script>
+
+$(document).ready(function() { 
+
+        $('#abrirModal').on('click', function () {
+            $('#modalAgregar').modal('show');
+        });
+
+        // Agrega datos al DataTable y guarda en localStorage
+        $('#guardar').on('click', function () {
+            var nrc = $('#nrc').val();
+
+            // logica para guardar en localStorage
+
+            // Cierra el modal
+            $('#modalAgregar').modal('hide');
+        });
+    });
+    </script>
+
+</body>
+
+</html>

@@ -5,7 +5,18 @@ table th {
 }
 table>tbody>tr>td {
     vertical-align: middle !important;
+    
 }
+table{
+    border-collapse: separate; /* Asegura que se utilice el espacio entre bordes */
+    border-spacing: 50px 50px; /* Establece el espacio horizontal y vertical entre celdas */
+}
+
+  /* Estilo de borde de las celdas para mayor claridad */
+  td, th {
+    border: 1px solid #000;
+    padding: 8px; /* Espacio interno de las celdas */
+  }
 
 /*para alinear los botones y cuadro de busqueda*/
 .btn-group, .btn-group-vertical {
@@ -14,9 +25,19 @@ table>tbody>tr>td {
 
 
 
+h1.tituloCursos{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 32px;
+}
 
-
-
+table#tablaCursos{
+    /*td en la izquierda*/
+    border-bottom-left-radius: 15px;
+}
+td#tablaCursos{
+    /*td en la derecha*/
+    border-bottom-right-radius: 15px;
+}
 
 /* Estilo para el contenedor del título y la entrada de período */
 .form-group {
@@ -75,8 +96,9 @@ table {
 
 td, th {
     /* padding: 10px;  */
-    border: 3px solid #000000; /* Opcional: añade un borde para mayor claridad */
-    
+    border: 3px solid #000000; 
+    /*ESPACIO entre columnas*/
+    padding: 10px 10px 10px 10px;
 }
 
 .home{
@@ -90,6 +112,12 @@ td, th {
     font-size: 50px;
     position: absolute;
     bottom: 5%;
+}
+.cursos{
+    color: black;
+    font-size: 50px;
+    position: absolute;
+    top: 20%;
 }
 
 
@@ -164,3 +192,50 @@ h1 {
     }
 }
 /*fin sidebar*/
+
+#tablaCursos .filaIzquierda {
+    text-align: left; /* Alinea el contenido de las celdas a la izquierda */
+    border-radius: 15px;
+  }
+
+
+  /*Card Body*/
+  .card-background{
+    background-color: #BDFBA7;
+    color: black;
+    font-weight: bold;
+  }
+
+footer ul {
+    list-style: none;
+    text-align: center;
+    background-color: #337ab7;
+    margin-top: 20px;
+    
+}
+  
+footer ul li {
+    display: inline-block;
+    margin: 0 20px;
+    padding: 10px 0;
+    color: black;
+    
+}
+
+footer ul li a i {
+    color: black;
+}
+.home2{
+    color: black;
+    font-size: 40px;
+
+}
+
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 25px;
+}
+
+.elPorcentaje h5{
+    font-size: 70px;
+}
