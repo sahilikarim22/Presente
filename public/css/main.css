@@ -191,6 +191,25 @@ h1 {
         display: block;
     }
 }
+
+footer.menuMovil{
+    display: none;
+}
+
+
+
+
+@media screen and (max-width: 1024px) {
+    
+
+    .sidebar {
+        display: none;
+    }
+
+    footer.menuMovil {
+        display: block;
+    }
+}
 /*fin sidebar*/
 
 #tablaCursos .filaIzquierda {
@@ -239,3 +258,33 @@ footer ul li a i {
 .elPorcentaje h5{
     font-size: 70px;
 }
+/*colocar boton a la derecha*/
+
+footer ul li.atras{
+    position: relative;
+    right: 15px;
+   }
+footer ul li.home3{
+    position: relative;
+    right: 15px;
+   }
+
+   
+
+   .ventanitaOpciones{
+    background-color: #ccc;
+    color: black;
+    font-weight: bold;
+    display: none;
+    padding: 30px;
+    border-radius: 15px;
+   }
+   .active{
+    display: block;
+   }
+
+   .circularBoton{
+    border-radius: 50%;
+    background-color: #ffffff;
+    padding: 12px;
+   }
