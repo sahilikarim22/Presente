@@ -139,15 +139,15 @@
     </button>
     <div class="form-container">
         <h2>Inicio de Sesión</h2>
-        <form id="loginForm">
+        <form method="post" action="/login" id="loginForm">
             <div class="form-row">
-                <input type="text" class="form-input" placeholder="Usuario" required>
-                <input type="password" class="form-input" placeholder="Contraseña" required>
+                <input name="correoUcab" type="email" class="form-input" placeholder="Correo UCAB" required>
+                <input name="clave" type="password" class="form-input" placeholder="Clave" required>
             </div>
             <button class="form-button" type="submit"><img src="https://i.postimg.cc/J7BY235N/cono-check.png" alt="Checkmark"></button>
         </form>
     </div>
-    <p class="register-link">¿No tienes una cuenta? <a href="registrarse.html">Registrarse</a></p>
+    <p class="register-link">¿No tienes una cuenta? <a href="/registrarse">Registrarse</a></p>
     <script src="src/js/app.js"></script>
 </body>
 </html>
