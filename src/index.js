@@ -28,6 +28,11 @@ app.use(
   })
 );
 
+//service worker
+app.get('/manifest.json', (req, res) =>{
+  res.sendFile(__dirname+'/views/manifest.json');
+});
+
 // Rutas
 const indexRouter = require('./routes/routes');
 app.use('/', indexRouter);
@@ -35,3 +40,5 @@ app.use('/', indexRouter);
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
 });
+
+
