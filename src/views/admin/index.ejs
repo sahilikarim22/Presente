@@ -20,13 +20,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    
+
     <div class="sidebar">
         <div class="logo">
             <i class="fas fa-bars menu-icon"></i>
@@ -59,7 +59,8 @@
                                     <td class="fondoTabla filaDerecha">
                                         <a href="/admin/editarCarrera/" class="btn btn-outline-info">
                                             <i class="fa-solid fa-pencil"></i></a>
-                                        <a onclick="confirmar('','/admin/deleteCarrera')" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+                                        <a onclick="confirmar('','/admin/deleteCarrera')"
+                                            class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -67,10 +68,11 @@
                                     <td class="fondoTabla filaDerecha">
                                         <a href="/admin/editarCarrera/" class="btn btn-outline-info">
                                             <i class="fa-solid fa-pencil"></i></a>
-                                        <a onclick="confirmar('','/admin/deleteCarrera')" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+                                        <a onclick="confirmar('','/admin/deleteCarrera')"
+                                            class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -81,33 +83,34 @@
 
     <!--Ejemplo tabla con DataTables-->
 
-   
-    
 
 
-    <div id="modalAgregar" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title text-uppercase">Agregar Período Académico</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="ModalTituloCampo" for="nombre">Período:</label>
-                        <input type="text" id="nombre" class="form-control inputModal">
+
+    <form method="post" action="/guardarPeriodo">
+        <div id="modalAgregar" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-uppercase">Agregar Período Académico</h4>
                     </div>
-                    <div class="form-group">
-                        <label for="semanas" class="ModalTituloCampo">Cantidad de Semanas:</label>
-                        <input type="number" min="0" id="semanas" class="form-control inputModal">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="ModalTituloCampo" for="nombre">Período:</label>
+                            <input name="nombrePeriodo" type="text" id="nombre" class="form-control inputModal">
+                        </div>
+                        <div class="form-group">
+                            <label for="semanas" class="ModalTituloCampo">Cantidad de Semanas:</label>
+                            <input name="cantidadSemanas" type="number" min="0" id="semanas" class="form-control inputModal">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer text-center justify-content-center mx-auto">
-                    <button id="guardar" class="btn botonGuardar">Guardar</button>
-                    <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
+                    <div class="modal-footer text-center justify-content-center mx-auto">
+                        <button id="guardar" class="btn botonGuardar">Guardar</button>
+                        <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
 
 

@@ -19,15 +19,17 @@ const loginController = require('../controllers/loginController');
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
-router.get('/admin',requireLogin, adminController.getAdmin);
-router.get('/admin/cursos',requireLogin, cursosController.getCursos);
+router.get('/admin',adminController.getAdmin);
+router.get('/admin/cursos', cursosController.getCursos);
 router.get('/estudiantes',requireLogin, estudiantesController.getEstudiantes);
-router.get('/admin/cursosprof',requireLogin, cursosProfController.getCursosProf);
+router.get('/admin/cursosprof', cursosProfController.getCursosProf);
 
 
 //posts
 router.post('/guardarUsuario', usuariosController.postUsuarios);
 router.post('/login',loginController.postLogin);
+router.post('/guardarPeriodo', adminController.postPeriodo);
+// router.post('/guardarCurso',loginController.);
 
 //funciones que requiere login
 function requireLogin(req, res, next) {
