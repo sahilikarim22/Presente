@@ -1,6 +1,6 @@
 const cursosProfController = {
     getCursosProf: (req, res) => {
-      res.render('admin/cursosprof');
+      res.render('profesor/cursosprof');
     },
   };
 
