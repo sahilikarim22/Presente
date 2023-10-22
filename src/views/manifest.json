@@ -28,6 +28,11 @@
         "sizes": "120x120"
       },
       {
+        "src": "/imagenes/appIcon/144.png",
+        "type": "image/png",
+        "sizes": "144x144"
+      },
+      {
         "src": "/imagenes/appIcon/180.png",
         "type": "image/png",
         "sizes": "180x180"

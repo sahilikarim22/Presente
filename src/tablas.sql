@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 21-10-2023 a las 02:08:30
+-- Tiempo de generación: 21-10-2023 a las 23:59:40
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `idProfesor` int DEFAULT NULL,
   `idEstudiante` int DEFAULT NULL,
   `idAsistencias` int DEFAULT NULL,
+  `nrc` int DEFAULT NULL,
   PRIMARY KEY (`idCurso`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -70,7 +71,14 @@ CREATE TABLE IF NOT EXISTS `periodos` (
   `idCurso` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idCurso` (`idCurso`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `periodos`
+--
+
+INSERT INTO `periodos` (`id`, `nombrePeriodo`, `cantidadSemanas`, `idCurso`) VALUES
+(1, 'aaa', 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -85,6 +93,16 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `nombre`) VALUES
+(1, 'administrador'),
+(2, 'profesor'),
+(3, 'estudiante');
+
+-- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuarios`
@@ -100,10 +118,18 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `cedula` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `estatus` int NOT NULL,
   `tipoUsuario` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `usuarios`
+--
 
+INSERT INTO `usuarios` (`id`, `correoUcab`, `clave`, `apellidos`, `nombres`, `cedula`, `estatus`, `tipoUsuario`, `token`) VALUES
+(9, 'kasahili.20@est.ucab.edu.ve', '1234', 'sahili', 'Karim Ali', '28161244', 0, 'estudiante', '2877bcf1ee2aac5239d0964b652c6e02514d8051'),
+(7, 'karimsh2001@gmail.com', '1234', '', 'Karim Ali', '28161244', 1, 'estudiante', '9eafff32a2db00e700e29879c97e6296f0b57347');
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

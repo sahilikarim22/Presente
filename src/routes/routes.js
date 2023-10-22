@@ -23,6 +23,7 @@ router.get('/admin',adminController.getAdmin);
 router.get('/admin/cursos', cursosController.getCursos);
 router.get('/estudiantes',requireLogin, estudiantesController.getEstudiantes);
 router.get('/admin/cursosprof', cursosProfController.getCursosProf);
+router.get('/confirmar/:token', usuariosController.getConfirmacion);
 
 
 //posts
