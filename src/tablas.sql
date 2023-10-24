@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 21-10-2023 a las 23:59:40
+-- Tiempo de generación: 24-10-2023 a las 00:53:45
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -29,12 +29,29 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `asistencias`;
 CREATE TABLE IF NOT EXISTS `asistencias` (
-  `idAsistencia` int NOT NULL AUTO_INCREMENT,
-  `tema` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `asistencia` int NOT NULL,
-  `fecha` date NOT NULL,
-  PRIMARY KEY (`idAsistencia`)
+  `idAsistencia` int NOT NULL,
+  `idEstudiante` int DEFAULT NULL,
+  `idCurso` int DEFAULT NULL,
+  `fechaAsistencia` date DEFAULT NULL,
+  `asistio` tinyint(1) DEFAULT NULL,
+  `comentario` text COLLATE utf8mb4_spanish_ci,
+  PRIMARY KEY (`idAsistencia`),
+  KEY `idEstudiante` (`idEstudiante`),
+  KEY `idCurso` (`idCurso`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `asistencias`
+--
+
+INSERT INTO `asistencias` (`idAsistencia`, `idEstudiante`, `idCurso`, `fechaAsistencia`, `asistio`, `comentario`) VALUES
+(1, 1, 1, '2010-10-10', 1, 'ninguno'),
+(2, 1, 1, '2010-10-10', 1, 'ninguno'),
+(3, 1, 1, '2010-10-10', 1, 'ninguno'),
+(4, 1, 1, '2010-10-10', 1, 'ninguno'),
+(5, 1, 1, '2010-10-10', 1, 'ninguno'),
+(6, 1, 1, '2010-10-10', 1, 'ninguno'),
+(7, 1, 1, '2010-10-10', 1, 'ninguno');
 
 -- --------------------------------------------------------
 
@@ -47,14 +64,35 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `idCurso` int NOT NULL AUTO_INCREMENT,
   `nombreCurso` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `cantDiasSemanas` int NOT NULL,
-  `facultad` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
-  `escuela` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `seccion` varchar(10) COLLATE utf8mb4_spanish_ci NOT NULL,
   `idProfesor` int DEFAULT NULL,
-  `idEstudiante` int DEFAULT NULL,
-  `idAsistencias` int DEFAULT NULL,
   `nrc` int DEFAULT NULL,
+  `idPeriodo` int DEFAULT NULL,
   PRIMARY KEY (`idCurso`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cursos`
+--
+
+INSERT INTO `cursos` (`idCurso`, `nombreCurso`, `cantDiasSemanas`, `seccion`, `idProfesor`, `nrc`, `idPeriodo`) VALUES
+(1, 'pan', 3000, '401', 1, 3000, 1),
+(2, 'Investigacion de Operaciones', 15, '401', 1, 45689, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `curso_estudiante`
+--
+
+DROP TABLE IF EXISTS `curso_estudiante`;
+CREATE TABLE IF NOT EXISTS `curso_estudiante` (
+  `idCursoEstudiante` int NOT NULL,
+  `idCurso` int DEFAULT NULL,
+  `idUsuario` int DEFAULT NULL,
+  PRIMARY KEY (`idCursoEstudiante`),
+  KEY `idCurso` (`idCurso`),
+  KEY `idUsuario` (`idUsuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
@@ -68,17 +106,16 @@ CREATE TABLE IF NOT EXISTS `periodos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombrePeriodo` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `cantidadSemanas` int NOT NULL,
-  `idCurso` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idCurso` (`idCurso`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `periodos`
 --
 
-INSERT INTO `periodos` (`id`, `nombrePeriodo`, `cantidadSemanas`, `idCurso`) VALUES
-(1, 'aaa', 14, NULL);
+INSERT INTO `periodos` (`id`, `nombrePeriodo`, `cantidadSemanas`) VALUES
+(1, '2023-15', 14),
+(2, '2023-25', 16);
 
 -- --------------------------------------------------------
 

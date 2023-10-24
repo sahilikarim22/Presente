@@ -1,6 +1,12 @@
+const conexion = require('../db/config');
+
 const cursosProfController = {
     getCursosProf: (req, res) => {
-      res.render('profesor/cursosprof');
+      
+      conexion.query('SELECT * FROM periodos',(err,periodos) => {
+        console.log(periodos);
+        res.render('profesor/cursosprof', {periodos});
+      });
     },
   };
 
