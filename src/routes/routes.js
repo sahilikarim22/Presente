@@ -25,7 +25,7 @@ router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
 router.get('/admin',adminController.getAdmin);
 router.get('/admin/cursos', cursosController.getCursos);
-router.get('/estudiantes', estudiantesController.getEstudiantes);
+router.get('/estudiantes',requireLogin, estudiantesController.getEstudiantes);
 router.get('/profesor/cursosprof', cursosProfController.getCursosProf);
 router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
 

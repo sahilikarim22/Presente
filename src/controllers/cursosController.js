@@ -52,7 +52,7 @@ const cursosController = {
 
       conexion.query(updateQuery, [nombreCurso, cantDiasSemanas, seccion, nrc, idCurso], (err, resultado) => {
         if (err) {
-          console.log(err);
+          console.log(err);1
           return res.status(400).json({ msg: 'Error al actualizar el curso' });
         }
         res.json({ message: 'Curso actualizado correctamente' });
