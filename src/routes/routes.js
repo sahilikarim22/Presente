@@ -19,8 +19,11 @@ const asistenciaController = require('../controllers/asistenciaController');
 //gets
 
 router.get('/periodos', periodosController.getPeriodos);
+<<<<<<< HEAD
 router.get('/profesor/periodos', periodosController.getPeriodos);
 router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
+=======
+>>>>>>> 578588731bbc2021b05b62dac8a618d0c833f1b4
 
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
