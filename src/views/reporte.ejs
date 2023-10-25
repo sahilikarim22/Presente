@@ -3,25 +3,29 @@
 
 <head>
     <title>
-        Admin
+        <%= title %>
     </title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href='/css/boxicons.min.css'>
+    <link rel="stylesheet" href="/css/iconos.min.css">
 
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
 
-    
+    <!--font awesome con CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
 
     <div class="sidebar">
         <div class="logo">
@@ -54,11 +58,21 @@
                                     <td class="fondoTabla filaIzquierda">Periodo 1</td>
                                     <td class="fondoTabla filaDerecha">
                                         <a href="/admin/editarCarrera/" class="btn btn-outline-info">
-                                            Editar</a>
+                                            <i class="fa-solid fa-pencil"></i></a>
                                         <a onclick="confirmar('','/admin/deleteCarrera')"
-                                            class="btn btn-outline-danger">Eliminar</a>
+                                            class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="fondoTabla filaIzquierda">Periodo 1</td>
+                                    <td class="fondoTabla filaDerecha">
+                                        <a href="/admin/editarCarrera/" class="btn btn-outline-info">
+                                            <i class="fa-solid fa-pencil"></i></a>
+                                        <a onclick="confirmar('','/admin/deleteCarrera')"
+                                            class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -104,12 +118,11 @@
     <script src="/jquery/jquery-3.3.1.min.js"></script>
     <script src="/popper/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/js/boxicons.js"></script>
 
-    
-
+    <!-- datatables JS -->
     <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
+    <!-- para usar botones en datatables JS -->
     <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
     <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
     <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
@@ -118,7 +131,6 @@
 
     <!-- código JS propio-->
     <script type="text/javascript" src="/js/main.js"></script>
-   
 
     <script>
         const sidebar = document.querySelector('.sidebar');

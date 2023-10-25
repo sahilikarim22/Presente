@@ -16,101 +16,156 @@
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
 
-    <!--font awesome con CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <div class="sidebar">
-        <div class="logo">
-            <i class="fas fa-bars menu-icon"></i>
-        </div>
+
         <ul class="menu">
-            <li class="cursos"><a href="#"><i class="fa-solid fa-user"></i></a></li>
+
             <li class="home"><a href="#"><i class="fas fa-home"></i></a></li>
             <li class="salir"><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
     <div class="content">
-        <button class="burger-btn">
-            <i class="fas fa-bars"></i>
-        </button>
+
         <div class="container">
-            <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo</button>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-xs-12 mt-3 table-responsive">
-                        <table id="tablaPeriodos" class="table table-bordered table-striped text-center mt-4">
-                            <thead>
-                                <tr class="bg-primary text-white">
-                                    <th scope="col">Periodo</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="fondoTabla filaIzquierda">Periodo 1</td>
-                                    <td class="fondoTabla filaDerecha">
-                                        <a href="/admin/editarCarrera/" class="btn btn-outline-info">
-                                            <i class="fa-solid fa-pencil"></i></a>
-                                        <a onclick="confirmar('','/admin/deleteCarrera')"
-                                            class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="fondoTabla filaIzquierda">Periodo 1</td>
-                                    <td class="fondoTabla filaDerecha">
-                                        <a href="/admin/editarCarrera/" class="btn btn-outline-info">
-                                            <i class="fa-solid fa-pencil"></i></a>
-                                        <a onclick="confirmar('','/admin/deleteCarrera')"
-                                            class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
-                                    </td>
-                                </tr>
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
+                    <h3>Jesús Ortiz</h3>
+                    <h5>Profesor</h5>
+                    <button id="abrirModal" class="btn btn-primary">Agregar Curso</button>
+                </div>
+            </div>
 
-                            </tbody>
-                        </table>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <h5 class="card-title">Periodos</h5>
+                </div>
+                <div class="col-6">
+                    <h5 class="card-title">Porcentaje de asistencias</h5>
+                </div>
+                <div class="col-12">
+                    <div class="card card-background">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <p class="card-text fw-bold">Álgebra Lineal</p>
+                                </div>
+
+                                <div class="ventanitaOpciones ml-auto ">
+                                    <div class="circularBoton">
+                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" style="fill: rgb(79, 0, 226);">
+                                                <path
+                                                    d="M8.707 19.707 18 10.414 13.586 6l-9.293 9.293a1.003 1.003 0 0 0-.263.464L3 21l5.242-1.03c.176-.044.337-.135.465-.263zM21 7.414a2 2 0 0 0 0-2.828L19.414 3a2 2 0 0 0-2.828 0L15 4.586 19.414 9 21 7.414z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <div class="circularBoton">
+                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" style="fill: rgb(206, 16, 16);">
+                                                <path
+                                                    d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="masCursos">
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <form method="post" action="/guardarPeriodo">
+            <div id="modalAgregar" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="ModalTituloCampo" for="nombrePeriodo">Período:</label>
+                                <select class="form-control" id="nombrePeriodo" name="nombrePeriodo">
+                                        
+                                        <% periodos.forEach((periodo)=>{ %>
+                                            <option  value="<%= periodo.id %>"> <%= periodo.nombrePeriodo %> </option>
+                                          <% }) %>
+
+                                </select> 
+                            </div>
+                            <div class="form-group">
+                                <label for="curso" class="ModalTituloCampo">Curso</label>
+                                <input name="idCurso" type="text" min="0" id="idCurso" class="form-control inputModal"
+                                    value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
+                                <input name="cantDiasSemanas" type="number" min="0" id="semanas"
+                                    class="form-control inputModal" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="seccion" class="ModalTituloCampo">Seccion: </label>
+                                <input class="form-control inputModal" name="seccion" type="text">
+                            </div>
+                        </div>
+                        <div class="modal-footer text-center justify-content-center mx-auto">
+                            <button id="guardar" class="btn botonGuardar">Guardar</button>
+                            <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
+
+        <footer class="menuMovil">
+            <ul class="d-flex justify-content-between">
+                <li class="atras">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgb(255, 255, 255);">
+                        <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
+                        <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
+                    </svg>
+                </li>
+
+                <li class="home3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgb(255, 255, 255);">
+                        <path
+                            d="M12.74 2.32a1 1 0 0 0-1.48 0l-9 10A1 1 0 0 0 3 14h2v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7h2a1 1 0 0 0 1-1 1 1 0 0 0-.26-.68z">
+                        </path>
+                    </svg>
+                </li>
+            </ul>
+        </footer>
+
     </div>
-
-    <!--Ejemplo tabla con DataTables-->
-
-
-
-
-    <form method="post" action="/guardarPeriodo">
-        <div id="modalAgregar" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title text-uppercase">Agregar Período Académico</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="ModalTituloCampo" for="nombre">Período:</label>
-                            <input name="nombrePeriodo" type="text" id="nombre" class="form-control inputModal">
-                        </div>
-                        <div class="form-group">
-                            <label for="semanas" class="ModalTituloCampo">Cantidad de Semanas:</label>
-                            <input name="cantidadSemanas" type="number" min="0" id="semanas" class="form-control inputModal">
-                        </div>
-                    </div>
-                    <div class="modal-footer text-center justify-content-center mx-auto">
-                        <button id="guardar" class="btn botonGuardar">Guardar</button>
-                        <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 
 
 
@@ -119,15 +174,9 @@
     <script src="/popper/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- datatables JS -->
-    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+  
 
-    <!-- para usar botones en datatables JS -->
-    <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
-    <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
-    <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
-    <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
-    <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+   
 
     <!-- código JS propio-->
     <script type="text/javascript" src="/js/main.js"></script>

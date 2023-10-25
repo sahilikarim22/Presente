@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Periodos Profesor
+    </title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/iconos.min.css">
+
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
+    <!--datables estilo bootstrap 4 CSS-->
+    <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+
+    <!--font awesome con CDN-->
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <ul class="menu">
+
+            <li class="home"><a href="#"><i class="fas fa-home"></i></a></li>
+            <li class="salir"><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+    </div>
+    <div class="content">
+
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
+                    <h3>Jesús Ortiz</h3>
+                    <h5>Profesor</h5>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-6">
+                    <h1 class="nombrePeriodo">Periodos</h1>
+                </div>
+                <% if (periodos.length> 0) { %>
+                    <% periodos.forEach((periodo)=>{ %>
+                        <div class="col-12">
+                                <a href="/profesor/curso/<%= periodo.id %>">
+                                <div class="card card-background contenedorPeriodo text-center">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <p class="card-text fw-bold">
+                                                    <%= periodo.nombrePeriodo %>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                            </div>
+                        <% }) %>
+                            <% } %>
+
+
+
+
+                                <footer class="menuMovil">
+                                    <ul class="d-flex justify-content-between">
+                                        <li class="atras">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
+                                                <path
+                                                    d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z">
+                                                </path>
+                                                <path
+                                                    d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z">
+                                                </path>
+                                            </svg>
+                                        </li>
+
+                                        <li class="home3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
+                                                <path
+                                                    d="M12.74 2.32a1 1 0 0 0-1.48 0l-9 10A1 1 0 0 0 3 14h2v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7h2a1 1 0 0 0 1-1 1 1 0 0 0-.26-.68z">
+                                                </path>
+                                            </svg>
+                                        </li>
+                                    </ul>
+                                </footer>
+
+            </div>
+
+
+
+            <!-- jQuery, Popper.js, Bootstrap JS -->
+            <script src="/jquery/jquery-3.3.1.min.js"></script>
+            <script src="/popper/popper.min.js"></script>
+            <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+            <!-- código JS propio-->
+            <script type="text/javascript" src="/js/main.js"></script>
+
+            <script>
+                const sidebar = document.querySelector('.sidebar');
+                const content = document.querySelector('.content');
+                const burgerBtn = document.querySelector('.burger-btn');
+
+                burgerBtn.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                    content.classList.toggle('active');
+                });
+            </script>
+
+
+
+</body>
+
+</html>

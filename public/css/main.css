@@ -1,8 +1,13 @@
+body{
+    background-color: #A9CBFF;
+}
+
 /*estilos para la tabla*/
 table th {
     background-color: #337ab7 !important;
     color: white;
 }
+
 table>tbody>tr>td {
     vertical-align: middle !important;
     
@@ -125,7 +130,7 @@ td, th {
 /*sidebar*/
 .sidebar {
     width: 90px;
-    background-color: #516EA6;
+    background-color: #BDFBA7;
     color: #fff;
     padding: 20px;
     position: fixed;
@@ -208,6 +213,7 @@ footer.menuMovil{
 
     footer.menuMovil {
         display: block;
+
     }
 }
 /*fin sidebar*/
@@ -287,4 +293,21 @@ footer ul li.home3{
     border-radius: 50%;
     background-color: #ffffff;
     padding: 12px;
+   }
+
+   /*periodos profe*/
+   .nombrePeriodo{
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+   }
+
+   .contenedorPeriodo{
+    background-color: #BDFBA7;
+    color: black;
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 20px;
+
    }

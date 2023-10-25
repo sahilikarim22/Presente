@@ -17,7 +17,7 @@
         <div class="row mt-4">
             <div class="col-12 text-center">
                 <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
-                <h3>Daniela Gómez</h3>
+                <h3><%= usuario[0].nombres %></h3>
                 <h5>Estudiante</h5>
                 <button id="abrirModal" class="btn btn-primary">Unirse a Curso</button>
             </div>
@@ -30,12 +30,13 @@
             <div class="col-6">
                 <h5 class="card-title">Porcentaje de asistencias</h5>
             </div>
+            <%  cursos.forEach((curso)=> { %>
             <div class="col-12">
                 <div class="card card-background">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <p class="card-text fw-bold">Álgebra Lineal</p>
+                                <p class="card-text fw-bold"><%= curso.nombreCurso %></p>
                                 <p class="card-text fw-bold">Clases: 20</p>
                                 <p class="card-text text-danger fw-bold">Faltas: 5</p>
                             </div>
@@ -47,47 +48,7 @@
                 </div>
             </div>
 
-
-            <div class="col-12">
-                <div class="card card-background">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <p class="card-text fw-bold">Álgebra Lineal</p>
-                                <p class="card-text fw-bold">Clases: 20</p>
-                                <p class="card-text text-danger fw-bold">Faltas: 5</p>
-                            </div>
-                            <div class="col-4 text-end elPorcentaje">
-                                <h5 class="card-title fs-4 text-white">75%</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="col-12">
-                <div class="card card-background">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <p class="card-text fw-bold">Álgebra Lineal</p>
-                                <p class="card-text fw-bold">Clases: 20</p>
-                                <p class="card-text text-danger fw-bold">Faltas: 5</p>
-                            </div>
-                            <div class="col-4 text-end elPorcentaje">
-                                <h5 class="card-title text-white">75%</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
+            <% }) %>
         </div>
     </div>
 

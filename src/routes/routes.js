@@ -1,48 +1,50 @@
 const express = require('express');
 const router = express.Router();
 const conexion = require('../db/config');
-<<<<<<< HEAD
+const flash = require('flash');
 const periodosController = require('../controllers/periodosController');
-=======
 const indexController = require('../controllers/indexController');
->>>>>>> 134ebd6402e42205474522cd1f61b87a30e2172b
 const registrarseController = require('../controllers/registrarseController');
 const iniciarSesionController = require('../controllers/iniciarSesionController');
 const estudiantesController = require('../controllers/estudiantesController');
 const usuariosController = require('../controllers/usuariosController');
-
 const cursosProfController = require('../controllers/cursoProfController');
-
 const adminController = require('../controllers/adminController');
 const cursosController = require('../controllers/cursosController');
 const loginController = require('../controllers/loginController');
-
+const cursoInfoController = require('../controllers/cursoInfoController');
+const asistenciaController = require('../controllers/asistenciaController');
 // Ruta de inicio
 
 //gets
-<<<<<<< HEAD
+
 router.get('/periodos', periodosController.getPeriodos);
-=======
+router.get('/profesor/periodos', periodosController.getPeriodos);
+router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
+
 router.get('/', indexController.getIndex);
->>>>>>> 134ebd6402e42205474522cd1f61b87a30e2172b
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
 router.get('/admin',adminController.getAdmin);
 router.get('/admin/cursos', cursosController.getCursos);
 router.get('/estudiantes',requireLogin, estudiantesController.getEstudiantes);
-<<<<<<< HEAD
 router.get('/profesor/cursosprof', cursosProfController.getCursosProf);
-
+router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
 
 //posts
 router.post('/guardarUsuario', usuariosController.postUsuarios);
 router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
+router.post('/guardarAsistencia', asistenciaController.postAsistencia);
 // router.post('/guardarCurso',loginController.);
+
+
+//puts
+
+router.put('/editarCurso/:idCurso',cursosController.putCurso);
 
 //funciones que requiere login
 function requireLogin(req, res, next) {
-    console.log('req.session: '+req.session+'req.session.userId: '+req.session.userId);
     if (req.session && req.session.userId) {
         
       // Obtener el usuario de la base de datos
@@ -70,9 +72,11 @@ function requireLogin(req, res, next) {
       res.redirect("/iniciarSesion");
     }
   }
-=======
+
 router.get('/admin/cursosprof', cursosProfController.getCursosProf);
->>>>>>> 134ebd6402e42205474522cd1f61b87a30e2172b
+
+router.get('/confirmar/:token', usuariosController.getConfirmacion);
+
 
 
 //posts

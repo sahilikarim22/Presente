@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
-    <!-- <link rel="stylesheet" href="/css/boxicons.min.css" rel='stylesheet'> -->
-    <link href='/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href='/css/boxicons.min.css'>
 
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
@@ -123,8 +122,13 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="ModalTituloCampo" for="nombrePeriodo">Período:</label>
-                                <input name="nombrePeriodo" type="text" id="nombrePeriodo"
-                                    class="form-control inputModal">
+                                <select class="form-control" id="nombrePeriodo" name="nombrePeriodo">
+                                        
+                                        <% periodos.forEach((periodo)=>{ %>
+                                            <option  value="<%= periodo.id %>"> <%= periodo.nombrePeriodo %> </option>
+                                          <% }) %>
+
+                                </select> 
                             </div>
                             <div class="form-group">
                                 <label for="curso" class="ModalTituloCampo">Curso</label>
@@ -132,9 +136,13 @@
                                     value="">
                             </div>
                             <div class="form-group">
-                                <label for="semanas" class="ModalTituloCampo">Cantidad Semanas</label>
-                                <input name="cantidadSemanas" type="number" min="0" id="semanas"
+                                <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
+                                <input name="cantDiasSemanas" type="number" min="0" id="semanas"
                                     class="form-control inputModal" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="seccion" class="ModalTituloCampo">Seccion: </label>
+                                <input class="form-control inputModal" name="seccion" type="text">
                             </div>
                         </div>
                         <div class="modal-footer text-center justify-content-center mx-auto">
