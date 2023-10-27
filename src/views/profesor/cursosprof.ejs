@@ -112,7 +112,7 @@
             </div>
         </div>
 
-        <form method="post" action="/guardarPeriodo">
+        <form method="POST" action="/guardarCurso">
             <div id="modalAgregar" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -122,7 +122,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label class="ModalTituloCampo" for="nombrePeriodo">Período:</label>
-                                <select class="form-control" id="nombrePeriodo" name="nombrePeriodo">
+                                <select class="form-control" id="nombrePeriodo" name="idPeriodo">
                                         
                                         <% periodos.forEach((periodo)=>{ %>
                                             <option  value="<%= periodo.id %>"> <%= periodo.nombrePeriodo %> </option>
@@ -132,8 +132,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="curso" class="ModalTituloCampo">Curso</label>
-                                <input name="idCurso" type="text" min="0" id="idCurso" class="form-control inputModal"
-                                    value="">
+                                <input name="nombreCurso" type="text" min="0" id="nombreCurso" class="form-control inputModal">
                             </div>
                             <div class="form-group">
                                 <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
@@ -144,9 +143,13 @@
                                 <label for="seccion" class="ModalTituloCampo">Seccion: </label>
                                 <input class="form-control inputModal" name="seccion" type="text">
                             </div>
+                            <div class="form-group">
+                                <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                                <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
+                            </div>
                         </div>
                         <div class="modal-footer text-center justify-content-center mx-auto">
-                            <button id="guardar" class="btn botonGuardar">Guardar</button>
+                            <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
                             <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
@@ -293,7 +296,7 @@ function agregarCursoDinamicamente(curso) {
 
 
         document.getElementById('guardar').addEventListener('click', function (event) {
-            event.preventDefault();
+            // event.preventDefault();
             const nombre = document.getElementById('nombrePeriodo').value;
             const clases = document.getElementById('idCurso').value;
             const faltas = document.getElementById('semanas').value;

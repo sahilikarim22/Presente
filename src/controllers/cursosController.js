@@ -4,37 +4,38 @@ const cursosController = {
     getCursos: (req, res) => {
       res.render('admin/cursos', { title: 'Proyecto Node.js con EJS' });
     },
-    postCursos: (req,res)=> {
+    postCurso: (req,res)=> {
+      //const idProfesor = req.session.userId;
+      const idProfesor = 1;
       const {
         nombreCurso,
         cantDiasSemanas,
         seccion,
-        idProfesor,
-        idEstudiante,
-        nrc,
+        nrc, 
+        idPeriodo
       } = req.body;
+
+      console.log(req.body);
     
-      const insertQuery = `INSERT INTO cursos (nombreCurso, cantDiasSemanas, seccion, idProfesor, idEstudiante, nrc) 
+      const insertQuery = `INSERT INTO cursos (nombreCurso, cantDiasSemanas, seccion, idProfesor, nrc, idPeriodo) 
                           VALUES (?, ?, ?, ?, ?, ?)`;
     
-      connection.query(
+      conexion.query(
         insertQuery,
         [
           nombreCurso,
           cantDiasSemanas,
-          facultad,
-          escuela,
           seccion,
           idProfesor,
-          idEstudiante,
           nrc,
+          idPeriodo
         ],
         (error, resultados) => {
           if (error) {
             console.error('Error al insertar el curso en la base de datos:', error);
             return res.status(500).json({ error: 'Error al insertar el curso en la base de datos' });
           }
-          res.json({ message: 'Curso insertado correctamente' });
+          res.json('/cursosProfesor');
         }
       );
     }, 
@@ -57,6 +58,21 @@ const cursosController = {
         }
         res.json({ message: 'Curso actualizado correctamente' });
       });
+    },
+
+    deleteCurso: (req, res) => {
+
+      const idCurso = req.params.idCurso;
+
+      const deleteQuery = 'delete from cursos where idCurso=?';
+
+      conexion.query(deleteQuery, [idCurso], (err, resultado) => {
+        if(err) console.log(err);
+
+        res.redirect('/');
+
+      });
+
     }
     
   };
