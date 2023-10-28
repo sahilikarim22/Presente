@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const conexion = require('../db/config');
-const flash = require('flash');
 const periodosController = require('../controllers/periodosController');
 const indexController = require('../controllers/indexController');
 const registrarseController = require('../controllers/registrarseController');
@@ -14,6 +13,7 @@ const cursosController = require('../controllers/cursosController');
 const loginController = require('../controllers/loginController');
 const cursoInfoController = require('../controllers/cursoInfoController');
 const asistenciaController = require('../controllers/asistenciaController');
+
 // Ruta de inicio
 
 //gets
@@ -37,12 +37,16 @@ router.post('/guardarUsuario', usuariosController.postUsuarios);
 router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
 router.post('/guardarAsistencia', asistenciaController.postAsistencia);
-// router.post('/guardarCurso',loginController.);
+router.post('/guardarCurso',cursosController.postCurso);
 
 
 //puts
 
 router.put('/editarCurso/:idCurso',cursosController.putCurso);
+
+//detetes
+
+router.delete('/eliminarCurso/:idCurso', cursosController.deleteCurso);
 
 //funciones que requiere login
 function requireLogin(req, res, next) {
