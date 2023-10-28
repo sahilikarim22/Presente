@@ -19,20 +19,18 @@ const asistenciaController = require('../controllers/asistenciaController');
 //gets
 
 router.get('/periodos', periodosController.getPeriodos);
-<<<<<<< HEAD
 router.get('/profesor/periodos', periodosController.getPeriodos);
 router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
-=======
->>>>>>> 578588731bbc2021b05b62dac8a618d0c833f1b4
 
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
 router.get('/admin',adminController.getAdmin);
 router.get('/admin/cursos', cursosController.getCursos);
-router.get('/estudiantes',requireLogin, estudiantesController.getEstudiantes);
+router.get('/estudiantes', estudiantesController.getEstudiantes);
 router.get('/profesor/cursosprof', cursosProfController.getCursosProf);
 router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
+router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
 
 //posts
 router.post('/guardarUsuario', usuariosController.postUsuarios);

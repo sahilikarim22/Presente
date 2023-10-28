@@ -85,15 +85,14 @@ INSERT INTO `cursos` (`idCurso`, `nombreCurso`, `cantDiasSemanas`, `seccion`, `i
 -- Estructura de tabla para la tabla `curso_estudiante`
 --
 
-DROP TABLE IF EXISTS `curso_estudiante`;
-CREATE TABLE IF NOT EXISTS `curso_estudiante` (
-  `idCursoEstudiante` int NOT NULL,
-  `idCurso` int DEFAULT NULL,
-  `idUsuario` int DEFAULT NULL,
-  PRIMARY KEY (`idCursoEstudiante`),
-  KEY `idCurso` (`idCurso`),
-  KEY `idUsuario` (`idUsuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+CREATE TABLE curso_estudiante (
+    idCursoEstudiante INT AUTO_INCREMENT,
+    idCurso INT,
+    idUsuario INT,
+    PRIMARY KEY (idCursoEstudiante),
+    FOREIGN KEY (idCurso) REFERENCES cursos(idCurso) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 -- --------------------------------------------------------
 

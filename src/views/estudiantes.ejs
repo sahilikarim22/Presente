@@ -17,9 +17,22 @@
         <div class="row mt-4">
             <div class="col-12 text-center">
                 <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
-                <h3><%= usuario[0].nombres %></h3>
+               
+                
                 <h5>Estudiante</h5>
+                <% if (estudiantes && estudiantes.length > 0) { %>
+                    <h3>
+                        <%= estudiantes[0].nombres %>
+                        <%= estudiantes[0].apellidos %>
+                    </h3>
+                <% } %>
+                
                 <button id="abrirModal" class="btn btn-primary">Unirse a Curso</button>
+                <h3>Cursos inscritos:</h3>
+                <% if (cursos && cursos.length < 0) { %>
+                    
+                    <h3>Aún no estas inscrito en ningún curso.</h3>
+                <% } %>
             </div>
         </div>
 
@@ -96,25 +109,68 @@
     <script src="/bootstrap/js/bootstrap.min.js"></script>
 
 
-    <script>
 
-$(document).ready(function() { 
-
-        $('#abrirModal').on('click', function () {
+<script>
+    $(document).ready(function() {
+        $('#abrirModal').on('click', function() {
             $('#modalAgregar').modal('show');
         });
 
         // Agrega datos al DataTable y guarda en localStorage
-        $('#guardar').on('click', function () {
+        $('#guardar').on('click', function() {
             var nrc = $('#nrc').val();
 
-            // logica para guardar en localStorage
+            // Guarda los datos en localStorage
+            var dataToStore = {
+                nrc: nrc
+                // Aquí puedes añadir más campos si es necesario
+            };
+
+            // Guarda en localStorage
+            localStorage.setItem('cursoData', JSON.stringify(dataToStore));
 
             // Cierra el modal
             $('#modalAgregar').modal('hide');
+
+            // Comprueba la disponibilidad de la conexión a internet
+            if (navigator.onLine) {
+                // Si hay conexión, enviar los datos al servidor
+                enviarDatosAlServidor(dataToStore);
+            }
         });
+
+        function enviarDatosAlServidor(data) {
+            // Realizar petición al servidor para inscribirse en el curso
+            // Aquí deberías hacer una petición AJAX usando jQuery o fetch API
+            // Ejemplo con jQuery:
+            $.ajax({
+                url: 'URL_DEL_SERVIDOR_PARA_INSCRIPCION',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log('Datos enviados al servidor');
+                    // Lógica adicional si es necesaria después de enviar los datos
+                },
+                error: function(error) {
+                    console.error('Error al enviar los datos al servidor', error);
+                    // Manejo de errores si es necesario
+                }
+            });
+        }
+
+        // Registrar el Service Worker para la PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(function(registration) {
+                    console.log('Service Worker registrado con éxito:', registration);
+                })
+                .catch(function(error) {
+                    console.error('Error al registrar el Service Worker:', error);
+                });
+        }
     });
-    </script>
+</script>
+
 
 </body>
 
