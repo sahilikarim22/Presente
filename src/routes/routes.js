@@ -28,8 +28,9 @@ router.get('/profesor/cursosprof/:idPeriodo', cursosProfController.getCursosProf
 router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
 router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
 
-router.get('/admin/cursosprof', cursosProfController.getCursosProf); //revisar si esto esta bien
-router.get('/periodos', periodosController.getPeriodos); //revisar si esta bien
+//revisar estos dos para ver si se usan
+router.get('/admin/cursosprof', cursosProfController.getCursosProf);
+router.get('/periodos', periodosController.getPeriodos); 
 
 //estudiantes
 router.get('/estudiantes', estudiantesController.getEstudiantes);

@@ -4,8 +4,6 @@ const cursosProfController = {
     getCursosProf: (req, res) => {
       const idPeriodo = req.params.idPeriodo;
       const idProfesor = req.session.userId;
-      console.log(idProfesor);
-
       const cursosSQL = 'SELECT * FROM cursos WHERE idProfesor = ? AND idPeriodo = ?';
       conexion.query(cursosSQL, [idProfesor, idPeriodo], (err,cursos)=>{
         if(err){
