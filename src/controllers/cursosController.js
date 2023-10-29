@@ -3,7 +3,7 @@ const conexion = require('../db/config');
 const cursosController = {
     postCurso: (req,res)=> {
       //const idProfesor = req.session.userId;
-      const idProfesor = 1;
+      const idProfesor = req.session.userId;
       const {
         nombreCurso,
         cantDiasSemanas,
@@ -12,7 +12,6 @@ const cursosController = {
         idPeriodo
       } = req.body;
 
-      console.log(req.body);
     
       const insertQuery = `INSERT INTO cursos (nombreCurso, cantDiasSemanas, seccion, idProfesor, nrc, idPeriodo) 
                           VALUES (?, ?, ?, ?, ?, ?)`;
@@ -32,7 +31,7 @@ const cursosController = {
             console.error('Error al insertar el curso en la base de datos:', error);
             return res.status(500).json({ error: 'Error al insertar el curso en la base de datos' });
           }
-          res.json('/cursosProfesor');
+          res.redirect("/profesor/cursosprof/"+idPeriodo);
         }
       );
     }, 

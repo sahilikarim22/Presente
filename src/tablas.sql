@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 29-10-2023 a las 18:30:42
+-- Tiempo de generación: 29-10-2023 a las 23:13:10
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   PRIMARY KEY (`idCurso`),
   KEY `idProfesor` (`idProfesor`),
   KEY `idPeriodo` (`idPeriodo`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `cursos`
@@ -95,7 +95,15 @@ CREATE TABLE IF NOT EXISTS `curso_estudiante` (
   PRIMARY KEY (`idCursoEstudiante`),
   KEY `idCurso` (`idCurso`),
   KEY `idUsuario` (`idUsuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `curso_estudiante`
+--
+
+INSERT INTO `curso_estudiante` (`idCursoEstudiante`, `idCurso`, `idUsuario`) VALUES
+(1, 1, 7),
+(2, 2, 7);
 
 -- --------------------------------------------------------
 
@@ -109,14 +117,15 @@ CREATE TABLE IF NOT EXISTS `periodos` (
   `nombrePeriodo` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `cantidadSemanas` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `periodos`
 --
 
 INSERT INTO `periodos` (`id`, `nombrePeriodo`, `cantidadSemanas`) VALUES
-(2, '2023-25', 16);
+(2, '2023-25', 16),
+(10, '23423', 2342);
 
 -- --------------------------------------------------------
 
@@ -165,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `correoUcab`, `clave`, `apellidos`, `nombres`, `cedula`, `estatus`, `tipoUsuario`, `token`) VALUES
-(11, 'profesor', '1234', 'Inojosa mendez', 'jesus miguel', '214243', 1, 'docente', '234433234'),
+(11, 'profesor@gmail.com', '1234', 'Inojosa mendez', 'jesus miguel', '214243', 1, 'docente', '234433234'),
 (10, 'sahilikarim22@gmail.com', '1234', 'Sahili Helbawi', 'Karim Ali', '28161244', 1, 'administrador', '39498342'),
 (9, 'kasahili.20@est.ucab.edu.ve', '1234', 'Helbawi Sahili', 'Karim Ali', '28161244', 1, 'estudiante', '2877bcf1ee2aac5239d0964b652c6e02514d8051'),
 (7, 'karimsh2001@gmail.com', '1234', 'Sahili Helbawi', 'Karim Ali', '28161244', 1, 'estudiante', '9eafff32a2db00e700e29879c97e6296f0b57347');
