@@ -1,9 +1,6 @@
 const conexion = require('../db/config');
 
 const cursosController = {
-    getCursos: (req, res) => {
-      res.render('admin/cursos', { title: 'Proyecto Node.js con EJS' });
-    },
     postCurso: (req,res)=> {
       //const idProfesor = req.session.userId;
       const idProfesor = 1;

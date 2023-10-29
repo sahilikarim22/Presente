@@ -3,7 +3,7 @@
 
 <head>
     <title>
-        <%= title %>
+        
     </title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -53,18 +53,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% cursos.forEach((curso) => { %>
                                 <tr>
-                                    <td class="fondoTabla filaIzquierda">Álgebra Lineal</td>
+                                    <td class="fondoTabla filaIzquierda"><%= curso.nombreCurso %></td>
                                    
                                 </tr>
-                                <tr>
-                                    <td class="fondoTabla filaIzquierda">Sistemas Operativos</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td class="fondoTabla filaIzquierda">INTERACCIÓN HUMANO COMPUTADOR</td>
-                                    
-                                </tr>
+                                <% }) %>
                                 
                             </tbody>
                         </table>

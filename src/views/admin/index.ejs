@@ -55,7 +55,11 @@
                                     <tr>
                                       <form action="/eliminarPeriodo" method="POST">
                                         <input type="hidden" name="id" value="<%= periodo.id %>" />
-                                        <td class="fondoTabla filaIzquierda"><%= periodo.nombrePeriodo %></td>
+                                        <td class="fondoTabla filaIzquierda">
+                                          <a href="/admin/cursos/<%= periodo.id %>" class="periodo-link">
+                                            <%= periodo.nombrePeriodo %>
+                                          </a>
+                                        </td>
                                         <td class="fondoTabla filaDerecha">
                                           <a href="/admin/editarCarrera/" class="btn btn-outline-info">
                                             Editar
@@ -65,6 +69,7 @@
                                       </form>
                                     </tr>
                                   <% }) %>
+                                  
                             </tbody>
                         </table>
                     </div>

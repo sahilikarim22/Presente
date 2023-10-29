@@ -44,6 +44,18 @@ const adminController = {
     console.log('Periodo borrado exitosamente');
     res.redirect('/admin');
   });
+   },
+   getAdminCursosPeriodo: (req, res) => {
+    const idPeriodo = req.params.idPeriodo;
+    // console.log(idPeriodo);
+    conexion.query('SELECT * FROM cursos WHERE idPeriodo =?', [idPeriodo], (err,cursos) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Error de servidor");
+    }
+    res.render('admin/cursos', {cursos: cursos});
+  });
+
    }
 };
 

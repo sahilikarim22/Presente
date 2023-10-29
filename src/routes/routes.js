@@ -16,8 +16,15 @@ const asistenciaController = require('../controllers/asistenciaController');
 
 // Ruta de inicio
 
-//gets
+//**************GETS***********************
+//admin 
+router.get('/admin',adminController.getAdmin);
+router.get('/admin/cursos/:idPeriodo', adminController.getAdminCursosPeriodo);
 
+
+
+
+router.get('/admin/cursosprof', cursosProfController.getCursosProf); //revisar si esto esta bien
 router.get('/periodos', periodosController.getPeriodos);
 router.get('/profesor/periodos', periodosController.getPeriodos);
 router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
@@ -25,13 +32,11 @@ router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
-router.get('/admin',adminController.getAdmin);
-router.get('/admin/cursos', cursosController.getCursos);
+
 router.get('/estudiantes', estudiantesController.getEstudiantes);
 router.get('/profesor/cursosprof', cursosProfController.getCursosProf);
 router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
 router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
-router.get('/admin/cursosprof', cursosProfController.getCursosProf);
 router.get('/confirmar/:token', usuariosController.getConfirmacion);
 
 //posts
