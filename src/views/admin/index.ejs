@@ -5,6 +5,7 @@
     <title>
         Admin
     </title>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
@@ -50,15 +51,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="fondoTabla filaIzquierda">Periodo 1</td>
-                                    <td class="fondoTabla filaDerecha">
-                                        <a href="/admin/editarCarrera/" class="btn btn-outline-info">
-                                            Editar</a>
-                                        <a onclick="confirmar('','/admin/deleteCarrera')"
-                                            class="btn btn-outline-danger">Eliminar</a>
-                                    </td>
-                                </tr>
+                                <% periodos.forEach((periodo) => {  %>
+                                    <tr>
+                                      <form action="/eliminarPeriodo" method="POST">
+                                        <input type="hidden" name="id" value="<%= periodo.id %>" />
+                                        <td class="fondoTabla filaIzquierda"><%= periodo.nombrePeriodo %></td>
+                                        <td class="fondoTabla filaDerecha">
+                                          <a href="/admin/editarCarrera/" class="btn btn-outline-info">
+                                            Editar
+                                          </a>
+                                          <button class="btn btn-outline-danger" type="submit">Eliminar</button>
+                                        </td>
+                                      </form>
+                                    </tr>
+                                  <% }) %>
                             </tbody>
                         </table>
                     </div>

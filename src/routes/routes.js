@@ -31,6 +31,8 @@ router.get('/estudiantes', estudiantesController.getEstudiantes);
 router.get('/profesor/cursosprof', cursosProfController.getCursosProf);
 router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
 router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
+router.get('/admin/cursosprof', cursosProfController.getCursosProf);
+router.get('/confirmar/:token', usuariosController.getConfirmacion);
 
 //posts
 router.post('/guardarUsuario', usuariosController.postUsuarios);
@@ -38,15 +40,21 @@ router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
 router.post('/guardarAsistencia', asistenciaController.postAsistencia);
 router.post('/guardarCurso',cursosController.postCurso);
+router.post('/guardarUsuario', usuariosController.postUsuarios);
+router.post('/login',loginController.postLogin);
+router.post('/guardarPeriodo', adminController.postPeriodo);
+// router.post('/guardarCurso',loginController.);
+router.post('/eliminarPeriodo',adminController.deletePeriodo);
 
 
 //puts
 
 router.put('/editarCurso/:idCurso',cursosController.putCurso);
 
-//detetes
+//deletes
 
 router.delete('/eliminarCurso/:idCurso', cursosController.deleteCurso);
+
 
 //funciones que requiere login
 function requireLogin(req, res, next) {
@@ -77,18 +85,6 @@ function requireLogin(req, res, next) {
       res.redirect("/iniciarSesion");
     }
   }
-
-router.get('/admin/cursosprof', cursosProfController.getCursosProf);
-
-router.get('/confirmar/:token', usuariosController.getConfirmacion);
-
-
-
-//posts
-router.post('/guardarUsuario', usuariosController.postUsuarios);
-router.post('/login',loginController.postLogin);
-router.post('/guardarPeriodo', adminController.postPeriodo);
-// router.post('/guardarCurso',loginController.);
 
 //funciones que requiere login
 function requireLogin(req, res, next) {

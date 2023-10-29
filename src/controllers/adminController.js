@@ -2,7 +2,14 @@ const conexion = require('../db/config');
 
 const adminController = {
   getAdmin: (req, res) => {
-    res.render('admin/index', { title: 'Proyecto Node.js con EJS' });
+    conexion.query('SELECT * FROM periodos', (err,periodos) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Error de servidor");
+      }
+      // console.log(periodos);
+      res.render('admin/index', { periodos });
+       });
   },
   postPeriodo: (req, res) => {
     const { nombrePeriodo, cantidadSemanas } = req.body;
@@ -19,6 +26,25 @@ const adminController = {
       }
     });
   },
+  deletePeriodo: (req, res) => {
+  // Obtener el id del registro a eliminar
+  const id = req.body.id;
+
+  // Consulta SQL para eliminar el registro
+  const query = `DELETE FROM periodos WHERE id = ${id}`;
+
+  // Ejecutar la consulta
+  conexion.query(query, (err, results) => {
+    if (err) {
+      console.log("Error executing query: ", err);
+      res.status(500).send("Error al eliminar el registro");
+      return;
+
+    }
+    console.log('Periodo borrado exitosamente');
+    res.redirect('/admin');
+  });
+   }
 };
 
 // exportar módulos
