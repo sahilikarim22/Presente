@@ -35,7 +35,12 @@
             <div class="row mt-4">
                 <div class="col-12 text-center">
                     <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
-                    <h3>Jesús Ortiz</h3>
+                    <% if (docente && docente.length > 0) { %>
+                        <h3>
+                            <%= docente[0].nombres %>
+                            <%= docente[0].apellidos %>
+                        </h3>
+                    <% } %>
                     <h5>Profesor</h5>
                 </div>
             </div>
@@ -47,7 +52,7 @@
                 <% if (periodos.length> 0) { %>
                     <% periodos.forEach((periodo)=>{ %>
                         <div class="col-12">
-                                <a href="/profesor/curso/<%= periodo.id %>">
+                                <a href="/profesor/cursosprof/<%= periodo.id %>">
                                 <div class="card card-background contenedorPeriodo text-center">
                                     <div class="card-body">
 

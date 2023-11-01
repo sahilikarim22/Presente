@@ -25,7 +25,11 @@ const asistenciaController = {
                 res.redirect(`localhost:3000/profesor/cursosprof`);
             });
         });
+    },
+    getAsistencias: (req, res) => {
+        res.render("profesor/asistencias");
     }
+
 };
 
 module.exports = asistenciaController;

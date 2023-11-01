@@ -1,15 +1,28 @@
 const conexion = require('../db/config');
 
 const periodosController = {
+  
   getPeriodos: (req, res) => {
+    const idDocente = req.session.userId;
+    const docenteSQL = `
+    SELECT * FROM usuarios WHERE id =?`;
+    conexion.query(docenteSQL, [idDocente], (error, docente) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).send("Error de servidor");
+      
+    }
     conexion.query('SELECT * FROM periodos', (error, results) => {
       if (error) {
         console.log(error);
       } else {
         res.render('profesor/periodos', {
-          periodos: results
+          docente:docente,
+          periodos: results,
         });
       }
+      });
+
     });
   },
   getCursoProfesor: (req, res) => {

@@ -61,6 +61,7 @@ const cursoInforController = {
               });
 
               console.log(asistencia);
+              
               res.render("profesor/cursoInfo", {
                 curso,
                 estudiantes,

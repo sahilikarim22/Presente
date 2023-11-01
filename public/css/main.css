@@ -1,313 +1,503 @@
-body{
-    background-color: #A9CBFF;
+body {
+  background-color: #262626;
+  font-family: "Poppins", sans-serif;
 }
 
-/*estilos para la tabla*/
-table th {
-    background-color: #337ab7 !important;
-    color: white;
+h1.tituloCursos {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 32px;
 }
 
-table>tbody>tr>td {
-    vertical-align: middle !important;
-    
-}
-table{
-    border-collapse: separate; /* Asegura que se utilice el espacio entre bordes */
-    border-spacing: 50px 50px; /* Establece el espacio horizontal y vertical entre celdas */
-}
-
-  /* Estilo de borde de las celdas para mayor claridad */
-  td, th {
-    border: 1px solid #000;
-    padding: 8px; /* Espacio interno de las celdas */
-  }
-
-/*para alinear los botones y cuadro de busqueda*/
-.btn-group, .btn-group-vertical {
-    position: absolute !important;
-}
-
-
-
-h1.tituloCursos{
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 32px;
-}
-
-table#tablaCursos{
-    /*td en la izquierda*/
-    border-bottom-left-radius: 15px;
-}
-td#tablaCursos{
-    /*td en la derecha*/
-    border-bottom-right-radius: 15px;
-}
-
-/* Estilo para el contenedor del título y la entrada de período */
 .form-group {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 /* Estilo para el título */
 .ModalTituloCampo {
-    flex: 1; /* Hace que el título ocupe todo el espacio disponible */
-    margin-right: 10px; /* Espacio entre el título y la entrada */
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: 'Roboto', sans-serif;
-    
+  flex: 1; /* Hace que el título ocupe todo el espacio disponible */
+  margin-right: 10px; /* Espacio entre el título y la entrada */
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Estilo para la entrada de período */
 .inputModal {
-    flex: 2; /* Hace que la entrada ocupe el doble de espacio que el título */
+  flex: 2; /* Hace que la entrada ocupe el doble de espacio que el título */
 }
 
-.botonGuardar{
-    background-color: #77E8E1;
-    color: #000;
-    font-weight: bold;
+.botonGuardar {
+  background-color: #77e8e1;
+  color: #000;
+  font-weight: bold;
 }
 
-.botonCerrar{
-    background-color: #c11616;
-    color: #000;
-    font-weight: bold;
+.botonCerrar {
+  background-color: #c11616;
+  color: #fff;
+  font-weight: bold;
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  border-radius: 50%;
 }
 
-.fondoTabla{
-    background-color: #BDFBA7;
-    color: black;
+.home {
+  color: black;
+  font-size: 50px;
+  position: absolute;
+  top: 40%;
 }
-
-td.filaIzquierda{
-    border-bottom-left-radius: 15px;
-    border-top-left-radius: 15px;    
+.salir {
+  color: black;
+  font-size: 50px;
+  position: absolute;
+  bottom: 5%;
 }
-
-td.filaDerecha{
-    border-bottom-right-radius: 15px;
-    border-top-right-radius: 15px;    
+.cursos {
+  color: black;
+  font-size: 50px;
+  position: absolute;
+  top: 20%;
 }
-
-table {
-    border-collapse: collapse; /* Esta propiedad colapsa los bordes de las celdas adyacentes */
-    border: none; /* Establece el borde de la tabla a ninguno (sin bordes) */
-}
-
-td, th {
-    /* padding: 10px;  */
-    border: 3px solid #000000; 
-    /*ESPACIO entre columnas*/
-    padding: 10px 10px 10px 10px;
-}
-
-.home{
-    color: black;
-    font-size: 50px;
-    position: absolute;
-    top: 40%;
-}
-.salir{
-    color: black;
-    font-size: 50px;
-    position: absolute;
-    bottom: 5%;
-}
-.cursos{
-    color: black;
-    font-size: 50px;
-    position: absolute;
-    top: 20%;
-}
-
-
 
 /*sidebar*/
 .sidebar {
-    width: 90px;
-    background-color: #BDFBA7;
-    color: #fff;
-    padding: 20px;
-    position: fixed;
-    height: 100%;
-    transition: width 0.3s;
+  width: 90px;
+  background-color: #bdfba7;
+  color: #fff;
+  padding: 20px;
+  position: fixed;
+  height: 100%;
+  transition: width 0.3s;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .menu-icon {
-    font-size: 24px;
-    margin-right: 10px;
+  font-size: 24px;
+  margin-right: 10px;
 }
 
 h1 {
-    margin: 0;
-    font-size: 1.5rem;
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .menu {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .menu li {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .menu a {
-    text-decoration: none;
-    color: #fff;
-    display: flex;
-    align-items: center;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
 }
 
 .content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 250px;
-    transition: margin-left 0.3s;
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s;
 }
 
 .burger-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    color: #333;
-    cursor: pointer;
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
-    
+  .content {
+    margin-left: 0;
+  }
 
-    .content {
-        margin-left: 0;
-    }
-
-    .burger-btn {
-        display: block;
-    }
+  .burger-btn {
+    display: block;
+  }
 }
 
-footer.menuMovil{
-    display: none;
+footer.menuMovil {
+  display: none;
 }
-
-
-
 
 @media screen and (max-width: 1024px) {
-    
+  .sidebar {
+    display: none;
+  }
 
-    .sidebar {
-        display: none;
-    }
-
-    footer.menuMovil {
-        display: block;
-
-    }
+  footer.menuMovil {
+    display: block;
+  }
 }
 /*fin sidebar*/
 
 #tablaCursos .filaIzquierda {
-    text-align: left; /* Alinea el contenido de las celdas a la izquierda */
-    border-radius: 15px;
-  }
+  text-align: left; /* Alinea el contenido de las celdas a la izquierda */
+  border-radius: 15px;
+}
 
+/*Card Body*/
+.card-background {
+  background-color: #FFF;
+  color: black;
+  font-weight: bold;
+}
 
-  /*Card Body*/
-  .card-background{
-    background-color: #BDFBA7;
-    color: black;
-    font-weight: bold;
-  }
+.porcentaje{
+  background-color: #ccc;
+  border-radius: 55px;
+  padding: 20px;
+}
 
 footer ul {
-    list-style: none;
-    text-align: center;
-    background-color: #337ab7;
-    margin-top: 20px;
-    
+  list-style: none;
+  text-align: center;
+  background-color: #337ab7;
+  margin-top: 20px;
 }
-  
+
 footer ul li {
-    display: inline-block;
-    margin: 0 20px;
-    padding: 10px 0;
-    color: black;
-    
+  display: inline-block;
+  margin: 0 20px;
+  padding: 10px 0;
+  color: black;
 }
 
 footer ul li a i {
-    color: black;
+  color: black;
 }
-.home2{
-    color: black;
-    font-size: 40px;
-
-}
-
-.card{
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    margin-bottom: 25px;
+.home2 {
+  color: black;
+  font-size: 40px;
 }
 
-.elPorcentaje h5{
-    font-size: 70px;
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
+}
+
+.elPorcentaje h5 {
+  font-size: 70px;
 }
 /*colocar boton a la derecha*/
 
-footer ul li.atras{
-    position: relative;
-    right: 15px;
-   }
-footer ul li.home3{
-    position: relative;
-    right: 15px;
-   }
+footer ul li.atras {
+  position: relative;
+  right: 15px;
+}
+footer ul li.home3 {
+  position: relative;
+  right: 15px;
+}
 
-   
+.ventanitaOpciones {
+  background-color: #ccc;
+  color: black;
+  font-weight: bold;
+  display: none;
+  padding: 30px;
+  border-radius: 15px;
+}
+.active {
+  display: block;
+}
 
-   .ventanitaOpciones{
-    background-color: #ccc;
-    color: black;
-    font-weight: bold;
-    display: none;
-    padding: 30px;
-    border-radius: 15px;
-   }
-   .active{
-    display: block;
-   }
+.circularBoton {
+  border-radius: 50%;
+  background-color: #ffffff;
+  padding: 12px;
+}
 
-   .circularBoton{
+.circularBotonAzul{
+  border-radius: 50%;
+  background-color: #002A7D;
+  padding: 42px;
+  position: relative;
+}
+
+/*periodos profe*/
+.nombrePeriodo {
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-transform: uppercase;
+}
+
+.contenedorPeriodo {
+  background-color: #bdfba7;
+  color: black;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+/*Estilos de Curso Info*/
+.botonGeneral {
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  border-radius: 55px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+
+.cursosProf {
+  background-color: #4a4e49;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.botonEliminar {
+  background-color: #dc2020;
+  padding: 10px;
+  border-radius: 55px;
+  color: white;
+}
+
+.fondoTabla {
+  background-color: #4a4e49;
+  color: black;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 20px;
+  /* z-index: 1; */
+}
+
+.escanear {
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  border-radius: 55px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 320px;
+  margin-top: 20px;
+}
+
+.textAsistencia {
+  font-size: 35px;
+
+}
+
+.miMenuMovil{
+    margin-top: 180px;
+}
+
+/*MENU MOVIL*/
+.navegacion {
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+}
+.navegacion ul {
+  display: flex;
+  width: 350px;
+}
+.navegacion ul li {
+  list-style: none;
+  width: 100%;
+  position: relative;
+  width: 70px;
+  height: 70px;
+  z-index: 3;
+}
+
+.navegacion ul li a {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  z-index: 3;
+}
+.navegacion ul li a .icon {
+  position: relative;
+  display: block;
+  line-height: 75px;
+  font-size: 1.5em;
+  text-align: center;
+  transition: 0.5s;
+  color: rgb(36, 33, 33);
+  z-index: 3;
+}
+
+.navegacion ul li.active a .icon {
+  transform: translateY(-35px);
+}
+
+.navegacion ul li a .text {
+  position: absolute;
+  color: rgb(43, 36, 36);
+  font-weight: 400;
+  font-size: 0.75em;
+  transition: 0.5s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.navegacion ul li.active a .text {
+  opacity: 1;
+  transform: translateY(10px);
+}
+
+.indicator {
+  position: absolute;
+  top: -50%;
+  width: 70px;
+  height: 70px;
+  background: #00c3ff;
+  border-radius: 50%;
+  border: 6px solid #262626;
+  transition: 0.5s;
+  z-index: -1;
+}
+
+.indicator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -22px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-top-right-radius: 20px;
+  box-shadow: 0px -10px 0 0 #262626; /* izquierda*/
+  z-index: -1;
+}
+
+.indicator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -22px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border-top-left-radius: 20px;
+  box-shadow: 0px -10px 0 0 #262626; /* va a la derecha */
+  z-index: 1;
+}
+/* Desplazamiento esfera */
+.navegacion ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(70px * 0));
+}
+.navegacion ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(70px * 1));
+}
+.navegacion ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(70px * 2));
+}
+
+
+/*Estilos Asistencia*/
+/* Estilos para el contenedor del checkbox */
+.botonCheckbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background-color: #ffffff;
-    padding: 12px;
-   }
+    border: 2px solid #000;
+    outline: none;
+    background-color: #FFF;
+    position: relative;
+    transition: background-color 0.3s;
+}
 
-   /*periodos profe*/
-   .nombrePeriodo{
-    font-size: 40px;
-    font-weight: bold;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    text-transform: uppercase;
-   }
+/* Pseudo-elemento que simula el tick/check */
+.botonCheckbox::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    width: 8px;
+    height: 14px;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    transition: border-color 0.3s;
+}
 
-   .contenedorPeriodo{
-    background-color: #BDFBA7;
-    color: black;
-    font-weight: bold;
-    border-radius: 15px;
-    padding: 20px;
+/* Cambia el color del tick y el fondo al ser seleccionado */
+.botonCheckbox:checked {
+    background-color: #fff;
+}
 
-   }
+.botonCheckbox:checked::before {
+    border-color: #00FF00;
+    border-width: 0 5px 6px 0; 
+}
+
+
+/*Estilos Estudiantes*/
+/* Estilo para el contenedor */
+/* Estilo para el contenedor */
+.circulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10rem; /* Ancho del círculo */
+  height: 10rem; /* Altura del círculo */
+  border-radius: 50%; /* Hacer un borde redondo para formar un círculo */
+  background-color: white; /* Color de fondo del círculo */
+  position: relative;
+}
+
+/* Estilo para el ícono */
+.fa-user {
+  color: #000000; /* Cambiar color del ícono */
+  font-size: 3rem; /* Tamaño del ícono */
+}
+
+.trianguloDerecha{
+  position: absolute;
+  right: 0;
+}
+
+/* Ocultar imagen a partir de 687px */
+@media screen and (min-width: 687px) {
+  .trianguloDerecha{
+      display: none;
+  }
+}
+
+p.nombreCurso{
+  font-size: 30px;
+  font-weight: bold;
+  /* font-family: poppins, sans-serif; */
+  text-transform: capitalize;
+}
+
+
+
+

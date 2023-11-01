@@ -4,11 +4,13 @@ const port = process.env.PORT || 3000;
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-// importar boxicons
-// const boxicons = require('boxicons');
+const ejsMate = require('ejs-mate');
+require('dotenv').config();
+
 
 
 // Configurar EJS como motor de plantillas
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 

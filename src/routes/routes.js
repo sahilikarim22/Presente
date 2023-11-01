@@ -16,21 +16,33 @@ const asistenciaController = require('../controllers/asistenciaController');
 
 // Ruta de inicio
 
-//gets
+//**************GETS***********************
+//admin 
+router.get('/admin',adminController.getAdmin);
+router.get('/admin/cursos/:idPeriodo', adminController.getAdminCursosPeriodo);
 
-router.get('/periodos', periodosController.getPeriodos);
+//profesores
 router.get('/profesor/periodos', periodosController.getPeriodos);
-router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
+// router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
+router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
+
+router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
+
+router.get('/profesor/asistencias', asistenciaController.getAsistencias);
+
+//revisar estos dos para ver si se usan
+router.get('/admin/cursosprof', cursosProfController.getCursosProf);
+router.get('/periodos', periodosController.getPeriodos); 
+
+//estudiantes
+router.get('/estudiantes/cursos/', estudiantesController.getCursos);
+router.get('/estudiantes/inicio/', estudiantesController.getInicio);
+router.get('/estudiantes/entrada/', estudiantesController.getEntrada);
 
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
-router.get('/admin',adminController.getAdmin);
-router.get('/admin/cursos', cursosController.getCursos);
-router.get('/estudiantes', estudiantesController.getEstudiantes);
-router.get('/profesor/cursosprof', cursosProfController.getCursosProf);
-router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
-router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
+router.get('/confirmar/:token', usuariosController.getConfirmacion);
 
 //posts
 router.post('/guardarUsuario', usuariosController.postUsuarios);
@@ -38,15 +50,21 @@ router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
 router.post('/guardarAsistencia', asistenciaController.postAsistencia);
 router.post('/guardarCurso',cursosController.postCurso);
+router.post('/guardarUsuario', usuariosController.postUsuarios);
+router.post('/login',loginController.postLogin);
+router.post('/guardarPeriodo', adminController.postPeriodo);
+// router.post('/guardarCurso',loginController.);
+router.post('/eliminarPeriodo',adminController.deletePeriodo);
 
 
 //puts
 
 router.put('/editarCurso/:idCurso',cursosController.putCurso);
 
-//detetes
+//deletes
 
 router.delete('/eliminarCurso/:idCurso', cursosController.deleteCurso);
+
 
 //funciones que requiere login
 function requireLogin(req, res, next) {
@@ -77,18 +95,6 @@ function requireLogin(req, res, next) {
       res.redirect("/iniciarSesion");
     }
   }
-
-router.get('/admin/cursosprof', cursosProfController.getCursosProf);
-
-router.get('/confirmar/:token', usuariosController.getConfirmacion);
-
-
-
-//posts
-router.post('/guardarUsuario', usuariosController.postUsuarios);
-router.post('/login',loginController.postLogin);
-router.post('/guardarPeriodo', adminController.postPeriodo);
-// router.post('/guardarCurso',loginController.);
 
 //funciones que requiere login
 function requireLogin(req, res, next) {

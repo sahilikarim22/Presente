@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Cursos Estudiantes
+    </title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
+    <!--datables estilo bootstrap 4 CSS-->
+    <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+
+
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-sm-12 col-md-12 d-flex flex-column align-items-center text-center">
+                <span class="circulo">
+                    <i class="fas fa-user" style="font-size: 3rem;"></i>
+                </span>
+                <h3 class="text-white">Jesús Ortiz <i class="fa-solid fa-browser"></i></h3>
+                <h5 class="text-white">Estudiante</h5>
+                <button id="abrirModal" class="btn btn-primary">Unirme a Curso </button>
+            </div>
+                <img class="trianguloDerecha" src="/imagenes/t_derecha.svg" />
+        </div>
+        <% if (cursos && cursos.length> 0) { %>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <h5 class="card-title text-white">Mis Cursos</h5>
+                </div>
+                <div class="col-6">
+                    <h5 class="card-title text-white">Porcentaje de asistencias</h5>
+                </div>
+                <div class="col-12">
+                    <% cursos.forEach((curso)=> { %>
+                        <div class="card card-background">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <!-- Enlace al curso con la URL correcta -->
+                                        <a href="/estudiante/cursoInfo/<%= curso.idCurso %><%= curso.idPeriodo %>"
+                                            class="card-link">
+                                            <p class="card-text fw-bold nombreCurso">
+                                                <%= curso.nombreCurso %>
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <div class="col-4 porcentaje">
+                                        75%
+                                    </div>
+                                    <!--Boton Opciones-->
+                                    <div class="position-absolute dropdown-menu-right m-2">
+                                        <button type="button" class="btn colorOpciones botonOpciones"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                    <div class="ventanitaOpciones ml-auto ">
+                                        <div class="">
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <div class="">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="masCursos">
+
+                        </div>
+                        <% }) %>
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+    </div>
+    <% } else { %>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <p class="text-white">Aún no tienes cursos inscritos.</p>
+            </div>
+        </div>
+        <% } %>
+            </div>
+
+            <form method="POST" action="/guardarCurso">
+                <div id="modalAgregar" class="modal fade">
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+                            <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
+
+                            <div class="modal-header">
+                                <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                                    <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
+                                </div>
+                            </div>
+                            <div class="modal-footer text-center justify-content-center mx-auto">
+                                <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <%- include('menuMovil') %>
+
+                </div>
+
+
+
+
+
+
+
+
+                <!-- jQuery, Popper.js, Bootstrap JS -->
+                <script src="/jquery/jquery-3.3.1.min.js"></script>
+                <script src="/popper/popper.min.js"></script>
+                <script src="/bootstrap/js/bootstrap.min.js"></script>
+                <script src="/js/boxicons.js"></script>
+
+
+                <script>
+
+
+
+                    const botonOpciones = document.querySelector('.botonOpciones');
+                    const ventanita = document.querySelector('.ventanitaOpciones');
+
+                    botonOpciones.addEventListener('click', () => {
+                        console.log("se presiona");
+                        ventanita.classList.toggle('active');
+
+                    });
+
+
+                    // Función para guardar datos en localStorage y en la base de datos (simulado)
+                    function guardarCursoEnBaseDeDatosYLocalStorage(curso) {
+                        // Guardar en localStorage
+                        const cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+                        cursos.push(curso);
+                        localStorage.setItem('cursos', JSON.stringify(cursos));
+
+                        // Aquí debes enviar los datos a la base de datos real usando una API
+                        // Ejemplo: fetch('/guardarCurso', { method: 'POST', body: JSON.stringify(curso) });
+                    }
+
+
+                    // Función para agregar un curso dinámicamente
+                    function agregarCursoDinamicamente(curso) {
+                        const masCursos = document.querySelector('.masCursos'); // Asegúrate de que exista un contenedor con la clase .masCursos
+                        const nuevoDiv = document.createElement('div');
+                        nuevoDiv.className = 'col-12';
+
+                        nuevoDiv.innerHTML =
+                            `<div class="card card-background">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <p class="card-text fw-bold">${curso.nombre}</p>
+                                    <p class="card-text fw-bold">Clases: ${curso.clases}</p>
+                                    <p class="card-text text-danger fw-bold">Faltas: ${curso.faltas}</p>
+                                </div>
+
+                                <!--Boton Opciones-->
+                                <div class="position-pabsolute dropdown-menu-right m-3">
+                                    <button type="button" class="btn colorOpciones botonOpciones" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <div class="ventanitaOpciones ml-auto ">
+                                    <div class="circularBoton">
+                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" style="fill: rgb(79, 0, 226);">
+                                                <path
+                                                    d="M8.707 19.707 18 10.414 13.586 6l-9.293 9.293a1.003 1.003 0 0 0-.263.464L3 21l5.242-1.03c.176-.044.337-.135.465-.263zM21 7.414a2 2 0 0 0 0-2.828L19.414 3a2 2 0 0 0-2.828 0L15 4.586 19.414 9 21 7.414z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <div class="circularBoton">
+                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" style="fill: rgb(206, 16, 16);">
+                                                <path
+                                                    d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+                        masCursos.appendChild(nuevoDiv);
+
+                        // Selecciona el botón de "botonOpciones" específico para este curso
+                        const botonOpciones = nuevoDiv.querySelector('.botonOpciones');
+
+                        // Agrega un controlador de eventos al botón de "botonOpciones" para mostrar la ventanitaOpciones
+                        botonOpciones.addEventListener('click', () => {
+                            const ventanita = nuevoDiv.querySelector('.ventanitaOpciones'); // Encuentra la .ventanitaOpciones dentro de este curso específico
+                            ventanita.classList.toggle('active');
+                        });
+                    }
+
+                    document.getElementById('guardar').addEventListener('click', function (event) {
+                        const nombre = document.getElementById('nombrePeriodo').value;
+                        const clases = document.getElementById('idCurso').value;
+                        const faltas = document.getElementById('semanas').value;
+
+                        const curso = { nombre, clases, faltas };
+
+                        guardarCursoEnBaseDeDatosYLocalStorage(curso);
+                        agregarCursoDinamicamente(curso);
+
+                    });
+
+
+
+                    $(document).ready(function () {
+
+                        // Abre el modal al hacer clic en el botón
+                        $('#abrirModal').on('click', function () {
+                            $('#modalAgregar').modal('show');
+                        });
+
+                        // Agrega datos al DataTable y guarda en localStorage
+                        $('#guardar').on('click', function () {
+                            var nombrePeriodo = $('#nombrePeriodo').val();
+                            var semanas = $('#semanas').val();
+                            var idCurso = $('#idCurso').val();
+
+                            // Cierra el modal
+                            $('#modalAgregar').modal('hide');
+                        });
+
+                        // Cierra el modal al hacer clic en el botón
+                        $('#cerrar').on('click', function () {
+                            $('#modalAgregar').modal('hide');
+                            event.preventDefault();
+
+                        });
+                    });
+
+
+
+
+
+                </script>
+
+
+
+</body>
+
+</html>

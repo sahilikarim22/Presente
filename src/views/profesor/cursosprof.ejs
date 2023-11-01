@@ -49,53 +49,37 @@
                     <h5 class="card-title">Porcentaje de asistencias</h5>
                 </div>
                 <div class="col-12">
-                    <div class="card card-background">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-8">
-                                    <p class="card-text fw-bold">Álgebra Lineal</p>
-                                    <p class="card-text fw-bold">Clases: 20</p>
-                                    <p class="card-text text-danger fw-bold">Faltas: 5</p>
-                                </div>
-
-                                <!--Boton Opciones-->
-                                <div class="position-pabsolute dropdown-menu-right m-3">
-                                    <button type="button" class="btn colorOpciones botonOpciones" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                </div>
-                                <div class="ventanitaOpciones ml-auto ">
-                                    <div class="circularBoton">
-                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: rgb(79, 0, 226);">
-                                                <path
-                                                    d="M8.707 19.707 18 10.414 13.586 6l-9.293 9.293a1.003 1.003 0 0 0-.263.464L3 21l5.242-1.03c.176-.044.337-.135.465-.263zM21 7.414a2 2 0 0 0 0-2.828L19.414 3a2 2 0 0 0-2.828 0L15 4.586 19.414 9 21 7.414z">
-                                                </path>
-                                            </svg>
+                    <% cursos.forEach((curso)=> { %>
+                        <div class="card card-background">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <!-- Enlace al curso con la URL correcta -->
+                                        <a href="/profesor/cursoInfo/<%= curso.idCurso %><%= curso.idPeriodo %>"
+                                            class="card-link">
+                                            <p class="card-text fw-bold">
+                                                <%= curso.nombreCurso %>
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <!--Boton Opciones-->
+                                    <div class="position-pabsolute dropdown-menu-right m-3">
+                                        <button type="button" class="btn colorOpciones botonOpciones"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                     </div>
-                                    <br>
-                                    <div class="circularBoton">
-                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: rgb(206, 16, 16);">
-                                                <path
-                                                    d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z">
-                                                </path>
-                                            </svg>
-                                        </button>
+                                    <div class="ventanitaOpciones ml-auto ">
+                                        <!-- Código de botones para opciones -->
+                                        <!-- ... -->
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="masCursos">
+                        <div class="masCursos"></div>
+                        <% }) %>
 
-                    </div>
+
                 </div>
 
 
@@ -123,16 +107,19 @@
                             <div class="form-group">
                                 <label class="ModalTituloCampo" for="nombrePeriodo">Período:</label>
                                 <select class="form-control" id="nombrePeriodo" name="idPeriodo">
-                                        
-                                        <% periodos.forEach((periodo)=>{ %>
-                                            <option  value="<%= periodo.id %>"> <%= periodo.nombrePeriodo %> </option>
-                                          <% }) %>
 
-                                </select> 
+                                    <% periodos.forEach((periodo)=>{ %>
+                                        <option value="<%= periodo.id %>">
+                                            <%= periodo.nombrePeriodo %>
+                                        </option>
+                                        <% }) %>
+
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="curso" class="ModalTituloCampo">Curso</label>
-                                <input name="nombreCurso" type="text" min="0" id="nombreCurso" class="form-control inputModal">
+                                <input name="nombreCurso" type="text" min="0" id="nombreCurso"
+                                    class="form-control inputModal">
                             </div>
                             <div class="form-group">
                                 <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
@@ -195,7 +182,7 @@
 
 
     <script>
-       
+
 
 
         const botonOpciones = document.querySelector('.botonOpciones');
@@ -220,14 +207,14 @@
         }
 
 
-       // Función para agregar un curso dinámicamente
-function agregarCursoDinamicamente(curso) {
-    const masCursos = document.querySelector('.masCursos'); // Asegúrate de que exista un contenedor con la clase .masCursos
-    const nuevoDiv = document.createElement('div');
-    nuevoDiv.className = 'col-12';
+        // Función para agregar un curso dinámicamente
+        function agregarCursoDinamicamente(curso) {
+            const masCursos = document.querySelector('.masCursos'); // Asegúrate de que exista un contenedor con la clase .masCursos
+            const nuevoDiv = document.createElement('div');
+            nuevoDiv.className = 'col-12';
 
-    nuevoDiv.innerHTML = 
-    `<div class="card card-background">
+            nuevoDiv.innerHTML =
+                `<div class="card card-background">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-8">
@@ -272,26 +259,26 @@ function agregarCursoDinamicamente(curso) {
                         </div>
                     </div>`;
 
-    masCursos.appendChild(nuevoDiv);
+            masCursos.appendChild(nuevoDiv);
 
-    // Selecciona el botón de "botonOpciones" específico para este curso
-    const botonOpciones = nuevoDiv.querySelector('.botonOpciones');
+            // Selecciona el botón de "botonOpciones" específico para este curso
+            const botonOpciones = nuevoDiv.querySelector('.botonOpciones');
 
-    // Agrega un controlador de eventos al botón de "botonOpciones" para mostrar la ventanitaOpciones
-    botonOpciones.addEventListener('click', () => {
-        const ventanita = nuevoDiv.querySelector('.ventanitaOpciones'); // Encuentra la .ventanitaOpciones dentro de este curso específico
-        ventanita.classList.toggle('active');
-    });
-}
+            // Agrega un controlador de eventos al botón de "botonOpciones" para mostrar la ventanitaOpciones
+            botonOpciones.addEventListener('click', () => {
+                const ventanita = nuevoDiv.querySelector('.ventanitaOpciones'); // Encuentra la .ventanitaOpciones dentro de este curso específico
+                ventanita.classList.toggle('active');
+            });
+        }
 
-// Resto del código...
-
-
+        // Resto del código...
 
 
 
 
-        
+
+
+
 
 
 

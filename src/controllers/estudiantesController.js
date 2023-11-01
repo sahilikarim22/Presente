@@ -1,40 +1,35 @@
-const conexion = require('../db/config');
+const conexion = require("../db/config");
 
 const estudiantesController = {
-  getEstudiantes: (req, res) => {
+  getEntrada: (req, res) => {
+    res.render("estudiantes/entrada");
+  },
+  getInicio: (req, res) => {
+    res.render("estudiantes/inicio");
+  },
+  getCursos: (req, res) => {
     const idUsuario = req.session.userId;
-    const cursosEstudiantesSQL = `
-    SELECT ce.idCursoEstudiante, c.idCurso, c.nombreCurso
-    FROM curso_estudiante ce
-    INNER JOIN cursos c ON ce.idCurso = c.idCurso
-    INNER JOIN usuarios u ON ce.idUsuario = u.id
-    WHERE u.id = ?;`;
 
-    conexion.query(cursosEstudiantesSQL, [idUsuario], (error, cursos) => {
-      if (error) {
-        console.log(error);
+    const cursosSQL = `
+      SELECT c.nombreCurso, c.cantDiasSemanas, c.seccion, c.idCurso
+      FROM curso_estudiante
+      INNER JOIN cursos c ON curso_estudiante.idCurso = c.idCurso
+      WHERE curso_estudiante.idUsuario = ?`;
+
+    conexion.query(cursosSQL, [idUsuario], (err, cursos) => {
+      if (err) {
+        console.log(err);
         return res.status(500).send("Error de servidor");
       }
-
-      const estudiantesSQL = `
-        SELECT nombres, apellidos
-        FROM usuarios
-        WHERE id = ?;`;
-
-      conexion.query(estudiantesSQL, [idUsuario], (error, estudiantes) => {
-        if (error) {
-          console.log(error);
-          return res.status(500).send("Error de servidor");
-        }
-
-
-        res.render('estudiantes', {
-          cursos,
-          estudiantes
-        });
-      });
+      console.log(cursos);
+      res.render("estudiantes/cursos", { cursos: cursos });
     });
+  },
+  gerCursoInfo:(req, res)=>{
+    
   }
 };
+
+// exportar modulos
 
 module.exports = estudiantesController;
