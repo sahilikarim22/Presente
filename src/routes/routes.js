@@ -39,6 +39,13 @@ router.get('/estudiantes/cursos/', estudiantesController.getCursos);
 router.get('/estudiantes/inicio/', estudiantesController.getInicio);
 router.get('/estudiantes/entrada/', estudiantesController.getEntrada);
 
+//revisar estos dos para ver si se usan
+router.get('/admin/cursosprof', cursosProfController.getCursosProf);
+router.get('/periodos', periodosController.getPeriodos); 
+
+//estudiantes
+router.get('/estudiantes', estudiantesController.getEstudiantes);
+//todos los usuarios
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
