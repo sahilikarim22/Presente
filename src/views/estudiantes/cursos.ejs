@@ -27,7 +27,7 @@
                 <span class="circulo">
                     <i class="fas fa-user" style="font-size: 3rem;"></i>
                 </span>
-                <h3 class="text-white">Jesús Ortiz <i class="fa-solid fa-browser"></i></h3>
+                <h3 class="text-white"><%= usuario.nombres %> <%= usuario.apellidos %> <i class="fa-solid fa-browser"></i></h3>
                 <h5 class="text-white">Estudiante</h5>
                 <button id="abrirModal" class="btn btn-primary">Unirme a Curso </button>
             </div>
@@ -113,7 +113,7 @@
         <% } %>
             </div>
 
-            <form method="POST" action="/guardarCurso">
+            <form action="/inscribirCurso" method="POST">
                 <div id="modalAgregar" class="modal fade">
                     <div class="modal-dialog">
 
