@@ -48,6 +48,9 @@ router.post('/guardarAsistencia/:idCurso/:idPeriodo', profesorController.postAsi
 // router.post('/guardarCurso',loginController.);
 router.post('/eliminarPeriodo',adminController.deletePeriodo);
 
+//estudiantes
+router.post('/inscribirCurso', estudiantesController.postInscripcionCurso);
+
 
 //puts
 
