@@ -1,29 +1,26 @@
 const conexion = require("../db/config");
 
 const adminController = {
-
   getAdmin: (req, res) => {
-    const idUsuario = req.session.userId;
+    conexion.query("SELECT * FROM periodos", (err, periodos) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("Error de servidor");
+      }
 
-    // Consulta para obtener los datos del usuario por su id
-    const usuarioSQL = `SELECT * FROM usuarios WHERE id = ?`;
+      const idUsuario = req.session.userId;
 
-    conexion.query(usuarioSQL, [idUsuario], (error, usuario) => {
-        if (error) {
-            console.log(error);
-            return res.status(500).send("Error de servidor");
+      conexion.query(`SELECT * FROM usuarios WHERE id=?`,[idUsuario], (err, usuarios) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Error de servidor");
         }
 
-        conexion.query("SELECT * FROM periodos", (err, periodos) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).send("Error de servidor");
-            }
-            res.render("admin/index", { usuario: usuario[0], periodos:periodos });
-        });
+
+      res.render("admin/index", { periodos, usuarios: usuarios[0] });
     });
-}
-,
+  });
+  },
   postPeriodo: (req, res) => {
     const { nombrePeriodo, cantidadSemanas } = req.body;
     const insertQuery = `INSERT INTO periodos (nombrePeriodo, cantidadSemanas) VALUES (?, ?)`;
@@ -112,6 +109,26 @@ WHERE ce.idCurso = ?
       }
     );
   },
+  putStatusPeriodo: (req, res) => {
+
+    const { status, id } = req.body;
+
+    const DesactivarSQL = `UPDATE periodos SET status = 0 WHERE status = 1`
+
+    conexion.query(DesactivarSQL,(error,resultado)=>{
+      if(error){
+        console.log(error)
+      }
+
+    const periodoSQL = `UPDATE periodos SET status = ? WHERE id = ?`
+
+    conexion.query(periodoSQL,[status,id],(error,resultado)=>{
+      if(error){
+        console.log(error)
+      }
+    })
+    })
+  }
 };
 
 // exportar módulos

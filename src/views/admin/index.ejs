@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href='/css/boxicons.min.css'>
+    <link rel="stylesheet" href='/css/admin.css'>
 
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
@@ -28,11 +28,14 @@
         <ul class="menu">
             <li class="user"><a href="#"><i class="fa-solid fa-user"></i></a></li>
             <li class="home"><a href="#"><i class="fas fa-home text-black"></i></a></li>
-            <li class="salir"><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
+            <li class="salir"><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
     <div class="content">
-        <p class="text-white"><%= usuario.nombres %> <%=usuario.apellidos %></p>
+        <p class="text-white">
+            <%= usuarios.nombres %>
+                <%= usuarios.apellidos %>
+        </p>
         <small class="text-white"><i>Administrador</i></small>
         <button class="burger-btn">
             <i class="fas fa-bars"></i>
@@ -48,6 +51,7 @@
                             <thead>
                                 <tr class="bg-primary text-white">
                                     <th scope="col">Periodo</th>
+                                    <th scope="col">Semanas</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -62,7 +66,15 @@
                                                     <%= periodo.nombrePeriodo %>
                                                 </a>
                                             </td>
+                                            <td class="fondoTabla nombreTabla">
+                                                <%= periodo.cantidadSemanas %>
+                                            </td>
                                             <td class="fondoTabla ">
+                                                <div class="switch-container">
+                                                    <input type="checkbox" id="switch-<%= periodo.id %>"
+                                                        class="switch status-<%= periodo.status %>" />
+                                                    <label for="switch-<%= periodo.id %>"></label>
+                                                </div>
                                                 <a href="/admin/editarPeriodo/" class="btn btn-outline-info">
                                                     Editar
                                                 </a>
@@ -71,9 +83,9 @@
                                         </form>
                                     </tr>
                                     <% }) %>
-
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -121,7 +133,6 @@
     <script src="/jquery/jquery-3.3.1.min.js"></script>
     <script src="/popper/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/js/boxicons.js"></script>
 
 
 
@@ -141,9 +152,9 @@
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros",
                     "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
                     "sSearch": "Buscar:",
                     "oPaginate": {
                         "sFirst": "Primero",
@@ -221,6 +232,63 @@
             content.classList.toggle('active');
         });
     </script>
+
+    <!-- Resto del código HTML -->
+
+    <script>
+        $(document).ready(function () {
+
+            const switches = $('.switch');
+            // marcar activo o inactivo cada switch
+            switches.each(function () {
+                const classes = $(this).attr('class');
+                const statusClass = classes.match(/status-(\d+)/); // Encuentra la parte de la clase que contiene el estado
+                if (statusClass) {
+                    const periodoId = statusClass[1]; // Obtiene el estado del período
+                    const label = $(this).next('label');
+
+                    // Verifica si el estado del período es 1 (activo)
+                    if (periodoId === '1') {
+                        $(this).prop('checked', true); // Marca como activo
+                    } else {
+                        $(this).prop('checked', false); // Marca como inactivo
+                    }
+                }
+            });
+
+
+
+
+
+
+            $('.switch').on('change', function () {
+                const isChecked = $(this).is(':checked');
+                const periodoId = $(this).attr('id').replace('switch-', ''); // Obtiene el ID del período
+
+                // Desactivar todos los checkboxes excepto el actualmente seleccionado
+                $('.switch').not(this).prop('checked', false);
+
+                $.ajax({
+                    method: 'POST',
+                    url: `/cambiarEstadoPeriodo`,
+                    data: { id: periodoId, status: isChecked ? 1 : 0 },
+                    success: function (response) {
+                        console.log(response)
+                        if (response.success) {
+                            console.log("actualizado correctamente el estado del periodo")
+                        } else {
+                            alert('Ocurrió un error al cambiar el estado del período.');
+                        }
+                    },
+                    error: function () {
+                        alert('Error al conectar con el servidor.');
+                    }
+                });
+            });
+
+        });
+    </script>
+
 
 
 

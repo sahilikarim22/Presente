@@ -550,6 +550,9 @@ p.nombreCurso {
 .dataTables_filter label {
   color: white;
 }
+.dataTables_length{
+  color: #fff;
+}
 .fondoAzul{
   background-color: #002a7d;
 }

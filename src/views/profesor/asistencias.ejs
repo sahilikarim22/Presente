@@ -23,10 +23,10 @@
             <div class="col-xs-12 col-md-12 col-lg-12 cursosProf">
                 <h1 class="mb-1 textAsistencia">Asistencia </h1>
                 <h5 class="mt-2">Fecha: </h5>
-                <input id="fechaActual" required type="date" class="form-control fechaClase">
-                <h5 class="mt-2">Tema: </h5>
+                <input required type="date" class="form-control fechaClase">
+                <h5 class="mt-2">Tema: </h5> 
                 <input required type="text" class="form-control nombreClase">
-                <h5 class="mt-2">Descripción: </h5>
+                <h5 class="mt-2">Descripción: </h5> 
                 <input type="text" class="form-control descripcion" placeholder="Opcional">
                 <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-end">
                     <form action="/escanearAsistencia" method="post">
@@ -51,8 +51,7 @@
         <input class="idPeriodo" type="hidden" value="<%= idPeriodo %>" />
 
         <div class="col-md-12 col-lg-12 fondoTabla">
-            <table id="tablaAsistencia"
-                class="table table-bordered table-dark table-striped text-white text-center mt-4">
+            <table id="tablaAsistencia" class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
                     <tr class="bg-primary text-white">
                         <th scope="col">Cédula</th>
@@ -63,17 +62,14 @@
                 <tbody>
                     <% estudiantes.forEach((est, index)=> { %>
                         <tr>
-                            <input class="idEstudiante" type="hidden" value="<%= est.idUsuario %>" />
                             <td class="cedula">
                                 <%= est.cedula %>
                             </td>
                             <td class="nombresApellidos">
-                                <%= est.nombres %>
-                                    <%= est.apellidos %>
+                                <%= est.nombres %> <%= est.apellidos %>
                             </td>
                             <td class="asistio">
-                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %>"
-                                    data-index="<%= index %>">
+                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %> id_<%= est.idUsuario %>" data-index="<%= index %>">
                             </td>
                         </tr>
                         <% }) %>
@@ -161,18 +157,11 @@
     <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 
 
-    <!--Escaner -->
+<!--Escaner -->
     <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
 
 
     <script>
-
-        // Obtener la fecha actual
-        const fechaHoy = new Date();
-        // Convertir la fecha a formato YYYY-MM-DD
-        const fechaFormato = fechaHoy.toISOString().split('T')[0];
-        // Asignar la fecha actual al campo de entrada de fecha
-        document.getElementById('fechaActual').value = fechaFormato;
 
         const list = document.querySelectorAll(".list");
         function activeLink() {
@@ -243,69 +232,66 @@
         // codigo para tomar asistencias
 
         function enviarAsistencia() {
-            const asistencia = [];
-            const idEstudianteInputs = document.querySelectorAll('.idEstudiante');
-            const idCurso = document.querySelector('.idCurso').value;
-            const idPeriodo = document.querySelector('.idPeriodo').value;
+    const asistencia = [];
+    const idEstudiante = document.querySelectorAll('.idEstudiante').value;
+    const idCurso = document.querySelector('.idCurso').value;
+    const idPeriodo = document.querySelector('.idPeriodo').value;
 
-            // Recorre cada checkbox para obtener los estudiantes presentes
-            document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
-                const idEstudiante = checkbox.id.split('_')[1]; // Extraer el idEstudiante del id del checkbox
+    // Recorre cada checkbox para obtener los estudiantes presentes
+    document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
+        const idEstudiante = checkbox.id.split('id_')[1];
 
-                const nombreClase = document.querySelector(".nombreClase").value;
-                const descripcion = document.querySelector(".descripcion").value;
-                const fechaClase = document.querySelector(".fechaClase").value;
-                const asistio = checkbox.checked; // Verificar si el checkbox está marcado o no
+        const nombreClase = document.querySelector(".nombreClase").value;
+        const descripcion = document.querySelector(".descripcion").value;
+        const fechaClase = document.querySelector(".fechaClase").value;
+        const asistio = checkbox.checked; // Verificar si el checkbox está marcado o no
 
-                asistencia.push({ idEstudiante, nombreClase, descripcion, fechaClase, asistio });
-            });
+        asistencia.push({ idEstudiante, nombreClase, descripcion, fechaClase, asistio });
+    });
 
-            // Envío de los datos mediante una petición fetch
-            fetch(`/guardarAsistencia/${idCurso}/${idPeriodo}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(asistencia),
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Datos de asistencia enviados correctamente.');
-                        // se puede redireccionar aqui
-                        window.location.href = `/profesor/curso/${idCurso}${idPeriodo}`;
+    // Envío de los datos mediante una petición fetch
+    fetch(`/guardarAsistencia/${idCurso}/${idPeriodo}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(asistencia),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Datos de asistencia enviados correctamente.');
+            // se puede redireccionar aqui
+            window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
 
-                    } else {
-                        throw new Error('Error al enviar los datos de asistencia.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Hubo un error:', error);
-                    // Manejo de errores, como mostrar un mensaje al usuario o realizar alguna acción específica
-                });
+        } else {
+            throw new Error('Error al enviar los datos de asistencia.');
         }
+    })
+    .catch(error => {
+        console.error('Hubo un error:', error);
+        // Manejo de errores, como mostrar un mensaje al usuario o realizar alguna acción específica
+    });
+}
 
-        function scaner() {
-            Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzUzNDI2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1MzQyNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOi0yMTQ2NjA0MzAzfQ==';
-            // Initializes and uses the SDK
-            (async () => {
-                let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
-                scanner.onFrameRead = results => {
-                    if (results.length > 0) console.log(results);
-                };
-                scanner.onUniqueRead = (txt, result) => {
-                    // marcar asistencia
-                    const idEstudiante = txt;
-                    const checkbox = document.getElementById(`estudiante_${idEstudiante}`);
-                    checkbox.checked = true;
-                };
-                await scanner.show();
-            })();
+function scaner() {
+        Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzUzNDI2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1MzQyNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOi0yMTQ2NjA0MzAzfQ==';
+        // Initializes and uses the SDK
+        (async () => {
+            let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+            scanner.onFrameRead = results => {
+                if (results.length > 0) console.log(results);
+            };
+            scanner.onUniqueRead = (txt, result) => {
+                // marcar asistencia
+                const idEstudiante = txt;
+                const checkbox = document.getElementById(`estudiante_${idEstudiante}`);
+                checkbox.checked = true;
+            };
+            await scanner.show();
+        })();
+}
 
-
-
-        }
-
-    </script>
+</script>
 
 </body>
 

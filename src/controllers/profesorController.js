@@ -4,7 +4,7 @@ const profesorController = {
   getCursos: (req, res) => {
     const idPeriodo = req.params.idPeriodo;
     const idProfesor = req.session.userId;
-    const cursosSQL = `SELECT c.*, u.nombres AS nombre_profesor, u.apellidos AS apellido_profesor
+    const cursosSQL = `SELECT c.*
       FROM cursos c
       JOIN usuarios u ON c.idProfesor = u.id
       WHERE c.idPeriodo = ? AND c.idProfesor = ?;
@@ -19,9 +19,20 @@ const profesorController = {
             console.log(err);
             return res.status(500).send("Error de servidor");
           } else {
-            res.render("profesor/cursos", {
-              cursos: cursos,
-              periodos: periodos,
+
+           const idProfesor = req.session.userId;
+
+            conexion.query("SELECT * FROM usuarios WHERE id = ?",[idProfesor], (err, profesor) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).send("Error de servidor");
+              } else {
+                res.render("profesor/cursos", {
+                  cursos: cursos,
+                  periodos: periodos,
+                  profesor: profesor[0]
+                });
+              }
             });
           }
         });
@@ -37,7 +48,7 @@ const profesorController = {
         console.log(error);
         return res.status(500).send("Error de servidor");
       }
-      conexion.query("SELECT * FROM periodos", (error, results) => {
+      conexion.query("SELECT * FROM periodos WHERE status=1", (error, results) => {
         if (error) {
           console.log(error);
         } else {
@@ -52,7 +63,7 @@ const profesorController = {
   getCursoInfo: (req, res) => {
     const idCurso = req.params.idCurso;
     const idPeriodo = req.params.idPeriodo;
-  
+
     const cursoSQL = "SELECT * FROM cursos WHERE idCurso=? AND idPeriodo=?";
     const estudiantesSQL = `
       SELECT u.nombres, u.apellidos, u.cedula, u.id
@@ -98,11 +109,9 @@ const profesorController = {
               return res.status(500).send("Error de servidor");
             }
   
-            console.log(asistencia);
             // Transformar la estructura de 'asistencia' para asociarla con clases
             const asistenciaPorClase = {};
             asistencia.forEach(registro => {
-              console.log('registro: ' + registro);
               if (!asistenciaPorClase[registro.idClase]) {
                 asistenciaPorClase[registro.idClase] = [];
               }
@@ -117,10 +126,11 @@ const profesorController = {
               return clase;
             });
 
-            console.log(asistenciaPorClase);
-  
-            res.render("profesor/cursoInfo", {
-              curso: curso[0],
+            console.log("asistencia",asistencia)
+            console.log("asistenciaPorClase",asistenciaPorClase)
+
+            res.render("profesor/cursoInfo", {            
+              curso,
               estudiantes,
               clases,
               asistenciaPorClase,
@@ -221,7 +231,6 @@ const profesorController = {
         if (error) {
           console.log(error);
         } else {
-          // console.log(estudiantes)
           res.render("profesor/asistencias", {
             estudiantes,
             idCurso,

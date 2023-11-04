@@ -45,8 +45,12 @@
             </div>
 
             <div class="row mt-4">
-                <div class="col-6">
+                <div class="col-12">
+                    <% if (periodos.length === 0 ) { %>
+                        <h1 class="text-white text-center">Aún no se han creado Períodos Académicos</h1>
+                        <% }else{ %>
                     <h1 class="nombrePeriodo">Periodos</h1>
+                            <% } %>
                 </div>
                 <% if (periodos.length> 0) { %>
                     <% periodos.forEach((periodo)=>{ %>
