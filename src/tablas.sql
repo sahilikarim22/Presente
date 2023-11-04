@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 29-10-2023 a las 23:13:10
+-- Tiempo de generación: 04-11-2023 a las 15:07:16
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.26
 
@@ -24,54 +24,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clases`
---
-
-CREATE TABLE `clases` (
-  `idClase` int NOT NULL AUTO_INCREMENT,
-  `nombreClase` varchar(50) NOT NULL,
-  `descripcion` text,
-  `idCurso` int NOT NULL,
-  `fechaClase` date NOT NULL,
-  `idPeriodo` int NOT NULL,
-  PRIMARY KEY (`idClase`),
-  CONSTRAINT `fk_clases_curso` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`),
-  CONSTRAINT `fk_clases_periodo` FOREIGN KEY (`idPeriodo`) REFERENCES `cursos` (`idPeriodo`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
-
---
 -- Estructura de tabla para la tabla `asistencias`
 --
 
 DROP TABLE IF EXISTS `asistencias`;
-
 CREATE TABLE IF NOT EXISTS `asistencias` (
   `idAsistencia` int NOT NULL AUTO_INCREMENT,
   `idEstudiante` int NOT NULL,
   `idCurso` int NOT NULL,
   `idClase` int NOT NULL,
-  `asistio` BOOLEAN NOT NULL,
+  `asistio` tinyint(1) NOT NULL,
   PRIMARY KEY (`idAsistencia`),
-  CONSTRAINT `fk_asistencias_estudiante` FOREIGN KEY (`idEstudiante`) REFERENCES `usuarios` (`idUsuario`),
-  CONSTRAINT `fk_asistencias_curso` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`),
-  CONSTRAINT `fk_asistencias_clases` FOREIGN KEY (`idClase`) REFERENCES `clases` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_asistencias_estudiante` (`idEstudiante`),
+  KEY `fk_asistencias_curso` (`idCurso`),
+  KEY `fk_asistencias_clases` (`idClase`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
-
+-- --------------------------------------------------------
 
 --
--- Volcado de datos para la tabla `asistencias`
+-- Estructura de tabla para la tabla `clases`
 --
 
-INSERT INTO `asistencias` (`idAsistencia`, `idEstudiante`, `idCurso`, `fechaAsistencia`, `asistio`, `comentario`) VALUES
-(1, 1, 1, '2010-10-10', 1, 'ninguno'),
-(2, 1, 1, '2010-10-10', 1, 'ninguno'),
-(3, 1, 1, '2010-10-10', 1, 'ninguno'),
-(4, 1, 1, '2010-10-10', 1, 'ninguno'),
-(5, 1, 1, '2010-10-10', 1, 'ninguno'),
-(6, 1, 1, '2010-10-10', 1, 'ninguno'),
-(7, 1, 1, '2010-10-10', 1, 'ninguno');
+DROP TABLE IF EXISTS `clases`;
+CREATE TABLE IF NOT EXISTS `clases` (
+  `idClase` int NOT NULL AUTO_INCREMENT,
+  `nombreClase` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_spanish_ci,
+  `idCurso` int NOT NULL,
+  `fechaClase` date NOT NULL,
+  `idPeriodo` int NOT NULL,
+  PRIMARY KEY (`idClase`),
+  KEY `fk_clases_curso` (`idCurso`),
+  KEY `fk_clases_periodo` (`idPeriodo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -91,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   PRIMARY KEY (`idCurso`),
   KEY `idProfesor` (`idProfesor`),
   KEY `idPeriodo` (`idPeriodo`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `cursos`
@@ -99,7 +85,9 @@ CREATE TABLE IF NOT EXISTS `cursos` (
 
 INSERT INTO `cursos` (`idCurso`, `nombreCurso`, `cantDiasSemanas`, `seccion`, `idProfesor`, `nrc`, `idPeriodo`) VALUES
 (1, 'matematicas', 2, 401, 11, 3243, 2),
-(2, 'calculo 3', 3, 401, 11, 324, 2);
+(2, 'calculo 3', 3, 401, 11, 324, 2),
+(10, 'Calculo 4', 2, 401, 11, 123123, 2),
+(13, 'Comprension Lectora', 3, 401, 11, 1234, 2);
 
 -- --------------------------------------------------------
 
@@ -115,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `curso_estudiante` (
   PRIMARY KEY (`idCursoEstudiante`),
   KEY `idCurso` (`idCurso`),
   KEY `idUsuario` (`idUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `curso_estudiante`
@@ -123,7 +111,9 @@ CREATE TABLE IF NOT EXISTS `curso_estudiante` (
 
 INSERT INTO `curso_estudiante` (`idCursoEstudiante`, `idCurso`, `idUsuario`) VALUES
 (1, 1, 7),
-(2, 2, 7);
+(2, 2, 7),
+(3, 10, 7),
+(4, 13, 7);
 
 -- --------------------------------------------------------
 
