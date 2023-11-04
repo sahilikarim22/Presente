@@ -9,29 +9,33 @@ const estudiantesController = {
   },
   getCursos: (req, res) => {
     const idUsuario = req.session.userId;
-
+  
     // Consulta para obtener los datos del usuario por su id
     const usuarioSQL = `SELECT * FROM usuarios WHERE id = ?`;
-
+  
     conexion.query(usuarioSQL, [idUsuario], (error, usuario) => {
       if (error) {
         console.log(error);
         return res.status(500).send("Error de servidor");
       }
-
-      // Consulta para obtener los cursos del usuario
+  
+      // Consulta para obtener los cursos del usuario con el cálculo del porcentaje de asistencia
       const cursosSQL = `
-              SELECT c.nombreCurso, c.cantDiasSemanas, c.seccion, c.idCurso
-              FROM curso_estudiante
-              INNER JOIN cursos c ON curso_estudiante.idCurso = c.idCurso
-              WHERE curso_estudiante.idUsuario = ?`;
-
+        SELECT c.nombreCurso, c.cantDiasSemanas, c.seccion, c.idCurso,
+        (COUNT(a.idAsistencia) / (c.cantDiasSemanas * p.cantidadSemanas)) * 100 AS porcentajeAsistencia
+        FROM curso_estudiante ce
+        INNER JOIN cursos c ON ce.idCurso = c.idCurso
+        INNER JOIN asistencias a ON ce.idCurso = a.idCurso
+        INNER JOIN periodos p ON c.idPeriodo = p.id
+        WHERE ce.idUsuario = ?
+        GROUP BY c.idCurso`;
+  
       conexion.query(cursosSQL, [idUsuario], (err, cursos) => {
         if (err) {
           console.log(err);
           return res.status(500).send("Error de servidor");
         }
-
+  
         // Renderiza la vista 'cursos' con los datos del usuario y sus cursos
         res.render("estudiantes/cursos", { usuario: usuario[0], cursos: cursos });
       });
