@@ -272,7 +272,7 @@
                     if (response.ok) {
                         console.log('Datos de asistencia enviados correctamente.');
                         // se puede redireccionar aqui
-                        window.location.href = `/profesor/curso/${idCurso}${idPeriodo}`;
+                        window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
 
                     } else {
                         throw new Error('Error al enviar los datos de asistencia.');
