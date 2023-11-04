@@ -22,7 +22,7 @@ const estudiantesController = {
       // Consulta para obtener los cursos del usuario con el cálculo del porcentaje de asistencia
       const cursosSQL = `
         SELECT c.nombreCurso, c.cantDiasSemanas, c.seccion, c.idCurso,
-        (COUNT(a.idAsistencia) / (c.cantDiasSemanas * p.cantidadSemanas)) * 100 AS porcentajeAsistencia
+        ROUND((COUNT(a.idAsistencia) / (c.cantDiasSemanas * p.cantidadSemanas)) * 100,2) AS porcentajeAsistencia
         FROM curso_estudiante ce
         INNER JOIN cursos c ON ce.idCurso = c.idCurso
         INNER JOIN asistencias a ON ce.idCurso = a.idCurso
