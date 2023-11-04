@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso
-    </title>
+    <title>Control de Asistencias</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/iconos.min.css">
 
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
@@ -24,19 +22,24 @@
         <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-12 cursosProf">
                 <h1 class="mb-1 textAsistencia">Asistencia </h1>
-                <h5>Fecha: </h5>
-                <input type="date" class="form-control">
-                <h5>Tema: </h5> <input type="text" class="form-control">
+                <h5 class="mt-2">Fecha: </h5>
+                <input required type="date" class="form-control fechaClase">
+                <h5 class="mt-2">Tema: </h5> 
+                <input required type="text" class="form-control nombreClase">
+                <h5 class="mt-2">Descripción: </h5> 
+                <input type="text" class="form-control descripcion" placeholder="Opcional">
                 <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-end">
-                    <button type="button" class="btn escanear" data-toggle="modal" data-target="#exampleModal">
-                        Escanear <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="fill: rgba(0, 0, 0, 1);">
-                            <path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path>
-                            <path
-                                d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z">
-                            </path>
-                        </svg>
-                    </button>
+                    <form action="/escanearAsistencia" method="post">
+                        <button type="button" class="btn escanear" onclick="scaner()">
+                            Escanear <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path>
+                                <path
+                                    d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z">
+                                </path>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -44,10 +47,11 @@
         <div class="col-xs-12 col-md-12 col-lg-12 m-4 d-flex justify-content-center">
             <h1 class="text-white textAsistencia">Lista de Asistencia:</h1>
         </div>
+        <input class="idCurso" type="hidden" value="<%= idCurso %>" />
+        <input class="idPeriodo" type="hidden" value="<%= idPeriodo %>" />
 
         <div class="col-md-12 col-lg-12 fondoTabla">
-            <table id="tablaAsistencia"
-                class="table table-bordered table-dark table-striped text-white text-center mt-4 ">
+            <table id="tablaAsistencia" class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
                     <tr class="bg-primary text-white">
                         <th scope="col">Cédula</th>
@@ -56,37 +60,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="">
-                            fecha
-                        </td>
-                        <td class="">
-                            tema
-                        </td>
-                        <td class="">
-                            <input type="checkbox" name="" id="" class="botonCheckbox">
-
-                        </td>
-                    </tr>
-
-
+                    <% estudiantes.forEach((est, index)=> { %>
+                        <tr>
+                            <input class="idEstudiante" type="hidden" value="<%= est.idUsuario %>" />
+                            <td class="cedula">
+                                <%= est.cedula %>
+                            </td>
+                            <td class="nombresApellidos">
+                                <%= est.nombres %> <%= est.apellidos %>
+                            </td>
+                            <td class="asistio">
+                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %>" data-index="<%= index %>">
+                            </td>
+                        </tr>
+                        <% }) %>
                 </tbody>
-
-
-
             </table>
-            <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-center">
-                <button type="button" class="btn escanear" data-toggle="modal" data-target="#exampleModal">
-                    Guardar <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        style="fill: rgba(0, 0, 0, 1);">
-                        <path d="m12 16 4-5h-3V4h-2v7H8z"></path>
-                        <path d="M20 18H4v-7H2v7c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-7h-2v7z"></path>
-                    </svg>
-                </button>
-            </div>
         </div>
+
     </div>
 
+    </div>
+
+    <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-center">
+        <button onclick="enviarAsistencia()" type="button" class="btn guardar">
+            Guardar <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                style="fill: rgba(0, 0, 0, 1);">
+                <path d="m12 16 4-5h-3V4h-2v7H8z"></path>
+                <path d="M20 18H4v-7H2v7c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-7h-2v7z"></path>
+            </svg>
+        </button>
     </div>
 
 
@@ -153,6 +156,11 @@
     <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
     <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
     <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+
+
+<!--Escaner -->
+    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+
 
     <script>
 
@@ -222,8 +230,69 @@
         });
 
 
-    </script>
+        // codigo para tomar asistencias
 
+        function enviarAsistencia() {
+    const asistencia = [];
+    const idEstudianteInputs = document.querySelectorAll('.idEstudiante');
+    const idCurso = document.querySelector('.idCurso').value;
+    const idPeriodo = document.querySelector('.idPeriodo').value;
+
+    // Recorre cada checkbox para obtener los estudiantes presentes
+    document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
+        const idEstudiante = checkbox.id.split('_')[1]; // Extraer el idEstudiante del id del checkbox
+
+        const nombreClase = document.querySelector(".nombreClase").value;
+        const descripcion = document.querySelector(".descripcion").value;
+        const fechaClase = document.querySelector(".fechaClase").value;
+        const asistio = checkbox.checked; // Verificar si el checkbox está marcado o no
+
+        asistencia.push({ idEstudiante, nombreClase, descripcion, fechaClase, asistio });
+    });
+
+    // Envío de los datos mediante una petición fetch
+    fetch(`/guardarAsistencia/${idCurso}/${idPeriodo}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(asistencia),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Datos de asistencia enviados correctamente.');
+            // se puede redireccionar aqui
+            window.location.href = `/profesor/cursos/${idCurso}${idPeriodo}`;
+
+        } else {
+            throw new Error('Error al enviar los datos de asistencia.');
+        }
+    })
+    .catch(error => {
+        console.error('Hubo un error:', error);
+        // Manejo de errores, como mostrar un mensaje al usuario o realizar alguna acción específica
+    });
+}
+
+function scaner() {
+        Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzUzNDI2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1MzQyNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOi0yMTQ2NjA0MzAzfQ==';
+        // Initializes and uses the SDK
+        (async () => {
+            let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+            scanner.onFrameRead = results => {
+                if (results.length > 0) console.log(results);
+            };
+            scanner.onUniqueRead = (txt, result) => {
+                // marcar asistencia
+                const idEstudiante = txt;
+                const checkbox = document.getElementById(`estudiante_${idEstudiante}`);
+                checkbox.checked = true;
+            };
+            await scanner.show();
+        })();
+}
+
+</script>
 
 </body>
 

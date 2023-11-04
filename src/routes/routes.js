@@ -1,51 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const conexion = require('../db/config');
-const periodosController = require('../controllers/periodosController');
 const indexController = require('../controllers/indexController');
 const registrarseController = require('../controllers/registrarseController');
 const iniciarSesionController = require('../controllers/iniciarSesionController');
 const estudiantesController = require('../controllers/estudiantesController');
 const usuariosController = require('../controllers/usuariosController');
-const cursosProfController = require('../controllers/cursoProfController');
 const adminController = require('../controllers/adminController');
 const cursosController = require('../controllers/cursosController');
 const loginController = require('../controllers/loginController');
-const cursoInfoController = require('../controllers/cursoInfoController');
-const asistenciaController = require('../controllers/asistenciaController');
+const profesorController = require('../controllers/profesorController');
 
 // Ruta de inicio
 
 //**************GETS***********************
 //admin 
-router.get('/admin',adminController.getAdmin);
-router.get('/admin/cursos/:idPeriodo', adminController.getAdminCursosPeriodo);
+router.get('/admin', requireLogin,adminController.getAdmin);
+router.get('/admin/cursos/:idPeriodo', requireLogin, adminController.getAdminCursosPeriodo);
+router.get('/admin/verCurso/:idCurso', requireLogin,adminController.getAdminCursoDetalle);
 
 //profesores
-router.get('/profesor/periodos', periodosController.getPeriodos);
-// router.get('/profesor/curso/:id_curso', periodosController.getCursoProfesor);
-router.get('/profesor/cursoInfo/:idCurso:idPeriodo', cursoInfoController.getCursoInfo);
-
-router.get('/profesor/curso/', cursoInfoController.getCursoInfo);
-
-router.get('/profesor/asistencias', asistenciaController.getAsistencias);
-
-//revisar estos dos para ver si se usan
-router.get('/admin/cursosprof', cursosProfController.getCursosProf);
-router.get('/periodos', periodosController.getPeriodos); 
+router.get('/profesor/periodos', requireLogin, profesorController.getPeriodos);
+router.get('/profesor/cursos/:idPeriodo', requireLogin, profesorController.getCursos);
+router.get('/profesor/curso/:idCurso:idPeriodo',  requireLogin, profesorController.getCursoInfo);
+router.get('/profesor/asistencias/:idCurso:idPeriodo',  requireLogin, profesorController.getAsistencias);
 
 //estudiantes
-router.get('/estudiantes/cursos/', estudiantesController.getCursos);
-router.get('/estudiantes/inicio/', estudiantesController.getInicio);
-router.get('/estudiantes/entrada/', estudiantesController.getEntrada);
+router.get('/estudiantes/cursos/', requireLogin, estudiantesController.getCursos);
+router.get('/estudiantes/inicio/', requireLogin,estudiantesController.getInicio);
+router.get('/estudiantes/entrada/', requireLogin,estudiantesController.getEntrada);
 
-//revisar estos dos para ver si se usan
-router.get('/admin/cursosprof', cursosProfController.getCursosProf);
-router.get('/periodos', periodosController.getPeriodos); 
-
-//estudiantes
-router.get('/estudiantes', estudiantesController.getEstudiantes);
-//todos los usuarios
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
 router.get('/iniciarSesion', iniciarSesionController.getIniciarSesion);
@@ -55,11 +39,12 @@ router.get('/confirmar/:token', usuariosController.getConfirmacion);
 router.post('/guardarUsuario', usuariosController.postUsuarios);
 router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
-router.post('/guardarAsistencia', asistenciaController.postAsistencia);
-router.post('/guardarCurso',cursosController.postCurso);
+router.post('/guardarCurso', cursosController.postCurso);
 router.post('/guardarUsuario', usuariosController.postUsuarios);
 router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
+// profesor
+router.post('/guardarAsistencia/:idCurso/:idPeriodo', profesorController.postAsistencia);
 // router.post('/guardarCurso',loginController.);
 router.post('/eliminarPeriodo',adminController.deletePeriodo);
 
@@ -105,7 +90,6 @@ function requireLogin(req, res, next) {
 
 //funciones que requiere login
 function requireLogin(req, res, next) {
-    console.log('req.session: '+req.session+'req.session.userId: '+req.session.userId);
     if (req.session && req.session.userId) {
         
       // Obtener el usuario de la base de datos

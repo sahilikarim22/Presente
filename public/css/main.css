@@ -3,11 +3,6 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-h1.tituloCursos {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-size: 32px;
-}
-
 .form-group {
   display: flex;
   align-items: center;
@@ -50,29 +45,55 @@ h1.tituloCursos {
   font-size: 50px;
   position: absolute;
   top: 40%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 55%;
+}
+.atras {
+  color: black;
+  font-size: 50px;
+  position: absolute;
+  top: 10%;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 55%;
 }
 .salir {
   color: black;
   font-size: 50px;
   position: absolute;
-  bottom: 5%;
+  bottom: 30%;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 80px;
+  transform: scaleX(-1);
 }
-.cursos {
-  color: black;
-  font-size: 50px;
+
+.imagenTrianguloCentrado {
   position: absolute;
-  top: 20%;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
 }
+.TextoSemestre{
+  font-size: 25px;
+  text-transform: capitalize;
+}
+.nombreTabla{
+  text-transform: capitalize;
+  color: #fff;
+}
+
 
 /*sidebar*/
 .sidebar {
-  width: 90px;
-  background-color: #bdfba7;
-  color: #fff;
+  width: 135px;
+  background-color: #002a7d;
   padding: 20px;
   position: fixed;
   height: 100%;
   transition: width 0.3s;
+  z-index: 5;
 }
 
 .logo {
@@ -145,21 +166,23 @@ footer.menuMovil {
     display: block;
   }
 }
+.user {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 80px;
+}
+
+.fa-home,
+.fa-circle-info,
+.fa-sign-out-alt,
+.fa-angle-left {
+  color: #000000; /* Cambiar color del ícono */
+  /* font-size: 3rem;  */
+}
+
 /*fin sidebar*/
 
-#tablaCursos .filaIzquierda {
-  text-align: left; /* Alinea el contenido de las celdas a la izquierda */
-  border-radius: 15px;
-}
-
-/*Card Body*/
-.card-background {
-  background-color: #FFF;
-  color: black;
-  font-weight: bold;
-}
-
-.porcentaje{
+.porcentaje {
   background-color: #ccc;
   border-radius: 55px;
   padding: 20px;
@@ -224,9 +247,9 @@ footer ul li.home3 {
   padding: 12px;
 }
 
-.circularBotonAzul{
+.circularBotonAzul {
   border-radius: 50%;
-  background-color: #002A7D;
+  background-color: #002a7d;
   padding: 42px;
   position: relative;
 }
@@ -235,12 +258,12 @@ footer ul li.home3 {
 .nombrePeriodo {
   font-size: 40px;
   font-weight: bold;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  color: white;
 }
 
 .contenedorPeriodo {
-  background-color: #bdfba7;
+  background-color: #002a7d;
   color: black;
   font-weight: bold;
   border-radius: 15px;
@@ -256,7 +279,9 @@ footer ul li.home3 {
   padding: 20px;
   margin-bottom: 20px;
 }
-
+.botonGeneral:hover {
+  text-decoration: none;
+}
 
 .cursosProf {
   background-color: #4a4e49;
@@ -278,7 +303,6 @@ footer ul li.home3 {
   background-color: #4a4e49;
   color: black;
   font-weight: bold;
-  border-radius: 15px;
   padding: 20px;
   /* z-index: 1; */
 }
@@ -294,13 +318,24 @@ footer ul li.home3 {
   margin-top: 20px;
 }
 
-.textAsistencia {
-  font-size: 35px;
-
+.guardar {
+  position: relative;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  border-radius: 80px;
+  padding: 20px;
+  margin-bottom: 200px;
+  margin-top: 30px;
+  z-index: 2;
 }
 
-.miMenuMovil{
-    margin-top: 180px;
+.textAsistencia {
+  font-size: 35px;
+}
+
+.miMenuMovil {
+  margin-top: 180px;
 }
 
 /*MENU MOVIL*/
@@ -389,7 +424,7 @@ footer ul li.home3 {
   background: transparent;
   border-top-right-radius: 20px;
   box-shadow: 0px -10px 0 0 #262626; /* izquierda*/
-  z-index: -1;
+  z-index: 1;
 }
 
 .indicator::after {
@@ -415,49 +450,47 @@ footer ul li.home3 {
   transform: translateX(calc(70px * 2));
 }
 
-
 /*Estilos Asistencia*/
 /* Estilos para el contenedor del checkbox */
 .botonCheckbox {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    outline: none;
-    background-color: #FFF;
-    position: relative;
-    transition: background-color 0.3s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  outline: none;
+  background-color: #fff;
+  position: relative;
+  transition: background-color 0.3s;
 }
 
 /* Pseudo-elemento que simula el tick/check */
 .botonCheckbox::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 4px;
-    left: 8px;
-    width: 8px;
-    height: 14px;
-    border-style: solid;
-    border-color: transparent;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    transition: border-color 0.3s;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  width: 8px;
+  height: 14px;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: border-color 0.3s;
 }
 
 /* Cambia el color del tick y el fondo al ser seleccionado */
 .botonCheckbox:checked {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .botonCheckbox:checked::before {
-    border-color: #00FF00;
-    border-width: 0 5px 6px 0; 
+  border-color: #00ff00;
+  border-width: 0 5px 6px 0;
 }
-
 
 /*Estilos Estudiantes*/
 /* Estilo para el contenedor */
@@ -479,25 +512,94 @@ footer ul li.home3 {
   font-size: 3rem; /* Tamaño del ícono */
 }
 
-.trianguloDerecha{
+.trianguloDerecha {
   position: absolute;
   right: 0;
 }
 
 /* Ocultar imagen a partir de 687px */
-@media screen and (min-width: 687px) {
-  .trianguloDerecha{
-      display: none;
+@media screen and (min-width: 1024px) {
+  .trianguloDerecha {
+    display: none;
   }
 }
 
-p.nombreCurso{
+p.nombreCurso {
   font-size: 30px;
   font-weight: bold;
   /* font-family: poppins, sans-serif; */
   text-transform: capitalize;
 }
 
+/*Colmenas UCAB*/
 
+.colmenasUcab {
+  background-color: white;
+  padding: 15px;
+  border-radius: 55%;
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+}
 
+.colmenasUcab img {
+  width: 60px;
+  height: 60px;
+}
 
+.dataTables_filter label {
+  color: white;
+}
+.fondoAzul{
+  background-color: #002a7d;
+}
+
+/*Boton Ripple*/
+
+.ripple-btn-wrapper {
+  max-width: 767px;
+  margin: 50px auto 0;
+  text-align: center;
+}
+.ripple-btn-wrapper .ripple-button {
+  background-color: #7c7cef;
+  color: #ffffff;
+  border: none;
+  display: inline-block;
+  padding: 16px 20px;
+  font-size: 16px;
+  min-width: 200px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transform-origin: center center;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.4;
+  border-radius: 5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.ripple-btn-wrapper .ripple-button:focus, .ripple-btn-wrapper .ripple-button:active {
+  outline: 0;
+  box-shadow: none;
+}
+.ripple-btn-wrapper .ripple-button .ripple-span {
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  transform: scale(0);
+  animation: ripple 0.7s linear;
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(30);
+    opacity: 0;
+  }
+}

@@ -24,21 +24,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `clases`
+--
+
+CREATE TABLE `clases` (
+  `idClase` int NOT NULL AUTO_INCREMENT,
+  `nombreClase` varchar(50) NOT NULL,
+  `descripcion` text,
+  `idCurso` int NOT NULL,
+  `fechaClase` date NOT NULL,
+  `idPeriodo` int NOT NULL,
+  PRIMARY KEY (`idClase`),
+  CONSTRAINT `fk_clases_curso` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`),
+  CONSTRAINT `fk_clases_periodo` FOREIGN KEY (`idPeriodo`) REFERENCES `cursos` (`idPeriodo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+--
 -- Estructura de tabla para la tabla `asistencias`
 --
 
 DROP TABLE IF EXISTS `asistencias`;
+
 CREATE TABLE IF NOT EXISTS `asistencias` (
-  `idAsistencia` int NOT NULL,
-  `idEstudiante` int DEFAULT NULL,
-  `idCurso` int DEFAULT NULL,
-  `fechaAsistencia` date DEFAULT NULL,
-  `asistio` tinyint(1) DEFAULT NULL,
-  `comentario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
+  `idAsistencia` int NOT NULL AUTO_INCREMENT,
+  `idEstudiante` int NOT NULL,
+  `idCurso` int NOT NULL,
+  `idClase` int NOT NULL,
+  `asistio` BOOLEAN NOT NULL,
   PRIMARY KEY (`idAsistencia`),
-  KEY `idEstudiante` (`idEstudiante`),
-  KEY `idCurso` (`idCurso`)
+  CONSTRAINT `fk_asistencias_estudiante` FOREIGN KEY (`idEstudiante`) REFERENCES `usuarios` (`idUsuario`),
+  CONSTRAINT `fk_asistencias_curso` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`),
+  CONSTRAINT `fk_asistencias_clases` FOREIGN KEY (`idClase`) REFERENCES `clases` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
 
 --
 -- Volcado de datos para la tabla `asistencias`

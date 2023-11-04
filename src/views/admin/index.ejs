@@ -17,7 +17,7 @@
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
 
-    
+
 
 </head>
 
@@ -25,21 +25,22 @@
 
 
     <div class="sidebar">
-        <div class="logo">
-            <i class="fas fa-bars menu-icon"></i>
-        </div>
         <ul class="menu">
-            <li class="cursos"><a href="#"><i class="fa-solid fa-user"></i></a></li>
-            <li class="home"><a href="#"><i class="fas fa-home"></i></a></li>
+            <li class="user"><a href="#"><i class="fa-solid fa-user"></i></a></li>
+            <li class="home"><a href="#"><i class="fas fa-home text-black"></i></a></li>
             <li class="salir"><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
     <div class="content">
+        <p class="text-white">Daniela Gómez</p>
+        <small class="text-white"><i>Administrador</i></small>
         <button class="burger-btn">
             <i class="fas fa-bars"></i>
         </button>
         <div class="container">
-            <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo</button>
+            <h1>Periodos</h1>
+            <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo <i
+                    class="fa-solid fa-plus"></i></button>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="col-xs-12 mt-3 table-responsive">
@@ -51,25 +52,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% periodos.forEach((periodo) => {  %>
+                                <% periodos.forEach((periodo)=> { %>
                                     <tr>
-                                      <form action="/eliminarPeriodo" method="POST">
-                                        <input type="hidden" name="id" value="<%= periodo.id %>" />
-                                        <td class="fondoTabla filaIzquierda">
-                                          <a href="/admin/cursos/<%= periodo.id %>" class="periodo-link">
-                                            <%= periodo.nombrePeriodo %>
-                                          </a>
-                                        </td>
-                                        <td class="fondoTabla filaDerecha">
-                                          <a href="/admin/editarCarrera/" class="btn btn-outline-info">
-                                            Editar
-                                          </a>
-                                          <button class="btn btn-outline-danger" type="submit">Eliminar</button>
-                                        </td>
-                                      </form>
+                                        <form action="/eliminarPeriodo" method="POST">
+                                            <input type="hidden" name="id" value="<%= periodo.id %>" />
+                                            <td class="fondoTabla nombreTabla">
+                                                <a href="/admin/cursos/<%= periodo.id %>"
+                                                    class="periodo-link text-white">
+                                                    <%= periodo.nombrePeriodo %>
+                                                </a>
+                                            </td>
+                                            <td class="fondoTabla ">
+                                                <a href="/admin/editarPeriodo/" class="btn btn-outline-info">
+                                                    Editar
+                                                </a>
+                                                <button class="btn btn-outline-danger" type="submit">Eliminar</button>
+                                            </td>
+                                        </form>
                                     </tr>
-                                  <% }) %>
-                                  
+                                    <% }) %>
+
                             </tbody>
                         </table>
                     </div>
@@ -97,17 +99,21 @@
                         </div>
                         <div class="form-group">
                             <label for="semanas" class="ModalTituloCampo">Cantidad de Semanas:</label>
-                            <input name="cantidadSemanas" type="number" min="0" id="semanas" class="form-control inputModal">
+                            <input name="cantidadSemanas" type="number" min="0" id="semanas"
+                                class="form-control inputModal">
                         </div>
                     </div>
                     <div class="modal-footer text-center justify-content-center mx-auto">
                         <button id="guardar" class="btn botonGuardar">Guardar</button>
-                        <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
+                        <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">x</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    <span class="colmenasUcab">
+        <img src="/imagenes/colmenasucab.png">
+    </span>
 
 
 
@@ -117,7 +123,7 @@
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/boxicons.js"></script>
 
-    
+
 
     <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
@@ -128,8 +134,82 @@
     <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 
     <!-- código JS propio-->
-    <script type="text/javascript" src="/js/main.js"></script>
-   
+    <script>
+        $(document).ready(function () {
+
+            $('#tablaPeriodos').DataTable({
+                language: {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "sProcessing": "Procesando...",
+                },
+                //para usar los botones   
+                responsive: "true",
+                dom: 'Bfrtilp',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> ',
+                        titleAttr: 'Exportar a Excel',
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> ',
+                        titleAttr: 'Exportar a PDF',
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    },
+
+                ]
+            });
+
+
+            // Abre el modal al hacer clic en el botón
+            $('#abrirModal').on('click', function () {
+                $('#modalAgregar').modal('show');
+            });
+
+            // Agrega datos al DataTable y guarda en localStorage
+            $('#guardar').on('click', function () {
+                var nombre = $('#nombre').val();
+                var semanas = $('#semanas').val();
+
+                // Agrega los datos al principio de la tabla
+                tablaPeriodos.row.add([nombre, semanas]).draw(false);
+
+                // Reordena la tabla para que el nuevo dato sea el primero
+                var nuevaFila = tablaPeriodos.row(0).node();
+                tablaPeriodos.row(nuevaFila).order([0, 'asc']).draw(false);
+
+                // Guarda en localStorage
+                var datos = JSON.parse(localStorage.getItem('periodos')) || [];
+                datos.unshift({ nombre: nombre, semanas: semanas });
+                localStorage.setItem('periodos', JSON.stringify(datos));
+
+                // Cierra el modal
+                $('#modalAgregar').modal('hide');
+            });
+        });
+
+
+    </script>
+
 
     <script>
         const sidebar = document.querySelector('.sidebar');
