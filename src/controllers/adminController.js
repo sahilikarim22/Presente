@@ -1,15 +1,29 @@
 const conexion = require("../db/config");
 
 const adminController = {
+
   getAdmin: (req, res) => {
-    conexion.query("SELECT * FROM periodos", (err, periodos) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send("Error de servidor");
-      }
-      res.render("admin/index", { periodos });
+    const idUsuario = req.session.userId;
+
+    // Consulta para obtener los datos del usuario por su id
+    const usuarioSQL = `SELECT * FROM usuarios WHERE id = ?`;
+
+    conexion.query(usuarioSQL, [idUsuario], (error, usuario) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send("Error de servidor");
+        }
+
+        conexion.query("SELECT * FROM periodos", (err, periodos) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Error de servidor");
+            }
+            res.render("admin/index", { usuario: usuario[0], periodos:periodos });
+        });
     });
-  },
+}
+,
   postPeriodo: (req, res) => {
     const { nombrePeriodo, cantidadSemanas } = req.body;
     const insertQuery = `INSERT INTO periodos (nombrePeriodo, cantidadSemanas) VALUES (?, ?)`;

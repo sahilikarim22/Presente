@@ -98,9 +98,11 @@ const profesorController = {
               return res.status(500).send("Error de servidor");
             }
   
+            console.log(asistencia);
             // Transformar la estructura de 'asistencia' para asociarla con clases
             const asistenciaPorClase = {};
             asistencia.forEach(registro => {
+              console.log('registro: ' + registro);
               if (!asistenciaPorClase[registro.idClase]) {
                 asistenciaPorClase[registro.idClase] = [];
               }
@@ -114,6 +116,8 @@ const profesorController = {
               });
               return clase;
             });
+
+            console.log(asistenciaPorClase);
   
             res.render("profesor/cursoInfo", {
               curso: curso[0],
