@@ -27,7 +27,7 @@
                 <span class="circulo">
                     <i class="fas fa-user" style="font-size: 3rem;"></i>
                 </span>
-                <h3 class="text-white"><%= estudiantes[0].nombres %> <%= estudiantes[0].apellidos %><i class="fa-solid fa-browser"></i></h3>
+                <h3 class="text-white"><%= usuario.nombres %> <%= usuario.apellidos %><i class="fa-solid fa-browser"></i></h3>
                 <h5 class="text-white">Estudiante</h5>
                 <button id="abrirModal" class="btn btn-primary">Unirme a Curso </button>
             </div>
@@ -42,45 +42,50 @@
                     <h5 class="card-title text-white">Porcentaje de asistencias</h5>
                 </div>
                 <div class="col-12">
-                    <% cursos.forEach(curso => { %>
+                    <% cursos.forEach((curso)=> { %>
                         <div class="card card-background">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-8">
-                                        <p class="card-text fw-bold nombreCurso">
-                                            <%= curso.nombreCurso %>
-                                        </p>
+                                        <!-- Enlace al curso con la URL correcta -->
+                                        <a href="/estudiante/cursoInfo/<%= curso.idCurso %><%= curso.idPeriodo %>"
+                                            class="card-link">
+                                            <p class="card-text fw-bold nombreCurso">
+                                                <%= curso.nombreCurso %>
+                                            </p>
+                                        </a>
                                     </div>
                                     <div class="col-4 porcentaje">
-                                        <% let porcentaje = (curso.total_asistencias / curso.cantDiasSemanas) * 100; %>
-                                        <% porcentaje %>
-                                        <div class="progress">
-                                            <% if (porcentaje >= 75) { %>
-                                                <div class="progress-bar-100" role="progressbar" aria-valuenow="<%= porcentaje %>" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only"><%= porcentaje.toFixed(2) %>%</span>
-                                                </div>
-                                            <% } else if (porcentaje >= 50) { %>
-                                                <div class="progress-bar-75" role="progressbar" aria-valuenow="<%= porcentaje %>" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only"><%= porcentaje.toFixed(2) %>%</span>
-                                                </div>
-                                            <% } else if (porcentaje >= 25) { %>
-                                                <div class="progress-bar-50" role="progressbar" aria-valuenow="<%= porcentaje %>" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only"><%= porcentaje.toFixed(2) %>%</span>
-                                                </div>
-                                            <% } else { %>
-                                                <div class="progress-bar-25" role="progressbar" aria-valuenow="<%= porcentaje %>" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only"><%= porcentaje.toFixed(2) %>%</span>
-                                                </div>
-                                            <% } %>
+                                        <%= curso.porcentajeAsistencia %>%
+                                    </div>
+                                    <!--Boton Opciones-->
+                                    <div class="position-absolute dropdown-menu-right m-2">
+                                        <button type="button" class="btn colorOpciones botonOpciones"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                    <div class="ventanitaOpciones ml-auto ">
+                                        <div class="">
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <div class="">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    <!-- Botones de opciones y otros elementos -->
-                                    <!-- ... -->
                                 </div>
                             </div>
                         </div>
-                        <div class="masCursos"></div>
-                    <% }) %>
+                        <div class="masCursos">
+                        </div>
+                        <% }) %>
                 </div>
                 
 
@@ -106,7 +111,7 @@
         <% } %>
             </div>
 
-            <form method="POST" action="/guardarCurso">
+            <form method="POST" action="/inscribirCurso">
                 <div id="modalAgregar" class="modal fade">
                     <div class="modal-dialog">
 
