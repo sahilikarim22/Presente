@@ -220,10 +220,9 @@
                             idCurso: idCurso
                         }, // Datos a enviar, aquí se incluye el ID del estudiante
                         success: function (response) {
-                            // Manejar la respuesta si la solicitud es exitosa
-                            // Por ejemplo, podrías actualizar la tabla después de la eliminación
-                            console.log('Estudiante eliminado correctamente');
-                            // Aquí puedes recargar la tabla o hacer otras acciones después de la eliminación
+                            const idCurso = response.idCurso;
+                            const idPeriodo = response.idPeriodo;
+                            window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
                         },
                         error: function (error) {
                             // Manejar el error si la solicitud no se completa correctamente

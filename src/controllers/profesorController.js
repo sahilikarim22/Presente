@@ -277,7 +277,17 @@ deleteCurso: (req, res) => {
     if (error) {
       res.status(500).json({ message: "Error al eliminar al estudiante del curso." });
     } else {
-      res.redirect()
+      // Consulta para obtener el idPeriodo asociado al idCurso
+      const queryPeriodo = 'SELECT idPeriodo FROM cursos WHERE idCurso = ?';
+
+      conexion.query(queryPeriodo, [idCurso], (errorPeriodo, resultsPeriodo) => {
+        if (errorPeriodo) {
+          res.status(500).json({ message: "Error al obtener el periodo del curso." });
+        } else {
+          const idPeriodo = resultsPeriodo[0].idPeriodo;
+          res.status(200).json({ idPeriodo: idPeriodo, idCurso: idCurso });
+        }
+      });
     }
   });
   }
