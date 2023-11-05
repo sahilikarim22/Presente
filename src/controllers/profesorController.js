@@ -14,7 +14,7 @@ const profesorController = {
         console.log(err);
         return res.status(500).send("Error de servidor");
       } else {
-        conexion.query("SELECT * FROM periodos", (err, periodos) => {
+        conexion.query("SELECT * FROM periodos WHERE status = 1", (err, periodos) => {
           if (err) {
             console.log(err);
             return res.status(500).send("Error de servidor");

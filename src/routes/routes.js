@@ -33,6 +33,7 @@ router.get('/confirmarUsuario',usuariosController.getConfirmarUsuario);
 router.get('/estudiantes/cursos/', requireLogin, checkUserType('estudiante'),estudiantesController.getCursos);
 router.get('/estudiantes/inicio/', requireLogin, checkUserType('estudiante'), estudiantesController.getInicio);
 router.get('/estudiantes/entrada/', requireLogin, checkUserType('estudiante'), estudiantesController.getEntrada);
+// router.get('/estudiantes/cursoInfo/:idCurso', requireLogin, checkUserType('estudiante'), estudiantesController.getCursoInfo);
 
 router.get('/', indexController.getIndex);
 router.get('/registrarse', registrarseController.getRegistrarse);
@@ -51,9 +52,6 @@ router.post('/guardarPeriodo', adminController.postPeriodo);
 router.post('/guardarAsistencia/:idCurso/:idPeriodo', profesorController.postAsistencia);
 // router.post('/guardarCurso',loginController.);
 router.post('/eliminarPeriodo',adminController.deletePeriodo);
-
-//estudiantes
-router.post('/inscribirCurso', estudiantesController.postInscripcionCurso);
 
 
 //puts
