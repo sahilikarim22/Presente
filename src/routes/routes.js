@@ -25,6 +25,8 @@ router.get('/profesor/periodos', requireLogin, checkUserType('docente'), profeso
 router.get('/profesor/cursos/:idPeriodo', requireLogin, checkUserType('docente'), profesorController.getCursos);
 router.get('/profesor/curso/:idCurso/:idPeriodo',  requireLogin, checkUserType('docente'), profesorController.getCursoInfo);
 router.get('/profesor/asistencias/:idCurso/:idPeriodo',  requireLogin, checkUserType('docente'), profesorController.getAsistencias);
+router.get('/profesor/getCurso/:idCurso',  requireLogin, checkUserType('docente'), profesorController.getCurso);
+router.get('/profesores/deleteCurso/:idCurso',  requireLogin, checkUserType('docente'), profesorController.deleteCurso);
 
 router.get('/confirmarUsuario',usuariosController.getConfirmarUsuario);
 
@@ -58,12 +60,13 @@ router.post('/inscribirCurso', estudiantesController.postInscripcionCurso);
 
 //puts
 
-router.put('/editarCurso/:idCurso',cursosController.putCurso);
+router.put('/profesor/actualizarCurso/:idCurso',cursosController.putCurso);
 
 //deletes
 
 router.delete('/eliminarCurso/:idCurso', cursosController.deleteCurso);
 router.delete('/eliminarEstudianteCurso', profesorController.deleteEstudianteCurso);
+
 
 //funciones que requiere login
 function requireLogin(req, res, next) {

@@ -23,7 +23,6 @@
 
     <%- include('sidebar') %>
         <div class="content">
-
             <div class="container">
                 <div class="row mt-4">
                     <div class="col-sm-12 col-md-12 d-flex flex-column align-items-center text-center">
@@ -41,44 +40,61 @@
 
                 <div class="row mt-4">
                     <div class="col-6">
-                        <h5 class="card-title">Mis Cursos</h5>
+                        <h5 class="card-title text-capitalize text-white">Mis Cursos</h5>
                     </div>
-                    <div class="col-6">
-                        <h5 class="card-title">Porcentaje de asistencias</h5>
-                    </div>
+
                     <div class="col-12">
                         <% cursos.forEach((curso)=> { %>
                             <div class="card card-background">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-8">
+                                        <div class="col-10">
                                             <!-- Enlace al curso con la URL correcta -->
                                             <a href="/profesor/curso/<%= curso.idCurso %>/<%= curso.idPeriodo %>"
                                                 class="card-link">
-                                                <p class="card-text fw-bold text-black text-capitalize">
+                                                <p class="card-text fw-bold text-black text-capitalize tituloCurso">
                                                     <%= curso.nombreCurso %>
                                                 </p>
                                             </a>
                                         </div>
-                                        <!--Boton Opciones-->
-                                        <div class="position-pabsolute dropdown-menu-right m-3">
-                                            <button type="button" class="btn colorOpciones botonOpciones"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
+
+                                        <!-- Botón de opciones (Ellipsis) -->
+                                        <div class="col-2 text-end">
+                                            <div class="dropdown">
+                                                <button class="btn btn-dark dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li>
+                                                        <a data-id="<%= curso.idCurso %>"
+                                                            class="dropdown-item editar-curso" href="#">Editar <i
+                                                                class="fa-solid fa-pencil"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a data-id="<%= curso.idCurso %>"
+                                                            class="dropdown-item eliminar-curso"
+                                                            href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">Eliminar
+                                                            <i class="fa-solid fa-trash"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <div class="ventanitaOpciones ml-auto ">
-                                            <!-- Código de botones para opciones -->
-                                            <!-- ... -->
+
+                                        <!-- Botón "Entrar" -->
+                                        <div class="col-12 mt-3 text-end">
+                                            <a href="/profesor/curso/<%= curso.idCurso %>/<%= curso.idPeriodo %>"
+                                                class="btn btn-primary">Entrar <i
+                                                    class="fa-solid fa-circle-arrow-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="masCursos"></div>
                             <% }) %>
-
-
                     </div>
+
 
 
 
@@ -134,7 +150,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer text-center justify-content-center mx-auto">
-                                <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
+                                <button type="submit" id="guardar" class="btn btn-primary">Guardar</button>
                                 <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
                             </div>
                         </div>
@@ -142,27 +158,46 @@
                 </div>
             </form>
 
-            <footer class="menuMovil">
-                <ul class="d-flex justify-content-between">
-                    <li class="atras">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="fill: rgb(255, 255, 255);">
-                            <path d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z"></path>
-                            <path d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z"></path>
-                        </svg>
-                    </li>
 
-                    <li class="home3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="fill: rgb(255, 255, 255);">
-                            <path
-                                d="M12.74 2.32a1 1 0 0 0-1.48 0l-9 10A1 1 0 0 0 3 14h2v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7h2a1 1 0 0 0 1-1 1 1 0 0 0-.26-.68z">
-                            </path>
-                        </svg>
-                    </li>
-                </ul>
-            </footer>
+                <div id="modalEditarCurso" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-uppercase">EDITAR CURSO</h4>
+                            </div>
 
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input name="idCurso" type="hidden" id="idCursoEditar"
+                                        class="form-control inputModal">
+                                    <label for="curso" class="ModalTituloCampo">Curso</label>
+                                    <input name="nombreCurso" type="text" min="0" id="nombreCursoEditar"
+                                        class="form-control inputModal">
+                                </div>
+                                <div class="form-group">
+                                    <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
+                                    <input name="cantDiasSemanas" type="number" min="0" id="semanasEditar"
+                                        class="form-control inputModal" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="seccion" class="ModalTituloCampo">Seccion: </label>
+                                    <input class="form-control inputModal" name="seccion" type="text"
+                                        id="seccionEditar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                                    <input class="form-control inputModal" name="nrc" type="number" min="0" step="1"
+                                        id="nrcEditar">
+                                </div>
+                            </div>
+                            <div class="modal-footer text-center justify-content-center mx-auto">
+                                <button type="submit" id="actualizarCambios" class="btn btn-primary">Guardar</button>
+                                <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
         </div>
 
 
@@ -176,141 +211,135 @@
         <script src="/jquery/jquery-3.3.1.min.js"></script>
         <script src="/popper/popper.min.js"></script>
         <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
         <script>
 
             $(document).ready(function () {
 
+                $('.editar-curso').on('click', function (e) {
+                    e.preventDefault();
+                    const cursoId = $(this).data('id');
+
+                    $.ajax({
+                        type: 'GET',
+                        url: `/profesor/getCurso/${cursoId}`,
+                        success: function (response) {
+                            $('#idCursoEditar').val(response.idCurso);
+                            $('#nombreCursoEditar').val(response.nombreCurso);
+                            $('#semanasEditar').val(response.cantDiasSemanas);
+                            $('#seccionEditar').val(response.seccion);
+                            $('#nrcEditar').val(response.nrc);
+
+                            $('#modalEditarCurso').modal('show');
+                        },
+                        error: function (xhr, status, error) {
+                            // Manejar errores, por ejemplo, mostrar un mensaje de error en caso de que la solicitud falle
+                            console.log('Error al obtener datos del curso:', error);
+                        }
+                    });
+                });
+
+                // Elimina el curso
+                $('.eliminar-curso').on('click', function (e) {
+                    e.preventDefault();
+                    const cursoId = $(this).data('id');
+
+
+
+                    // Lógica para confirmar y eliminar el curso con AJAX
+                    if (confirm('¿Estás seguro de que deseas eliminar este curso?')) {
+                        $.ajax({
+                            type: 'DELETE', // El método HTTP DELETE es solo un ejemplo. Debes usar el método correcto que tu servidor requiere para eliminar el curso.
+                            url: `/profesores/deleteCurso/${cursoId}`, // Reemplaza con la ruta correcta en tu servidor para eliminar el curso
+                            success: function (response) {
+                                // Aquí puedes manejar la respuesta después de eliminar el curso, por ejemplo, recargar la página o actualizar la lista de cursos
+                                location.reload(); // Recarga la página después de eliminar el curso. Puedes adaptar esto según tu flujo de la aplicación.
+                            },
+                            error: function (xhr, status, error) {
+                                // Manejar errores, por ejemplo, mostrar un mensaje de error en caso de que la eliminación falle
+                                console.log('Error al eliminar el curso:', error);
+                            }
+                        });
+                    }
+                });
+
+
+                $('#actualizarCambios').on('click', function (e) {
+                    e.preventDefault();
+                    const cursoId = $('#idCursoEditar').val();
+                    // Recolectar los datos del formulario del modal
+                    const nombreCurso = $('#nombreCursoEditar').val();
+                    const cantDiasSemanas = $('#semanasEditar').val();
+                    const seccion = $('#seccionEditar').val();
+                    const nrc = $('#nrcEditar').val();
+
+                    const datosActualizados = {
+                        nombreCurso: nombreCurso,
+                        cantDiasSemanas: cantDiasSemanas,
+                        seccion: seccion,
+                        nrc: nrc
+                        // Otros campos del formulario que estás editando
+                    };
+
+
+                    $.ajax({
+                        type: 'PUT',
+                        url: `/profesor/actualizarCurso/${cursoId}`,
+                        contentType: 'application/json',
+                        data: JSON.stringify(datosActualizados), // Convertir a JSON los datos a enviar
+                        success: function (response) {
+                            // Mostrar SweetAlert 2 en caso de éxito
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Cambios guardados con éxito',
+                                showConfirmButton: false,
+                                timer: 1500 // Ocultar automáticamente después de 1.5 segundos
+                            }).then(() => {
+                                $('#modalEditarCurso').modal('hide');
+                                // Puedes realizar más acciones después de cerrar el SweetAlert 2
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            // Manejar errores, por ejemplo, mostrar un mensaje de error en caso de que la solicitud falle
+                            console.log('Error al guardar los cambios:', error);
+                            console.log(xhr)
+                        }
+                    });
+                });
+
+
+
                 // Abre el modal al hacer clic en el botón
                 $('#abrirModal').on('click', function () {
-                    console.log("hola")
                     $('#modalAgregar').modal('show');
                 });
 
-                // Agrega datos al DataTable y guarda en localStorage
                 $('#guardar').on('click', function () {
-                    var nombrePeriodo = $('#nombrePeriodo').val();
-                    var semanas = $('#semanas').val();
-                    var idCurso = $('#idCurso').val();
-
                     // Cierra el modal
                     $('#modalAgregar').modal('hide');
                 });
 
-                // Cierra el modal al hacer clic en el botón
                 $('#cerrar').on('click', function () {
                     $('#modalAgregar').modal('hide');
                 });
             });
 
 
-
-            const botonOpciones = document.querySelector('.botonOpciones');
-            const ventanita = document.querySelector('.ventanitaOpciones');
-
-            botonOpciones.addEventListener('click', () => {
-                ventanita.classList.toggle('active');
-
-            });
-
-
-            // Función para guardar datos en localStorage y en la base de datos (simulado)
-            function guardarCursoEnBaseDeDatosYLocalStorage(curso) {
-                // Guardar en localStorage
-                const cursos = JSON.parse(localStorage.getItem('cursos')) || [];
-                cursos.push(curso);
-                localStorage.setItem('cursos', JSON.stringify(cursos));
-
-                // Aquí debes enviar los datos a la base de datos real usando una API
-                // Ejemplo: fetch('/guardarCurso', { method: 'POST', body: JSON.stringify(curso) });
-            }
-
-
-            // Función para agregar un curso dinámicamente
-            function agregarCursoDinamicamente(curso) {
-                const masCursos = document.querySelector('.masCursos'); // Asegúrate de que exista un contenedor con la clase .masCursos
-                const nuevoDiv = document.createElement('div');
-                nuevoDiv.className = 'col-12';
-
-                nuevoDiv.innerHTML =
-                    `<div class="card card-background">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-8">
-                                    <p class="card-text fw-bold">${curso.nombre}</p>
-                                    <p class="card-text fw-bold">Clases: ${curso.clases}</p>
-                                    <p class="card-text text-danger fw-bold">Faltas: ${curso.faltas}</p>
-                                </div>
-
-                                <!--Boton Opciones-->
-                                <div class="position-pabsolute dropdown-menu-right m-3">
-                                    <button type="button" class="btn colorOpciones botonOpciones" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                </div>
-                                <div class="ventanitaOpciones ml-auto ">
-                                    <div class="circularBoton">
-                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: rgb(79, 0, 226);">
-                                                <path
-                                                    d="M8.707 19.707 18 10.414 13.586 6l-9.293 9.293a1.003 1.003 0 0 0-.263.464L3 21l5.242-1.03c.176-.044.337-.135.465-.263zM21 7.414a2 2 0 0 0 0-2.828L19.414 3a2 2 0 0 0-2.828 0L15 4.586 19.414 9 21 7.414z">
-                                                </path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <br>
-                                    <div class="circularBoton">
-                                        <button type="button" class="btn colorOpciones" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: rgb(206, 16, 16);">
-                                                <path
-                                                    d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z">
-                                                </path>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-
-                masCursos.appendChild(nuevoDiv);
-
-                // Selecciona el botón de "botonOpciones" específico para este curso
-                const botonOpciones = nuevoDiv.querySelector('.botonOpciones');
-
-                // Agrega un controlador de eventos al botón de "botonOpciones" para mostrar la ventanitaOpciones
-                botonOpciones.addEventListener('click', () => {
-                    const ventanita = nuevoDiv.querySelector('.ventanitaOpciones'); // Encuentra la .ventanitaOpciones dentro de este curso específico
-                    ventanita.classList.toggle('active');
+            // JavaScript para manejar la funcionalidad del menú ellipsis
+            $(document).ready(function () {
+                $('.dropdown-toggle').click(function () {
+                    $(this).next('.dropdown-menu').toggleClass('show');
                 });
-            }
 
-            document.getElementById('guardar').addEventListener('click', function (event) {
-                // event.preventDefault();
-                const nombre = document.getElementById('nombrePeriodo').value;
-                const clases = document.getElementById('idCurso').value;
-                const faltas = document.getElementById('semanas').value;
-
-                const curso = { nombre, clases, faltas };
-
-                guardarCursoEnBaseDeDatosYLocalStorage(curso);
-                agregarCursoDinamicamente(curso);
-
-                // Cierra el modal (puede requerir código adicional)
+                $(document).on('click', function (e) {
+                    if (!$(e.target).closest('.dropdown').length) {
+                        $('.dropdown-menu').removeClass('show');
+                    }
+                });
             });
-
-
-
-
-
-
-
 
 
         </script>

@@ -636,3 +636,40 @@ p.nombreCurso {
   width: 100%;
   background-color: #5cb85c;
 }
+
+/*Estilos para profesores*/
+  .botonSeccion {
+padding: 0.3em 0.5em;
+    
+  }
+.botonContainer{
+max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+
+/* Estilos para el menú ellipsis y el dropdown */
+.dropdown-menu {
+  display: none; /* Ocultar el menú por defecto */
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 0;
+  min-width: 120px;
+}
+
+.dropdown-menu.show {
+  display: block; /* Mostrar el menú cuando se active */
+}
+
+.tituloCurso {
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+
+
