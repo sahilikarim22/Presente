@@ -1,3 +1,12 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 05-11-2023 a las 19:09:01
+-- Versión del servidor: 8.0.31
+-- Versión de PHP: 8.0.26
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -52,8 +61,8 @@ INSERT INTO `asistencias` (`idAsistencia`, `idEstudiante`, `idCurso`, `idClase`,
 DROP TABLE IF EXISTS `clases`;
 CREATE TABLE IF NOT EXISTS `clases` (
   `idClase` int NOT NULL AUTO_INCREMENT,
-  `nombreClase` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish_ci,
+  `nombreClase` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
   `idCurso` int NOT NULL,
   `fechaClase` date NOT NULL,
   `idPeriodo` int NOT NULL,
@@ -91,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `nrc` int DEFAULT NULL,
   `idPeriodo` int DEFAULT NULL,
   PRIMARY KEY (`idCurso`),
+  UNIQUE KEY `unique_nrc` (`nrc`),
   KEY `idProfesor` (`idProfesor`),
   KEY `idPeriodo` (`idPeriodo`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -100,8 +110,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
 --
 
 INSERT INTO `cursos` (`idCurso`, `nombreCurso`, `cantDiasSemanas`, `seccion`, `idProfesor`, `nrc`, `idPeriodo`) VALUES
-(10, 'Matematicas', 12, 401, 9, 123, 1),
-(11, 'Algebra lineal', 12, 401, 9, 123, 1);
+(10, 'Matematicas', 12, 401, 9, 123, 1);
 
 -- --------------------------------------------------------
 
@@ -148,6 +157,28 @@ CREATE TABLE IF NOT EXISTS `periodos` (
 
 INSERT INTO `periodos` (`id`, `nombrePeriodo`, `cantidadSemanas`, `status`) VALUES
 (1, 'SEM-2023-25', 15, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `nombre`) VALUES
+(1, 'administrador'),
+(2, 'profesor'),
+(3, 'estudiante');
 
 -- --------------------------------------------------------
 
