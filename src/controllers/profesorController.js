@@ -1,6 +1,34 @@
 const conexion = require("../db/config");
 
 const profesorController = {
+  getCurso: (req, res) => {
+    const idCurso = req.params.idCurso;
+    const cursoSQL = "SELECT * FROM cursos WHERE idCurso = ?";
+    conexion.query(cursoSQL, [idCurso], (error, curso) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Error de servidor" });
+        } else {
+            if (curso.length > 0) {
+                res.json(curso[0]); // Devuelve los detalles del curso en formato JSON
+            } else {
+                res.status(404).json({ error: "Curso no encontrado" });
+            }
+        }
+    });
+},
+deleteCurso: (req, res) => {
+    const idCurso = req.params.idCurso;
+    const cursoSQL = "DELETE FROM cursos WHERE idCurso = ?";
+    conexion.query(cursoSQL, [idCurso], (error, curso) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Error de servidor" });
+        } else {
+            res.json({ message: "Curso eliminado correctamente" });
+        }
+    });
+},
   getCursos: (req, res) => {
     const idPeriodo = req.params.idPeriodo;
     const idProfesor = req.session.userId;
