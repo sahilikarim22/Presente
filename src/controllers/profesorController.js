@@ -126,9 +126,6 @@ const profesorController = {
               return clase;
             });
 
-            console.log("asistencia",asistencia)
-            console.log("asistenciaPorClase",asistenciaPorClase)
-
             res.render("profesor/cursoInfo", {            
               curso,
               estudiantes,
@@ -240,6 +237,22 @@ const profesorController = {
       }
     );
   },
+  deleteEstudianteCurso: (req,res) =>{
+    const idEstudiante = req.body.idEstudiante;
+    const idCurso = req.body.idCurso;
+
+  // Consulta SQL para eliminar al estudiante del curso en la tabla curso_estudiante
+  const query = 'DELETE FROM curso_estudiante WHERE idUsuario = ? AND idCurso = ?';
+
+  // Ejecutar la consulta con los parámetros
+  conexion.query(query, [idEstudiante, idCurso], (error, results, fields) => {
+    if (error) {
+      res.status(500).json({ message: "Error al eliminar al estudiante del curso." });
+    } else {
+      res.redirect()
+    }
+  });
+  }
 };
 
 // exportar modulos

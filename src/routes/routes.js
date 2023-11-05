@@ -63,7 +63,7 @@ router.put('/editarCurso/:idCurso',cursosController.putCurso);
 //deletes
 
 router.delete('/eliminarCurso/:idCurso', cursosController.deleteCurso);
-
+router.delete('/eliminarEstudianteCurso', profesorController.deleteEstudianteCurso);
 
 //funciones que requiere login
 function requireLogin(req, res, next) {

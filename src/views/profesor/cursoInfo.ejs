@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso <%= curso[0].nombreCurso %></title>
+    <title>Curso <%= curso[0].nombreCurso %>
+    </title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
@@ -16,7 +17,7 @@
 </head>
 
 <body>
-    
+
 
 
     <div class="container">
@@ -33,9 +34,10 @@
                 <h5>Clases: <%= curso[0].cantDiasSemanas %>
                 </h5>
                 <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-end">
-                    <a href="/profesor/asistencias/<%= curso[0].idCurso %>/<%= idPeriodo %>"><button type="button" class="btn botonGeneral" data-toggle="modal" data-target="#exampleModal">
-                        Pasar Asistencia
-                    </button></a>
+                    <a href="/profesor/asistencias/<%= curso[0].idCurso %>/<%= idPeriodo %>"><button type="button"
+                            class="btn botonGeneral" data-toggle="modal" data-target="#exampleModal">
+                            Pasar Asistencia
+                        </button></a>
                 </div>
             </div>
 
@@ -53,6 +55,7 @@
                     <tr class="bg-primary text-white">
                         <th scope="col">Cedula</th>
                         <th scope="col">Nombres</th>
+                        <th scope="col">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +65,15 @@
                                 <%= est.cedula %>
                             </td>
                             <td class="">
-                                <%= est.nombres %> <%= est.apellidos %>
+                                <%= est.nombres %>
+                                    <%= est.apellidos %>
+
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btnEliminarEstudiante"
+                                    data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>">
+                                    Eliminar
+                                </button>
                             </td>
                         </tr>
                         <% }) %>
@@ -79,88 +90,101 @@
         <div class="col-md-12 col-lg-12 fondoTabla">
             <table id="tablaClases" class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
-                  <tr>
-                    <th>Cédula</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <% clases.forEach(clase => { %>
-                      <th><%= clase.nombreClase %> (<%= clase.fechaClase %>)</th>
-                    <% }); %>
-                  </tr>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <% clases.forEach(clase=> { %>
+                            <th>
+                                <%= clase.nombreClase %> (<%= clase.fechaClase %>)
+                            </th>
+                            <% }); %>
+                    </tr>
                 </thead>
                 <tbody>
-                  <% estudiantes.forEach(estudiante => { %>
-                    <tr>
-                      <td><%= estudiante.cedula %></td>
-                      <td><%= estudiante.nombres %></td>
-                      <td><%= estudiante.apellidos %></td>
-                      <% clases.forEach(clase => { %>
-                        <td>
-                          <% const asistencias = asistenciaPorClase[clase.idClase] || []; %>
-                          <% const asistenciaEstudiante = asistencias.find(asistencia => asistencia.id === estudiante.id); %>
-                          <% if (asistenciaEstudiante) { %>
-                            <% if (asistenciaEstudiante.asistio === 1) { %>
-                              <div style="width: 20px; height: 20px; border-radius: 50%; background-color: green;"></div>
-                            <% } else { %>
-                              <div style="width: 20px; height: 20px; border-radius: 50%; background-color: red;"></div>
-                            <% } %>
-                          <% } %>
-                        </td>
-                      <% }); %>
-                    </tr>
-                  <% }); %>
+                    <% estudiantes.forEach(estudiante=> { %>
+                        <tr>
+                            <td>
+                                <%= estudiante.cedula %>
+                            </td>
+                            <td>
+                                <%= estudiante.nombres %>
+                            </td>
+                            <td>
+                                <%= estudiante.apellidos %>
+                            </td>
+                            <% clases.forEach(clase=> { %>
+                                <td>
+                                    <% const asistencias=asistenciaPorClase[clase.idClase] || []; %>
+                                        <% const asistenciaEstudiante=asistencias.find(asistencia=> asistencia.id ===
+                                            estudiante.id); %>
+                                            <% if (asistenciaEstudiante) { %>
+                                                <% if (asistenciaEstudiante.asistio===1) { %>
+                                                    <div
+                                                        style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
+                                                    </div>
+                                                    <% } else { %>
+                                                        <div
+                                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
+                                                        </div>
+                                                        <% } %>
+                                                            <% } %>
+                                </td>
+                                <% }); %>
+                        </tr>
+                        <% }); %>
                 </tbody>
-              </table>
+            </table>
         </div>
     </div>
     </div>
 
-<div class="miMenuMovil">
-    <div class="navegacion">
-        <ul>
-            <li class="list">
-                <a href="#">
-                    <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                            style="fill: rgba(0, 0, 0, 1);">
-                            <path
-                                d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z">
-                            </path>
-                        </svg>
-                    </span>
-                    <!-- <span class="text">Atrás</span> -->
-                </a>
-            </li>
-            <li class="list">
-                <a href="#">
-                    <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                            style="fill: rgba(0, 0, 0, 1);">
-                            <path
-                                d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z">
-                            </path>
-                        </svg>
-                    </span>
-                    <!-- <span class="text">Home</span> -->
-                </a>
-            </li>
-            <li class="list active">
-                <a href="#">
-                    <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                            style="fill: rgba(0, 0, 0, 1);">
-                            <path
-                                d="M4 7h11v2H4zm0 4h11v2H4zm0 4h7v2H4zm15.299-2.708-4.3 4.291-1.292-1.291-1.414 1.415 2.706 2.704 5.712-5.703z">
-                            </path>
-                        </svg>
-                    </span>
-                    <!-- <span class="text">Atrás</span> -->
-                </a>
-            </li>
-            <div class="indicator"></div>
-        </ul>
+    <div class="miMenuMovil">
+        <div class="navegacion">
+            <ul>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path
+                                    d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z">
+                                </path>
+                            </svg>
+                        </span>
+                        <!-- <span class="text">Atrás</span> -->
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path
+                                    d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z">
+                                </path>
+                            </svg>
+                        </span>
+                        <!-- <span class="text">Home</span> -->
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path
+                                    d="M4 7h11v2H4zm0 4h11v2H4zm0 4h7v2H4zm15.299-2.708-4.3 4.291-1.292-1.291-1.414 1.415 2.706 2.704 5.712-5.703z">
+                                </path>
+                            </svg>
+                        </span>
+                        <!-- <span class="text">Atrás</span> -->
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </div>
     </div>
-</div>
 
 
     <script src="/jquery/jquery-3.3.1.min.js"></script>
@@ -180,6 +204,35 @@
     <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
 
     <script>
+
+        $(document).ready(function () {
+            $('.btnEliminarEstudiante').on('click', function () {
+
+                var estudianteId = $(this).data('estudiante-id');
+                var idCurso = $(this).data('curso-id');
+                if (confirm("¿Seguro que quieres eliminar este estudiante?")) {
+                    // Realizar la solicitud AJAX para eliminar al estudiante
+                    $.ajax({
+                        type: 'DELETE', // Puedes cambiar el método HTTP según lo que uses en tu backend
+                        url: '/eliminarEstudianteCurso', // Especifica la URL de tu endpoint para eliminar estudiantes
+                        data: {
+                            idEstudiante: estudianteId,
+                            idCurso: idCurso
+                        }, // Datos a enviar, aquí se incluye el ID del estudiante
+                        success: function (response) {
+                            // Manejar la respuesta si la solicitud es exitosa
+                            // Por ejemplo, podrías actualizar la tabla después de la eliminación
+                            console.log('Estudiante eliminado correctamente');
+                            // Aquí puedes recargar la tabla o hacer otras acciones después de la eliminación
+                        },
+                        error: function (error) {
+                            // Manejar el error si la solicitud no se completa correctamente
+                            console.error('Error al eliminar el estudiante', error);
+                        }
+                    });
+                }
+            });
+        });
 
         const list = document.querySelectorAll(".list");
         function activeLink() {
@@ -279,6 +332,9 @@
 
 
         });
+
+
+
 
 
     </script>
