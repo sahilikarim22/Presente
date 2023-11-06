@@ -112,9 +112,8 @@ GROUP BY
         });
       } else {
         console.log("No se encontró un curso con el NRC proporcionado.");
-        return res
-          .status(500)
-          .send("El curso con el nrc proporcionado no existe");
+        const err = new Error('Este es un mensaje de error personalizado');
+        next(err);
       }
     });
   },
