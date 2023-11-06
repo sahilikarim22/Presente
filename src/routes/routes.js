@@ -10,7 +10,7 @@ const adminController = require('../controllers/adminController');
 const cursosController = require('../controllers/cursosController');
 const loginController = require('../controllers/loginController');
 const profesorController = require('../controllers/profesorController');
-const errorController = require('../controllers/errorController');
+// const errorController = require('../controllers/errorController');
 
 // Ruta de inicio
 
