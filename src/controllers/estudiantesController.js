@@ -112,7 +112,7 @@ GROUP BY
         });
       } else {
         console.log("No se encontró un curso con el NRC proporcionado.");
-        const err = new Error('Este es un mensaje de error personalizado');
+        const err = new Error("No se encontró un curso con el NRC proporcionado.");
         next(err);
       }
     });
