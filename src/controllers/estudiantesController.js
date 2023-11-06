@@ -66,7 +66,7 @@ GROUP BY
     const idUsuario = req.session.userId;
 
     // Consulta para obtener el id del curso basado en el NRC
-    const query = `SELECT idCurso FROM cursos WHERE nrc = '${nrc}'`;
+    const query = `SELECT idCurso, idPeriodo FROM cursos WHERE nrc = '${nrc}'`;
 
     conexion.query(query, (error, results, fields) => {
       if (error) {
@@ -79,7 +79,7 @@ GROUP BY
         const idPeriodo = results[0].idPeriodo;
 
         // Verificar si el usuario ya está inscrito en el curso
-        const checkQuery = `SELECT idCurso, idPeriodo FROM curso_estudiante WHERE idUsuario = ${idUsuario} AND idCurso = ${idCurso}`;
+        const checkQuery = `SELECT idCurso FROM curso_estudiante WHERE idUsuario = ${idUsuario} AND idCurso = ${idCurso}`;
 
         conexion.query(checkQuery, (checkError, checkResults) => {
           if (checkError) {
