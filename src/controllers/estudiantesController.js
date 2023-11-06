@@ -76,6 +76,7 @@ GROUP BY
 
       if (results.length > 0) {
         const idCurso = results[0].idCurso;
+        const idPeriodo = results[0].idPeriodo;
 
         // Verificar si el usuario ya está inscrito en el curso
         const checkQuery = `SELECT idCurso FROM curso_estudiante WHERE idUsuario = ${idUsuario} AND idCurso = ${idCurso}`;
@@ -104,7 +105,7 @@ GROUP BY
                 return res.status(500).send("Error en la inserción");
               } else {
                 console.log("Inserción exitosa en la tabla curso_estudiante.");
-                return res.redirect("/estudiantes/cursos");
+                return res.redirect("/estudiantes/cursos/${idPeriodo}");
               }
             });
           }
