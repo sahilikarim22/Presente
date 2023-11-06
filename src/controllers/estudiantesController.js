@@ -22,14 +22,29 @@ const estudiantesController = {
 
       // Consulta para obtener los cursos del usuario con el cálculo del porcentaje de asistencia
       const cursosSQL = `
-      SELECT c.nombreCurso, c.cantDiasSemanas, c.seccion, c.idCurso,
-      ROUND((COUNT(a.idAsistencia) / (c.cantDiasSemanas * p.cantidadSemanas)) * 100,2) AS porcentajeAsistencia
-      FROM curso_estudiante ce
-      INNER JOIN cursos c ON ce.idCurso = c.idCurso
-      LEFT JOIN asistencias a ON ce.idCurso = a.idCurso
-      INNER JOIN periodos p ON c.idPeriodo = p.id
-      WHERE ce.idUsuario = ? AND c.idPeriodo = ?
-      GROUP BY c.idCurso
+      SELECT 
+    c.nombreCurso, 
+    c.cantDiasSemanas, 
+    c.seccion, 
+    c.idCurso,
+    ROUND(
+        (SUM(CASE WHEN a.asistio = 1 THEN 1 ELSE 0 END) / c.cantDiasSemanas) * 100,
+        2
+    ) AS porcentajeAsistencia
+FROM 
+    curso_estudiante ce
+INNER JOIN 
+    cursos c ON ce.idCurso = c.idCurso
+LEFT JOIN 
+    asistencias a ON ce.idCurso = a.idCurso
+INNER JOIN 
+    periodos p ON c.idPeriodo = p.id
+WHERE 
+    ce.idUsuario = ? 
+    AND c.idPeriodo = ?
+GROUP BY 
+    c.idCurso
+
 `;
 
       conexion.query(cursosSQL, [idUsuario, idPeriodo], (err, cursos) => {
@@ -38,7 +53,6 @@ const estudiantesController = {
           return res.status(500).send("Error de servidor");
         }
 
-        // Renderiza la vista 'cursos' con los datos del usuario y sus cursos
         res.render("estudiantes/cursos", {
           usuario: usuario[0],
           cursos: cursos,
