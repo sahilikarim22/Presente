@@ -19,6 +19,39 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!--font awesome con CDN-->
 
+    <style>
+        .miMenuMovil {
+            position: fixed;
+            top: 50%; /* Centra verticalmente */
+            left: 50%; /* Centra horizontalmente */
+            transform: translate(-50%, -50%); /* Ajusta para centrar */
+            width: 70%; /* Ancho deseado */
+            max-width: 300px; /* Establece el ancho máximo */
+            height: auto; /* Altura automática */
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 999;
+            text-align: center; /* Centra el texto */
+        }
+        
+        .navegacion {
+            margin: 0;
+            padding: 0;
+        }
+    
+        .list {
+            list-style: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+    
+        .list a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -72,7 +105,7 @@
                         <% }) %>
                             <% } %>
             </div>
-            
+
             <%- include('menuMovil') %>
 
 
