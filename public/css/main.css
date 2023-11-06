@@ -127,12 +127,7 @@ h1 {
   align-items: center;
 }
 
-.content {
-  flex: 1;
-  padding: 20px;
-  margin-left: 250px;
-  transition: margin-left 0.3s;
-}
+
 
 .burger-btn {
   display: none;
