@@ -48,7 +48,6 @@ body {
   background-color: white;
   padding: 20px;
   border-radius: 55%;
-  border: 3px solid #333;
 }
 .atras {
   color: black;
@@ -58,7 +57,6 @@ body {
   background-color: white;
   padding: 10px 20px;
   border-radius: 55%;
-  border: 3px solid #333;
 }
 .salir {
   color: black;
@@ -69,7 +67,6 @@ body {
   padding: 25px;
   border-radius: 80px;
   transform: scaleX(-1);
-  border: 3px solid #333;
 }
 
 .imagenTrianguloCentrado {
