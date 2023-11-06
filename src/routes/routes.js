@@ -17,7 +17,7 @@ const profesorController = require('../controllers/profesorController');
 //admin 
 router.get('/admin', requireLogin, checkUserType('administrador'), adminController.getAdmin);
 router.get('/admin/cursos/:idPeriodo', requireLogin, checkUserType('administrador'), adminController.getAdminCursosPeriodo);
-router.get('/admin/verCurso/:idCurso', requireLogin, checkUserType('administrador'), adminController.getAdminCursoDetalle);
+router.get('/admin/verCurso/:idCurso/:idPeriodo', requireLogin, checkUserType('administrador'), adminController.getAdminCursoDetalle);
 router.post('/cambiarEstadoPeriodo/', adminController.putStatusPeriodo);
 
 //profesores

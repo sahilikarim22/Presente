@@ -86,28 +86,81 @@ const adminController = {
   },
   getAdminCursoDetalle: (req, res) => {
     const idCurso = req.params.idCurso;
-    const estudiantesSQL = `
-    SELECT u.nombres AS nombre_estudiante, u.apellidos AS apellido_estudiante, u.cedula AS cedula_estudiante,
-    p.nombres AS nombre_profesor, p.apellidos AS apellido_profesor, c.nombreCurso
-FROM curso_estudiante ce
-INNER JOIN usuarios u ON ce.idUsuario = u.id
-INNER JOIN cursos c ON ce.idCurso = c.idCurso
-INNER JOIN usuarios p ON c.idProfesor = p.id
-WHERE ce.idCurso = ?
-`;
+    const idPeriodo = req.params.idPeriodo;
 
-    conexion.query(
-      estudiantesSQL,
-      [idCurso],
-      (err, curso) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("Error de servidor");
-        } else {
-          res.render("admin/curso", { curso });
-        }
+    const cursoSQL = "SELECT * FROM cursos WHERE idCurso=? AND idPeriodo=?";
+    const estudiantesSQL = `
+      SELECT u.nombres, u.apellidos, u.cedula, u.id
+      FROM curso_estudiante ce
+      INNER JOIN cursos c ON ce.idCurso = c.idCurso
+      INNER JOIN usuarios u ON ce.idUsuario = u.id
+      WHERE c.idCurso = ? AND c.idPeriodo = ?;
+    `;
+    const clasesSQL = `
+      SELECT idClase, nombreClase, fechaClase
+      FROM clases
+      WHERE idCurso = ? AND idPeriodo = ?;
+    `;
+    const asistenciaSQL = `
+      SELECT a.asistio, u.nombres, u.apellidos, u.cedula, u.id, a.idClase
+      FROM usuarios u
+      JOIN asistencias a ON u.id = a.idEstudiante
+      JOIN clases c ON c.idClase = a.idClase
+      WHERE c.idCurso = ?;
+    `;
+  
+    conexion.query(cursoSQL, [idCurso, idPeriodo], (error, curso) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send("Error de servidor");
       }
-    );
+  
+      conexion.query(estudiantesSQL, [idCurso, idPeriodo], (error, estudiantes) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).send("Error de servidor");
+        }
+  
+        conexion.query(clasesSQL, [idCurso, idPeriodo], (error, clases) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).send("Error de servidor");
+          }
+  
+          conexion.query(asistenciaSQL, [idCurso], (error, asistencia) => {
+            if (error) {
+              console.log(error);
+              return res.status(500).send("Error de servidor");
+            }
+  
+            // Transformar la estructura de 'asistencia' para asociarla con clases
+            const asistenciaPorClase = {};
+            asistencia.forEach(registro => {
+              if (!asistenciaPorClase[registro.idClase]) {
+                asistenciaPorClase[registro.idClase] = [];
+              }
+              asistenciaPorClase[registro.idClase].push(registro);
+            });
+  
+            // Formatear la fecha en cada objeto de 'clases'
+            clases = clases.map(clase => {
+              clase.fechaClase = new Date(clase.fechaClase).toLocaleDateString("es-ES", {
+                dateStyle: "short"
+              });
+              return clase;
+            });
+
+            res.render("admin/curso", {            
+              curso,
+              estudiantes,
+              clases,
+              asistenciaPorClase,
+              idPeriodo
+            });
+          });
+        });
+      });
+    });
   },
   putStatusPeriodo: (req, res) => {
 
