@@ -57,11 +57,8 @@ const cursosController = {
     },
 
     deleteCurso: (req, res) => {
-
       const idCurso = req.params.idCurso;
-
       const deleteQuery = 'delete from curso_estudiante where idCurso=?';
-
       conexion.query(deleteQuery, [idCurso], (err, resultado) => {
         if(err){
           console.log(err)
