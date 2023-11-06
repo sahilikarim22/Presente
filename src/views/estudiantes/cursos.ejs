@@ -218,6 +218,8 @@
                 e.preventDefault();
                 const cursoId = $(this).data('id');
 
+                console.log("hola")
+
                 // Utilizando SweetAlert en lugar de confirm
                 Swal.fire({
                     title: '¿Estás seguro de que deseas eliminar este curso?',
@@ -230,9 +232,11 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        console.log("aver")
+                        console.log(cursoId)
                         $.ajax({
                             type: 'DELETE',
-                            url: `/profesores/deleteCurso/${cursoId}`,
+                            url: `/eliminarCurso/${cursoId}`,
                             success: function (response) {
                                 location.reload();
                             },
