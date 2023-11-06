@@ -161,6 +161,8 @@
 
 <!--Escaner -->
     <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <script>
@@ -288,6 +290,15 @@ function scaner() {
                 const idEstudiante = txt;
                 const checkbox = document.getElementById(`estudiante_${idEstudiante}`);
                 checkbox.checked = true;
+                // console.log(idEstudiante);
+                // console.log(checkbox);
+                Swal.fire({
+                                icon: 'success',
+                                title: '¡Escaneado con éxito!',
+                                showConfirmButton: false,
+                                timer: 3000 
+                            });
+
             };
             await scanner.show();
         })();
