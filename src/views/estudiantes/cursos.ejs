@@ -123,6 +123,27 @@
                                                             </span>
                                                             <%= curso.porcentajeAsistencia %>%
                                                         </div>
+                                                        <% } else if (curso.porcentajeAsistencia>= 15) { %>
+                                                            <div class="progress-bar-15" role="progressbar">
+                                                                <span class="sr-only">
+                                                                    <%= curso.porcentajeAsistencia %>%
+                                                                </span>
+                                                                <%= curso.porcentajeAsistencia %>%
+                                                            </div>
+                                                            <% } else if (curso.porcentajeAsistencia>= 10) { %>
+                                                                <div class="progress-bar-10" role="progressbar">
+                                                                    <span class="sr-only">
+                                                                        <%= curso.porcentajeAsistencia %>%
+                                                                    </span>
+                                                                    <%= curso.porcentajeAsistencia %>%
+                                                                </div>
+                                                                <% } else if (curso.porcentajeAsistencia>= 5) { %>
+                                                                    <div class="progress-bar-5" role="progressbar">
+                                                                        <span class="sr-only">
+                                                                            <%= curso.porcentajeAsistencia %>%
+                                                                        </span>
+                                                                        <%= curso.porcentajeAsistencia %>%
+                                                                    </div>
                                                         <% } else { %>
                                                             <div class="progress-bar-0" role="progressbar">
                                                                 <span class="sr-only">

@@ -672,6 +672,24 @@ max-width: 40%;
   margin-bottom: 20px;
 }
 
+.progress-bar-5 {
+  width: 5%;
+  background-color: #d9534f;
+  border-radius: 55px;
+}
+
+.progress-bar-10 {
+  width: 13%;
+  background-color: #d9534f;
+  border-radius: 55px;
+}
+
+.progress-bar-15 {
+  width: 17%;
+  background-color: #d9534f;
+  border-radius: 55px;
+}
+
 .progress-bar-25 {
   width: 25%;
   background-color: #d9534f;
