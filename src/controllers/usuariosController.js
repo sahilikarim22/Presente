@@ -90,6 +90,16 @@ const usuariosController = {
   getConfirmarUsuario: (req, res) => {
     res.render(`confirmarUsuario`);
   },
+  getLogout: (req,res) => {
+     // Destruir la sesión
+     req.session.destroy(err => {
+      if (err) {
+          console.log(err);
+      } else {
+          res.redirect('/');
+      }
+    });
+  }
 };
 
 module.exports = usuariosController;
