@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <!-- Metadatos, enlaces a CSS, otros recursos -->
     <meta charset="UTF-8">
@@ -25,8 +26,10 @@
         /* Estilos del botón "atrás" */
         .back-button {
             position: absolute;
-            left: 20px; /* Ajusta la posición izquierda del botón */
-            top: 20px; /* Ajusta la posición superior del botón */
+            left: 20px;
+            /* Ajusta la posición izquierda del botón */
+            top: 20px;
+            /* Ajusta la posición superior del botón */
             background-color: #9c9c9c;
             border: none;
             border-radius: 50%;
@@ -36,19 +39,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background-color 0.3s, transform 0.2s; /* Agregamos una transición para el efecto de escala */
+            transition: background-color 0.3s, transform 0.2s;
+            /* Agregamos una transición para el efecto de escala */
         }
 
         /* Estilos del formulario */
         .form-container {
-            max-width: 600px; /* Ancho máximo del formulario */
+            max-width: 600px;
+            /* Ancho máximo del formulario */
             width: 100%;
             padding: 20px;
             background-color: #fff;
             border-radius: 50px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center; /* Alinea el contenido del contenedor al centro */
-            margin: 20px 20px; /* Margen derecho e izquierdo */
+            text-align: center;
+            /* Alinea el contenido del contenedor al centro */
+            margin: 20px 20px;
+            /* Margen derecho e izquierdo */
         }
 
         .form-row {
@@ -58,56 +65,70 @@
         }
 
         .form-input {
-            width: calc(50% - 10px); /* Ancho del 50% con espacio entre campos */
+            width: calc(50% - 10px);
+            /* Ancho del 50% con espacio entre campos */
             padding: 10px;
             margin-bottom: 8px;
             border: none;
             border-radius: 50px;
             font-size: 16px;
             box-sizing: border-box;
-            text-align: center; /* Alinea el texto al centro dentro de los campos de entrada */
+            text-align: center;
+            /* Alinea el texto al centro dentro de los campos de entrada */
         }
 
         /* Estilos del botón con imagen */
         .form-button {
             background-color: #002a7d;
-            color: transparent; /* Oculta el texto del botón */
-            font-size: 0; /* Oculta cualquier tamaño de fuente predeterminado */
+            color: transparent;
+            /* Oculta el texto del botón */
+            font-size: 0;
+            /* Oculta cualquier tamaño de fuente predeterminado */
             padding: 12px 12px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s; /* Agregamos una transición para el efecto de escala */
+            transition: background-color 0.3s, transform 0.2s;
+            /* Agregamos una transición para el efecto de escala */
         }
 
         /* Estilos de la imagen en línea */
         .form-button img {
-            width: 25px; /* Ajusta el tamaño de la imagen */
+            width: 25px;
+            /* Ajusta el tamaño de la imagen */
             height: 25px;
             display: inline-block;
-            vertical-align: middle; /* Alinea verticalmente la imagen */
-            filter: invert(100%); /* Efecto de negativo */
-            margin-right: auto; /* Agrega un pequeño espacio a la derecha de la imagen */
+            vertical-align: middle;
+            /* Alinea verticalmente la imagen */
+            filter: invert(100%);
+            /* Efecto de negativo */
+            margin-right: auto;
+            /* Agrega un pequeño espacio a la derecha de la imagen */
         }
 
         .back-button img {
-            width: 20px; /* Ajusta el tamaño de la imagen */
+            width: 20px;
+            /* Ajusta el tamaño de la imagen */
             height: 20px;
             display: inline-block;
-            vertical-align: middle; /* Alinea verticalmente la imagen */
-            margin-right: 0; /* Agrega un pequeño espacio a la derecha de la imagen */
+            vertical-align: middle;
+            /* Alinea verticalmente la imagen */
+            margin-right: 0;
+            /* Agrega un pequeño espacio a la derecha de la imagen */
             margin-top: 0;
         }
 
         /* Cambia el estilo del botón al pasar el cursor sobre él */
         .form-button:hover {
             background-color: #32852a;
-            transform: scale(1.25); /* Ajusta el tamaño del botón al pasar el cursor */
+            transform: scale(1.25);
+            /* Ajusta el tamaño del botón al pasar el cursor */
         }
 
         .back-button:hover {
             background-color: black;
-            transform: scale(1.25); /* Ajusta el tamaño del botón al pasar el cursor */
+            transform: scale(1.25);
+            /* Ajusta el tamaño del botón al pasar el cursor */
         }
 
         /* Texto "Registrarse" fuera del formulario */
@@ -120,21 +141,23 @@
         @media screen and (max-width: 768px) {
             .form-container {
                 max-width: 75%;
-                margin: 0 20px; /* Agrega un margen derecho e izquierdo en la versión vertical */
+                margin: 0 20px;
+                /* Agrega un margen derecho e izquierdo en la versión vertical */
             }
 
             .form-input {
                 padding: 20px;
-                width: 100%; /* Establece el ancho completo para dispositivos móviles */
+                width: 100%;
+                /* Establece el ancho completo para dispositivos móviles */
                 margin-top: 8px;
                 margin-bottom: 10px;
             }
         }
-
     </style>
 </head>
+
 <body style="background: radial-gradient(circle, rgba(255,255,255,1) 6%, rgba(0,42,125,1) 100%)">
-    <button class="back-button" onclick="window.location.href = '/registrarse'"> 
+    <button class="back-button" onclick="goBack()">
         <img src="https://i.postimg.cc/jdDB0rxw/icono-back.png" alt="Atrás">
     </button>
     <div class="form-container">
@@ -144,10 +167,17 @@
                 <input name="correoUcab" type="email" class="form-input" placeholder="Correo UCAB" required>
                 <input name="clave" type="password" class="form-input" placeholder="Clave" required>
             </div>
-            <button class="form-button" type="submit"><img src="https://i.postimg.cc/J7BY235N/cono-check.png" alt="Checkmark"></button>
+            <button class="form-button" type="submit"><img src="https://i.postimg.cc/J7BY235N/cono-check.png"
+                    alt="Checkmark"></button>
         </form>
     </div>
     <p class="register-link">¿No tienes una cuenta? <a href="/registrarse">Registrarse</a></p>
     <script src="src/js/app.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
+
 </html>
