@@ -89,7 +89,7 @@ GROUP BY
   
           if (checkResults.length > 0) {
             // El usuario ya está inscrito en el curso, puedes mostrar un modal o enviar un mensaje
-            return res.status(500).send("Ya inscribió el curso con ese nrc");
+            return next(new Error("Ya inscribió el curso con ese nrc"));
           } else {
             // El usuario no está inscrito, proceder con la inserción en la tabla curso_estudiante
             const insertQuery = `INSERT INTO curso_estudiante (idUsuario, idCurso) VALUES (${idUsuario}, ${idCurso})`;
