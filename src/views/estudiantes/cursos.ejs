@@ -112,13 +112,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <!-- Enlace al curso con la URL correcta -->
-                                <p class="card-text fw-bold nombreCurso">
-                                    <%= curso.nombreCurso %>
-                                </p>
-                            </div>
-
                             <div class="col-12 porcentaje">
                                 <% if (curso.porcentajeAsistencia>= 75) { %>
                                     <div class="progress-bar-75" role="progressbar">
@@ -254,7 +247,7 @@
 
 
             <script>
-                // ... (otros scripts) ...
+
             
                 // Agregar función para el botón de cerrar sesión
                 $('#cerrarSesion').on('click', function() {
