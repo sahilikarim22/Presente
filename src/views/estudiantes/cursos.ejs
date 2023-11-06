@@ -57,51 +57,69 @@
                                             <%= curso.nombreCurso %>
                                         </p>
                                     </div>
-                                    
+
                                     <div class="col-4 porcentaje">
-                                        <% if (curso.porcentajeAsistencia >= 75) { %>
+                                        <% if (curso.porcentajeAsistencia>= 75) { %>
                                             <div class="progress-bar-75" role="progressbar">
                                                 <span class="sr-only">
                                                     <%= curso.porcentajeAsistencia %>%
                                                 </span>
                                                 <%= curso.porcentajeAsistencia %>%
                                             </div>
-                                        <% }else if (curso.porcentajeAsistencia >= 75) { %>
-                                        <div class="progress-bar-75" role="progressbar">
-                                            <span class="sr-only">
-                                                <%= curso.porcentajeAsistencia %>%
-                                            </span>
-                                            <%= curso.porcentajeAsistencia %>%
+                                            <% }else if (curso.porcentajeAsistencia>= 75) { %>
+                                                <div class="progress-bar-75" role="progressbar">
+                                                    <span class="sr-only">
+                                                        <%= curso.porcentajeAsistencia %>%
+                                                    </span>
+                                                    <%= curso.porcentajeAsistencia %>%
+                                                </div>
+                                                <% } else if (curso.porcentajeAsistencia>= 50) { %>
+                                                    <div class="progress-bar-50" role="progressbar">
+                                                        <span class="sr-only">
+                                                            <%= curso.porcentajeAsistencia %>%
+                                                        </span>
+                                                        <%= curso.porcentajeAsistencia %>%
+                                                    </div>
+                                                    <% } else if (curso.porcentajeAsistencia>= 25) { %>
+                                                        <div class="progress-bar-25" role="progressbar">
+                                                            <span class="sr-only">
+                                                                <%= curso.porcentajeAsistencia %>%
+                                                            </span>
+                                                            <%= curso.porcentajeAsistencia %>%
+                                                        </div>
+                                                        <% } else { %>
+                                                            <div class="progress-bar-0" role="progressbar">
+                                                                <span class="sr-only">
+                                                                    <%= curso.porcentajeAsistencia %>%
+                                                                </span>
+                                                                <%= curso.porcentajeAsistencia %>%
+                                                            </div>
+                                                            <% } %>
+                                    </div>
+                                    <!-- Botón de opciones (Ellipsis) -->
+                                    <div class="col-2 text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-dark dropdown-toggle" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li>
+                                                    <a data-id="<%= curso.idCurso %>"
+                                                        class="dropdown-item eliminar-curso"
+                                                        href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">Eliminar
+                                                        <i class="fa-solid fa-trash"></i></a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <% } else if (curso.porcentajeAsistencia >= 50) { %>
-                                        <div class="progress-bar-50" role="progressbar">
-                                            <span class="sr-only">
-                                                <%= curso.porcentajeAsistencia %>%
-                                            </span>
-                                            <%= curso.porcentajeAsistencia %>%
-                                        </div>
-                                        <% } else if (curso.porcentajeAsistencia >= 25) { %>
-                                        <div class="progress-bar-25" role="progressbar">
-                                            <span class="sr-only">
-                                                <%= curso.porcentajeAsistencia %>%
-                                            </span>
-                                            <%= curso.porcentajeAsistencia %>%
-                                        </div>
-                                        <% } else { %>
-                                        <div class="progress-bar-0" role="progressbar">
-                                            <span class="sr-only">
-                                                <%= curso.porcentajeAsistencia %>%
-                                            </span>
-                                            <%= curso.porcentajeAsistencia %>%
-                                        </div>
-                                        <% } %>
+                                    </div>
                                 </div>
                             </div>
+
+                            <% }) %>
+
                         </div>
 
-                        <% }) %>        
-                
-                    </div>
 
 
 
@@ -114,99 +132,130 @@
 
 
 
-
+                </div>
             </div>
+            <% } else { %>
+                <div class="row mt-4">
+                    <div class="col-12 text-center">
+                        <p class="text-white">Aún no tienes cursos inscritos.</p>
+                    </div>
+                </div>
+                <% } %>
     </div>
-    <% } else { %>
-        <div class="row mt-4">
-            <div class="col-12 text-center">
-                <p class="text-white">Aún no tienes cursos inscritos.</p>
+
+    <form method="POST" action="/inscribirCurso">
+        <div id="modalAgregar" class="modal fade">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
+
+                    <div class="modal-header">
+                        <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                            <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="modal-footer text-center justify-content-center mx-auto">
+                        <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
+
+                    </div>
+                </div>
             </div>
         </div>
-        <% } %>
-            </div>
+    </form>
 
-            <form method="POST" action="/inscribirCurso">
-                <div id="modalAgregar" class="modal fade">
-                    <div class="modal-dialog">
+    <%- include('menuMovil') %>
 
-                        <div class="modal-content">
-                            <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
-
-                            <div class="modal-header">
-                                <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="nrc" class="ModalTituloCampo">NRC: </label>
-                                    <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
-                                </div>
-                            </div>
-                            <div class="modal-footer text-center justify-content-center mx-auto">
-                                <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <%- include('menuMovil') %>
-
-                </div>
+        </div>
 
 
 
 
-                <!-- jQuery, Popper.js, Bootstrap JS -->
-                <script src="/jquery/jquery-3.3.1.min.js"></script>
-                <script src="/popper/popper.min.js"></script>
-                <script src="/bootstrap/js/bootstrap.min.js"></script>
-
-
-                <script>
+        <!-- jQuery, Popper.js, Bootstrap JS -->
+        <script src="/jquery/jquery-3.3.1.min.js"></script>
+        <script src="/popper/popper.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
-                    $(document).ready(function () {
+        <script>
 
-                        // Abre el modal al hacer clic en el botón
-                        $('#abrirModal').on('click', function () {
-                            $('#modalAgregar').modal('show');
+
+
+            $(document).ready(function () {
+
+                // Abre el modal al hacer clic en el botón
+                $('#abrirModal').on('click', function () {
+                    $('#modalAgregar').modal('show');
+                });
+
+                // Agrega datos al DataTable y guarda en localStorage
+                $('#guardar').on('click', function () {
+                    var nombrePeriodo = $('#nombrePeriodo').val();
+                    var semanas = $('#semanas').val();
+                    var idCurso = $('#idCurso').val();
+
+                    // Cierra el modal
+                    $('#modalAgregar').modal('hide');
+                });
+
+                // Cierra el modal al hacer clic en el botón
+                $('#cerrar').on('click', function () {
+                    $('#modalAgregar').modal('hide');
+                    event.preventDefault();
+
+                });
+            });
+
+
+            // Elimina el curso
+            $('.eliminar-curso').on('click', function (e) {
+                e.preventDefault();
+                const cursoId = $(this).data('id');
+
+                // Utilizando SweetAlert en lugar de confirm
+                Swal.fire({
+                    title: '¿Estás seguro de que deseas eliminar este curso?',
+                    text: 'Esta acción no se puede deshacer',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminarlo',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: `/profesores/deleteCurso/${cursoId}`,
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function (xhr, status, error) {
+                                console.log('Error al eliminar el curso:', error);
+                            }
                         });
-
-                        // Agrega datos al DataTable y guarda en localStorage
-                        $('#guardar').on('click', function () {
-                            var nombrePeriodo = $('#nombrePeriodo').val();
-                            var semanas = $('#semanas').val();
-                            var idCurso = $('#idCurso').val();
-
-                            // Cierra el modal
-                            $('#modalAgregar').modal('hide');
-                        });
-
-                        // Cierra el modal al hacer clic en el botón
-                        $('#cerrar').on('click', function () {
-                            $('#modalAgregar').modal('hide');
-                            event.preventDefault();
-
-                        });
-                    });
-
-
-                    // Función para obtener la clase correspondiente al porcentaje
-                    // Función para determinar la clase de ancho de la barra según el porcentaje
-                    function obtenerAnchoBarra(porcentaje) {
-                        if (porcentaje >= 75) {
-                            return 'barra-75'; // Asigna la clase correspondiente al 75% de la barra
-                        } else if (porcentaje >= 50) {
-                            return 'barra-50'; // Asigna la clase correspondiente al 50% de la barra
-                        } else if (porcentaje >= 25) {
-                            return 'barra-25'; // Asigna la clase correspondiente al 25% de la barra
-                        } else {
-                            return 'barra-0'; // Si el porcentaje es menor que 25, asigna la clase al 0%
-                        }
                     }
+                });
+            });
+
+            // JavaScript para manejar la funcionalidad del menú ellipsis
+            $(document).ready(function () {
+                $('.dropdown-toggle').click(function () {
+                    $(this).next('.dropdown-menu').toggleClass('show');
+                });
+
+                $(document).on('click', function (e) {
+                    if (!$(e.target).closest('.dropdown').length) {
+                        $('.dropdown-menu').removeClass('show');
+                    }
+                });
+            });
 
 
 
@@ -215,7 +264,10 @@
 
 
 
-                </script>
+
+
+
+        </script>
 
 
 

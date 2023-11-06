@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso <%= curso[0].nombreCurso %>
     </title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
@@ -14,78 +14,176 @@
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
-
-    <!--font awesome con CDN-->
+    <!--Iconos Font Awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
 
 <body>
 
-    <div class="sidebar">
-        <div class="logo">
-            <i class="fas fa-bars menu-icon"></i>
-        </div>
-        <ul class="menu">
 
-            <li class="home"><a href="/admin/"><i class="fas fa-home text-black"></i></a></li>
-            <li class="atras"><a href="javascript:history.back()"><i class="fa-solid fa-angle-left"></i></a></li>
-        </ul>
-    </div>
-    <div class="content">
 
-        <button class="burger-btn">
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="container">
-            <p class="text-white TextoSemestre">Curso: <%= curso[0].nombreCurso %>
-            </p>
-            <h1 class="text-white">Curso Dictado por: <%= curso[0].nombre_profesor %>
-                    <%= curso[0].apellido_profesor %>
-            </h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 cursosProf">
+                <h1 class="mb-1">Curso <%= curso[0].nombreCurso %>
+                </h1>
+                <h5>Sección: <%= curso[0].seccion %>
+                </h5>
+                <h5>NRC: <%= curso[0].nrc %>
+                </h5>
+                <h5>Cantidad de días por semana: <%= curso[0].cantDiasSemanas %>
+                </h5>
+                <h5>Clases: <%= curso[0].cantDiasSemanas %>
+                </h5>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-xs-12 mt-3 table-responsive">
-                        <table id="tablaCursos" class="table table-bordered table-striped text-center mt-4">
-                            <thead>
-                                <tr class="bg-primary text-white">
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Cedula</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% curso.forEach((curso)=> { %>
-                                    <tr>
-                                        <td class="fondoTabla nombreTabla text-white">
-                                            <%= curso.nombre_estudiante %>
-                                                <%= curso.apellido_estudiante %>
-                                        </td>
-                                        <td class="fondoTabla nombreTabla text-white">
-                                            <%= curso.cedula_estudiante %>
-                                        </td>
-
-                                    </tr>
-
-                                    <% }) %>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12 m-4">
+            <h1 class="text-white">Estudiantes:</h1>
+        </div>
+
+        <div class="col-md-12 col-lg-12 fondoTabla table-responsive">
+            <table id="tablaEstudiantes"
+                class="table table-bordered table-dark table-striped text-white text-center mt-4">
+                <thead>
+
+                    <tr class="bg-primary text-white">
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% estudiantes.forEach((est)=>{ %>
+                        <tr>
+                            <td class="">
+                                <%= est.cedula %>
+                            </td>
+                            <td class="">
+                                <%= est.nombres %>
+                                    <%= est.apellidos %>
+
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btnEliminarEstudiante"
+                                    data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12 m-4">
+            <h1 class="text-white">Clases:</h1>
+        </div>
+
+        <div class="col-md-12 col-lg-12 fondoTabla">
+            <table id="tablaClases" class="table table-bordered table-dark table-striped text-white text-center mt-4">
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <% clases.forEach(clase=> { %>
+                            <th>
+                                <%= clase.nombreClase %> (<%= clase.fechaClase %>)
+                            </th>
+                            <% }); %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% estudiantes.forEach(estudiante=> { %>
+                        <tr>
+                            <td>
+                                <%= estudiante.cedula %>
+                            </td>
+                            <td>
+                                <%= estudiante.nombres %>
+                            </td>
+                            <td>
+                                <%= estudiante.apellidos %>
+                            </td>
+                            <% clases.forEach(clase=> { %>
+                                <td>
+                                    <% const asistencias=asistenciaPorClase[clase.idClase] || []; %>
+                                        <% const asistenciaEstudiante=asistencias.find(asistencia=> asistencia.id ===
+                                            estudiante.id); %>
+                                            <% if (asistenciaEstudiante) { %>
+                                                <% if (asistenciaEstudiante.asistio===1) { %>
+                                                    <div
+                                                        style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
+                                                    </div>
+                                                    <% } else { %>
+                                                        <div
+                                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
+                                                        </div>
+                                                        <% } %>
+                                                            <% } %>
+                                </td>
+                                <% }); %>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+    <div class="miMenuMovil">
+        <div class="navegacion">
+            <ul>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path
+                                    d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z">
+                                </path>
+                            </svg>
+                        </span>
+                        <!-- <span class="text">Atrás</span> -->
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path
+                                    d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z">
+                                </path>
+                            </svg>
+                        </span>
+                        <!-- <span class="text">Home</span> -->
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path
+                                    d="M4 7h11v2H4zm0 4h11v2H4zm0 4h7v2H4zm15.299-2.708-4.3 4.291-1.292-1.291-1.414 1.415 2.706 2.704 5.712-5.703z">
+                                </path>
+                            </svg>
+                        </span>
+                        <!-- <span class="text">Atrás</span> -->
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
         </div>
     </div>
 
-    <div class="imagenTrianguloCentrado">
-        <img src="/imagenes/t_abajo.svg">
-    </div>
 
-
-
-
-
-
-    <!-- jQuery, Popper.js, Bootstrap JS -->
     <script src="/jquery/jquery-3.3.1.min.js"></script>
     <script src="/popper/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
@@ -100,17 +198,80 @@
     <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
     <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 
-    <!-- código JS propio-->
-    <script>
-        $(document).ready(function () {
+    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            $('#tablaCursos').DataTable({
+
+    <script>
+
+        $(document).ready(function () {
+            $('.btnEliminarEstudiante').on('click', function () {
+
+                var estudianteId = $(this).data('estudiante-id');
+                var idCurso = $(this).data('curso-id');
+                Swal.fire({
+                    title: '¿Seguro que quieres eliminar este estudiante de este curso?',
+                    text: '¡Esta acción no se puede deshacer!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Realizar la solicitud AJAX para eliminar al estudiante
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/eliminarEstudianteCurso',
+                            data: {
+                                idEstudiante: estudianteId,
+                                idCurso: idCurso
+                            }, // Datos a enviar, aquí se incluye el ID del estudiante
+                            success: function (response) {
+                                const idCurso = response.idCurso;
+                                const idPeriodo = response.idPeriodo;
+                                window.location.href = `/admin/verCurso/${idCurso}/${idPeriodo}`;
+                            },
+                            error: function (error) {
+                                // Manejar el error si la solicitud no se completa correctamente
+                                console.error('Error al eliminar el estudiante', error);
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+
+        const list = document.querySelectorAll(".list");
+        function activeLink() {
+            list.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+        }
+        list.forEach((l) => l.addEventListener("click", activeLink));
+
+
+        const checkbox = document.getElementById('botonCheckbox');
+
+        checkbox.addEventListener('click', function () {
+            if (this.checked) {
+                this.checked = false;
+            } else {
+                this.checked = true;
+            }
+        });
+
+        jQuery(document).ready(function ($) {
+
+
+            $('#tablaEstudiantes').DataTable({
                 language: {
-                    "lengthMenu": "_MENU_",
+                    "lengthMenu": "Mostrar _MENU_ registros",
                     "zeroRecords": "No se encontraron resultados",
-                    "info": "",
-                    "infoEmpty": "",
-                    "infoFiltered": "",
+                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "sSearch": "Buscar:",
                     "oPaginate": {
                         "sFirst": "Primero",
@@ -128,51 +289,65 @@
                         extend: 'excelHtml5',
                         text: '<i class="fas fa-file-excel"></i> ',
                         titleAttr: 'Exportar a Excel',
-                        className: 'btn btn-success',
-                        exportOptions: {
-                            columns: ':not(:last-child)' // Excluye la última columna
-                        }
+                        className: 'btn btn-success d-inline-block'
                     },
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger',
-                        exportOptions: {
-                            columns: ':not(:last-child)' // Excluye la última columna
-                        }
+                        className: 'btn btn-danger d-inline-block'
                     },
 
                 ]
             });
 
 
-            // Abre el modal al hacer clic en el botón
-            $('#abrirModal').on('click', function () {
-                $('#modalAgregar').modal('show');
+            $('#tablaClases').DataTable({
+                language: {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "sProcessing": "Procesando...",
+                },
+                //para usar los botones   
+                responsive: "true",
+                dom: 'Bfrtilp',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> ',
+                        titleAttr: 'Exportar a Excel',
+                        className: 'btn btn-success'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> ',
+                        titleAttr: 'Exportar a PDF',
+                        className: 'btn btn-danger'
+                    },
+
+                ]
             });
 
-            // Agrega datos al DataTable y guarda en localStorage
-            $('#guardar').on('click', function () {
-                // Cierra el modal
-                $('#modalAgregar').modal('hide');
-            });
+
+
+
         });
 
 
+
+
+
     </script>
-
-    <script>
-        const sidebar = document.querySelector('.sidebar');
-        const content = document.querySelector('.content');
-        const burgerBtn = document.querySelector('.burger-btn');
-
-        burgerBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            content.classList.toggle('active');
-        });
-    </script>
-
 
 
 </body>
