@@ -238,19 +238,18 @@ function scaner() {
             };
             scanner.onUniqueRead = (txt, result) => {
                 // marcar asistencia
+                alert("escaneado correctamente");
                 
                 const cedula = txt;
                 console.log(cedula)
                 const checkbox = document.getElementById(`estudiante_${cedula}`);
                 checkbox.checked = true;
-                alert("escaneado correctamente");
-                console.log(checkbox);
-                Swal.fire({
-                                icon: 'success',
-                                title: '¡Escaneado con éxito!',
-                                showConfirmButton: false,
-                                timer: 3000 
-                            });
+                // Swal.fire({
+                //                 icon: 'success',
+                //                 title: '¡Escaneado con éxito!',
+                //                 showConfirmButton: false,
+                //                 timer: 3000 
+                //             });
 
             };
             await scanner.show();
