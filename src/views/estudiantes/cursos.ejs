@@ -244,21 +244,21 @@
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        $(document).ready(function () {
-            // Abre el menú móvil al hacer clic en el icono
-            $('.abrirMenu').click(function () {
-                $('.miMenuMovil').css('left', '0');
-            });
-
-            // Cierra el menú móvil al hacer clic fuera del menú
-            $(document).click(function (e) {
-                if (!$(e.target).closest('.miMenuMovil').length) {
-                    $('.miMenuMovil').css('left', '-100%');
-                }
-            });
+<script>
+    $(document).ready(function () {
+        // Abre el menú móvil al hacer clic en el icono
+        $('.abrirMenu').click(function () {
+            $('.miMenuMovil').css('left', '0');
         });
-    </script>
+
+        // Cierra el menú móvil al hacer clic fuera del menú
+        $(document).click(function (e) {
+            if (!$(e.target).closest('.miMenuMovil').length && !$(e.target).closest('.abrirMenu').length) {
+                $('.miMenuMovil').css('left', '-100%');
+            }
+        });
+    });
+</script>
 
     <script>
 
