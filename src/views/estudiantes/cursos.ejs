@@ -87,258 +87,273 @@
                 <div class="col-12">
                     <% cursos.forEach((curso)=> { %>
                         <div class="card card-background">
-                            <div class="card-body">
-                                <div class="row">
-                                    <!-- Botón de opciones (Ellipsis) -->
-                                    <div class="col-2 d-flex justify-content-end mb-2">
-                                        <div class="dropdown">
-                                            <button class="btn btn-dark dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li>
-                                                    <a data-id="<%= curso.idCurso %>"
-                                                        class="dropdown-item eliminar-curso"
-                                                        href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">Eliminar
-                                                        <i class="fa-solid fa-trash"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="card-text fw-bold nombreCurso">
+                                        <%= curso.nombreCurso %>
+                                    </p>
+                                    <div class="porcentaje">
+                                        <!-- Aquí se mantiene el bloque de porcentaje de asistencia -->
                                     </div>
-                                    <div class="col-12">
-                                        <!-- Enlace al curso con la URL correcta -->
-                                        <p class="card-text fw-bold nombreCurso">
-                                            <%= curso.nombreCurso %>
-                                        </p>
-                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-dark dropdown-toggle" type="button"
+                                        id="dropdownMenuButton-<%= curso.idCurso %>" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-<%= curso.idCurso %>">
+                                        <li>
+                                            <a data-id="<%= curso.idCurso %>" class="dropdown-item eliminar-curso"
+                                                href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">
+                                                Eliminar <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <!-- Enlace al curso con la URL correcta -->
+                                <p class="card-text fw-bold nombreCurso">
+                                    <%= curso.nombreCurso %>
+                                </p>
+                            </div>
 
-                                    <div class="col-12 porcentaje">
-                                        <% if (curso.porcentajeAsistencia>= 75) { %>
-                                            <div class="progress-bar-75" role="progressbar">
+                            <div class="col-12 porcentaje">
+                                <% if (curso.porcentajeAsistencia>= 75) { %>
+                                    <div class="progress-bar-75" role="progressbar">
+                                        <span class="sr-only">
+                                            <%= curso.porcentajeAsistencia %>%
+                                        </span>
+                                        <%= curso.porcentajeAsistencia %>%
+                                    </div>
+                                    <% }else if (curso.porcentajeAsistencia>= 75) { %>
+                                        <div class="progress-bar-75" role="progressbar">
+                                            <span class="sr-only">
+                                                <%= curso.porcentajeAsistencia %>%
+                                            </span>
+                                            <%= curso.porcentajeAsistencia %>%
+                                        </div>
+                                        <% } else if (curso.porcentajeAsistencia>= 50) { %>
+                                            <div class="progress-bar-50" role="progressbar">
                                                 <span class="sr-only">
                                                     <%= curso.porcentajeAsistencia %>%
                                                 </span>
                                                 <%= curso.porcentajeAsistencia %>%
                                             </div>
-                                            <% }else if (curso.porcentajeAsistencia>= 75) { %>
-                                                <div class="progress-bar-75" role="progressbar">
+                                            <% } else if (curso.porcentajeAsistencia>= 25) { %>
+                                                <div class="progress-bar-25" role="progressbar">
                                                     <span class="sr-only">
                                                         <%= curso.porcentajeAsistencia %>%
                                                     </span>
                                                     <%= curso.porcentajeAsistencia %>%
                                                 </div>
-                                                <% } else if (curso.porcentajeAsistencia>= 50) { %>
-                                                    <div class="progress-bar-50" role="progressbar">
+                                                <% } else if (curso.porcentajeAsistencia>= 15) { %>
+                                                    <div class="progress-bar-15" role="progressbar">
                                                         <span class="sr-only">
                                                             <%= curso.porcentajeAsistencia %>%
                                                         </span>
                                                         <%= curso.porcentajeAsistencia %>%
                                                     </div>
-                                                    <% } else if (curso.porcentajeAsistencia>= 25) { %>
-                                                        <div class="progress-bar-25" role="progressbar">
+                                                    <% } else if (curso.porcentajeAsistencia>= 10) { %>
+                                                        <div class="progress-bar-10" role="progressbar">
                                                             <span class="sr-only">
                                                                 <%= curso.porcentajeAsistencia %>%
                                                             </span>
                                                             <%= curso.porcentajeAsistencia %>%
                                                         </div>
-                                                        <% } else if (curso.porcentajeAsistencia>= 15) { %>
-                                                            <div class="progress-bar-15" role="progressbar">
+                                                        <% } else if (curso.porcentajeAsistencia>= 5) { %>
+                                                            <div class="progress-bar-5" role="progressbar">
                                                                 <span class="sr-only">
                                                                     <%= curso.porcentajeAsistencia %>%
                                                                 </span>
                                                                 <%= curso.porcentajeAsistencia %>%
                                                             </div>
-                                                            <% } else if (curso.porcentajeAsistencia>= 10) { %>
-                                                                <div class="progress-bar-10" role="progressbar">
+                                                            <% } else { %>
+                                                                <div class="progress-bar-0" role="progressbar">
                                                                     <span class="sr-only">
                                                                         <%= curso.porcentajeAsistencia %>%
                                                                     </span>
                                                                     <%= curso.porcentajeAsistencia %>%
                                                                 </div>
-                                                                <% } else if (curso.porcentajeAsistencia>= 5) { %>
-                                                                    <div class="progress-bar-5" role="progressbar">
-                                                                        <span class="sr-only">
-                                                                            <%= curso.porcentajeAsistencia %>%
-                                                                        </span>
-                                                                        <%= curso.porcentajeAsistencia %>%
-                                                                    </div>
-                                                        <% } else { %>
-                                                            <div class="progress-bar-0" role="progressbar">
-                                                                <span class="sr-only">
-                                                                    <%= curso.porcentajeAsistencia %>%
-                                                                </span>
-                                                                <%= curso.porcentajeAsistencia %>%
-                                                            </div>
-                                                            <% } %>
-                                    </div>
-                                    
-                                </div>
+                                                                <% } %>
                             </div>
 
-                            <% }) %>
-
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
+
+                <% }) %>
+
             </div>
-            <% } else { %>
-                <div class="row mt-4">
-                    <div class="col-12 text-center">
-                        <p class="text-white">Aún no tienes cursos inscritos.</p>
-                    </div>
-                </div>
-                <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-
-    <form method="POST" action="/inscribirCurso">
-        <div id="modalAgregar" class="modal fade">
-            <div class="modal-dialog">
-
-                <div class="modal-content">
-                    <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
-
-                    <div class="modal-header">
-                        <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nrc" class="ModalTituloCampo">NRC: </label>
-                            <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
-                        </div>
-                    </div>
-                    <div class="modal-footer text-center justify-content-center mx-auto">
-                        <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
-
-                    </div>
-                </div>
+    </div>
+    <% } else { %>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <p class="text-white">Aún no tienes cursos inscritos.</p>
             </div>
         </div>
-    </form>
+        <% } %>
+            </div>
 
-    <div class="miMenuMovil">
-        <ul>
-            <li><a href="/logout"><span class="icon"><i class="fas fa-sign-out-alt"></i></span>Salir</a></li>
-        </ul>
+            <form method="POST" action="/inscribirCurso">
+                <div id="modalAgregar" class="modal fade">
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+                            <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
+
+                            <div class="modal-header">
+                                <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                                    <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
+                                </div>
+                            </div>
+                            <div class="modal-footer text-center justify-content-center mx-auto">
+                                <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+<!-- Agregar un botón para cerrar sesión -->
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
     </div>
-
-    </div>
-
+</div>
 
 
 
-    <!-- jQuery, Popper.js, Bootstrap JS -->
-    <script src="/jquery/jquery-3.3.1.min.js"></script>
-    <script src="/popper/popper.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    $(document).ready(function () {
-        // Abre el menú móvil al hacer clic en el icono
-        $('.abrirMenu').click(function () {
-            $('.miMenuMovil').css('left', '0');
-        });
-
-        // Cierra el menú móvil al hacer clic fuera del menú
-        $(document).click(function (e) {
-            if (!$(e.target).closest('.miMenuMovil').length && !$(e.target).closest('.abrirMenu').length) {
-                $('.miMenuMovil').css('left', '-100%');
-            }
-        });
-    });
-</script>
-
-    <script>
+            <!-- jQuery, Popper.js, Bootstrap JS -->
+            <script src="/jquery/jquery-3.3.1.min.js"></script>
+            <script src="/popper/popper.min.js"></script>
+            <script src="/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
+            <script>
+                // ... (otros scripts) ...
+            
+                // Agregar función para el botón de cerrar sesión
+                $('#cerrarSesion').on('click', function() {
+                    // Aquí puedes agregar el código para cerrar la sesión o realizar la acción necesaria
+                    // Por ejemplo, redireccionar a la página de cierre de sesión
+                    window.location.href = '/logout'; // Esta es una redirección de ejemplo, cambia la URL según tu configuración
+                });
+            
+                // ... (otros scripts) ...
+            </script>
+            <script>
+                $(document).ready(function () {
+                    // Abre el menú móvil al hacer clic en el icono
+                    $('.abrirMenu').click(function () {
+                        $('.miMenuMovil').css('left', '0');
+                    });
 
-        $(document).ready(function () {
-
-            // Abre el modal al hacer clic en el botón
-            $('#abrirModal').on('click', function () {
-                $('#modalAgregar').modal('show');
-            });
-
-            // Agrega datos al DataTable y guarda en localStorage
-            $('#guardar').on('click', function () {
-                var nombrePeriodo = $('#nombrePeriodo').val();
-                var semanas = $('#semanas').val();
-                var idCurso = $('#idCurso').val();
-
-                // Cierra el modal
-                $('#modalAgregar').modal('hide');
-            });
-
-            // Cierra el modal al hacer clic en el botón
-            $('#cerrar').on('click', function () {
-                $('#modalAgregar').modal('hide');
-                event.preventDefault();
-
-            });
-        });
-
-
-        // Elimina el curso
-        $('.eliminar-curso').on('click', function (e) {
-            e.preventDefault();
-            const cursoId = $(this).data('id');
-
-            console.log("hola")
-
-            // Utilizando SweetAlert en lugar de confirm
-            Swal.fire({
-                title: '¿Estás seguro de que deseas eliminar este curso?',
-                text: 'Esta acción no se puede deshacer',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Sí, eliminarlo',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: `/eliminarCurso/${cursoId}`,
-                        success: function (response) {
-                            location.reload();
-                        },
-                        error: function (xhr, status, error) {
-                            console.log('Error al eliminar el curso:', error);
+                    // Cierra el menú móvil al hacer clic fuera del menú
+                    $(document).click(function (e) {
+                        if (!$(e.target).closest('.miMenuMovil').length && !$(e.target).closest('.abrirMenu').length) {
+                            $('.miMenuMovil').css('left', '-100%');
                         }
                     });
-                }
-            });
-        });
+                });
+            </script>
 
-        // JavaScript para manejar la funcionalidad del menú ellipsis
-        $(document).ready(function () {
-            $('.dropdown-toggle').click(function () {
-                $(this).next('.dropdown-menu').toggleClass('show');
-            });
-
-            $(document).on('click', function (e) {
-                if (!$(e.target).closest('.dropdown').length) {
-                    $('.dropdown-menu').removeClass('show');
-                }
-            });
-        });
+            <script>
 
 
 
+                $(document).ready(function () {
+
+                    // Abre el modal al hacer clic en el botón
+                    $('#abrirModal').on('click', function () {
+                        $('#modalAgregar').modal('show');
+                    });
+
+                    // Agrega datos al DataTable y guarda en localStorage
+                    $('#guardar').on('click', function () {
+                        var nombrePeriodo = $('#nombrePeriodo').val();
+                        var semanas = $('#semanas').val();
+                        var idCurso = $('#idCurso').val();
+
+                        // Cierra el modal
+                        $('#modalAgregar').modal('hide');
+                    });
+
+                    // Cierra el modal al hacer clic en el botón
+                    $('#cerrar').on('click', function () {
+                        $('#modalAgregar').modal('hide');
+                        event.preventDefault();
+
+                    });
+                });
+
+
+                // Elimina el curso
+                $('.eliminar-curso').on('click', function (e) {
+                    e.preventDefault();
+                    const cursoId = $(this).data('id');
+
+                    console.log("hola")
+
+                    // Utilizando SweetAlert en lugar de confirm
+                    Swal.fire({
+                        title: '¿Estás seguro de que deseas eliminar este curso?',
+                        text: 'Esta acción no se puede deshacer',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sí, eliminarlo',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: `/eliminarCurso/${cursoId}`,
+                                success: function (response) {
+                                    location.reload();
+                                },
+                                error: function (xhr, status, error) {
+                                    console.log('Error al eliminar el curso:', error);
+                                }
+                            });
+                        }
+                    });
+                });
+
+                // JavaScript para manejar la funcionalidad del menú ellipsis
+                $(document).ready(function () {
+                    $('.dropdown-toggle').click(function () {
+                        $(this).next('.dropdown-menu').toggleClass('show');
+                    });
+
+                    $(document).on('click', function (e) {
+                        if (!$(e.target).closest('.dropdown').length) {
+                            $('.dropdown-menu').removeClass('show');
+                        }
+                    });
+                });
 
 
 
@@ -347,7 +362,10 @@
 
 
 
-    </script>
+
+
+
+            </script>
 
 
 
