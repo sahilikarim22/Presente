@@ -15,7 +15,43 @@
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <!--Iconos Font Awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <style>
+        /* Menú móvil */
+        .miMenuMovil {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 70%;
+            height: 100%;
+            background-color: #333;
+            transition: 0.3s;
+            z-index: 999;
+            padding: 20px;
+        }
 
+        .miMenuMovil ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .miMenuMovil ul li {
+            margin-bottom: 20px;
+        }
+
+        .miMenuMovil ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .salir {
+            margin-top: auto;
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
 
 </head>
 
@@ -168,97 +204,114 @@
         </div>
     </form>
 
-    <%- include('menuMovil') %>
+    <div class="miMenuMovil">
+        <ul>
+            <li><a href="/logout"><span class="icon"><i class="fas fa-sign-out-alt"></i></span>Salir</a></li>
+        </ul>
+    </div>
 
-        </div>
-
-
-
-
-        <!-- jQuery, Popper.js, Bootstrap JS -->
-        <script src="/jquery/jquery-3.3.1.min.js"></script>
-        <script src="/popper/popper.min.js"></script>
-        <script src="/bootstrap/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </div>
 
 
 
-        <script>
 
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/popper/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-            $(document).ready(function () {
-
-                // Abre el modal al hacer clic en el botón
-                $('#abrirModal').on('click', function () {
-                    $('#modalAgregar').modal('show');
-                });
-
-                // Agrega datos al DataTable y guarda en localStorage
-                $('#guardar').on('click', function () {
-                    var nombrePeriodo = $('#nombrePeriodo').val();
-                    var semanas = $('#semanas').val();
-                    var idCurso = $('#idCurso').val();
-
-                    // Cierra el modal
-                    $('#modalAgregar').modal('hide');
-                });
-
-                // Cierra el modal al hacer clic en el botón
-                $('#cerrar').on('click', function () {
-                    $('#modalAgregar').modal('hide');
-                    event.preventDefault();
-
-                });
+    <script>
+        $(document).ready(function () {
+            // Abre el menú móvil al hacer clic en el icono
+            $('.abrirMenu').click(function () {
+                $('.miMenuMovil').css('left', '0');
             });
 
+            // Cierra el menú móvil al hacer clic fuera del menú
+            $(document).click(function (e) {
+                if (!$(e.target).closest('.miMenuMovil').length) {
+                    $('.miMenuMovil').css('left', '-100%');
+                }
+            });
+        });
+    </script>
 
-            // Elimina el curso
-            $('.eliminar-curso').on('click', function (e) {
-                e.preventDefault();
-                const cursoId = $(this).data('id');
+    <script>
 
-                console.log("hola")
 
-                // Utilizando SweetAlert en lugar de confirm
-                Swal.fire({
-                    title: '¿Estás seguro de que deseas eliminar este curso?',
-                    text: 'Esta acción no se puede deshacer',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminarlo',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'DELETE',
-                            url: `/eliminarCurso/${cursoId}`,
-                            success: function (response) {
-                                location.reload();
-                            },
-                            error: function (xhr, status, error) {
-                                console.log('Error al eliminar el curso:', error);
-                            }
-                        });
-                    }
-                });
+
+        $(document).ready(function () {
+
+            // Abre el modal al hacer clic en el botón
+            $('#abrirModal').on('click', function () {
+                $('#modalAgregar').modal('show');
             });
 
-            // JavaScript para manejar la funcionalidad del menú ellipsis
-            $(document).ready(function () {
-                $('.dropdown-toggle').click(function () {
-                    $(this).next('.dropdown-menu').toggleClass('show');
-                });
+            // Agrega datos al DataTable y guarda en localStorage
+            $('#guardar').on('click', function () {
+                var nombrePeriodo = $('#nombrePeriodo').val();
+                var semanas = $('#semanas').val();
+                var idCurso = $('#idCurso').val();
 
-                $(document).on('click', function (e) {
-                    if (!$(e.target).closest('.dropdown').length) {
-                        $('.dropdown-menu').removeClass('show');
-                    }
-                });
+                // Cierra el modal
+                $('#modalAgregar').modal('hide');
             });
 
+            // Cierra el modal al hacer clic en el botón
+            $('#cerrar').on('click', function () {
+                $('#modalAgregar').modal('hide');
+                event.preventDefault();
+
+            });
+        });
+
+
+        // Elimina el curso
+        $('.eliminar-curso').on('click', function (e) {
+            e.preventDefault();
+            const cursoId = $(this).data('id');
+
+            console.log("hola")
+
+            // Utilizando SweetAlert en lugar de confirm
+            Swal.fire({
+                title: '¿Estás seguro de que deseas eliminar este curso?',
+                text: 'Esta acción no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: `/eliminarCurso/${cursoId}`,
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            console.log('Error al eliminar el curso:', error);
+                        }
+                    });
+                }
+            });
+        });
+
+        // JavaScript para manejar la funcionalidad del menú ellipsis
+        $(document).ready(function () {
+            $('.dropdown-toggle').click(function () {
+                $(this).next('.dropdown-menu').toggleClass('show');
+            });
+
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+        });
 
 
 
@@ -269,7 +322,8 @@
 
 
 
-        </script>
+
+    </script>
 
 
 
