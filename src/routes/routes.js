@@ -68,6 +68,12 @@ router.delete('/eliminarCurso/:idCurso', cursosController.deleteCurso);
 router.delete('/eliminarEstudianteCurso', profesorController.deleteEstudianteCurso);
 router.delete('/profesores/deleteCurso/:idCurso',  requireLogin, checkUserType('docente'), profesorController.deleteCurso);
 
+// Manejador de errores
+router.use((err, req, res, next) => {
+  console.error(err.stack); // Registro del error
+  res.status(500).render('error', { errorMessage: err.message });
+});
+
 
 //funciones que requiere login
 function requireLogin(req, res, next) {

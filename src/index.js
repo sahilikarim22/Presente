@@ -29,15 +29,14 @@ app.use(
   })
 );
 
-// Manejador de errores
-app.use((err, req, res, next) => {
-  console.error(err.stack); // Registro del error
-  res.status(500).render('error', { errorMensaje: err.message });
-});
 
 //service worker
 app.get('/manifest.json', (req, res) =>{
   res.sendFile(__dirname+'/views/manifest.json');
+});
+
+app.get('/sw.js', (req, res) =>{
+  res.sendFile(__dirname+'/views/sw.js');
 });
 
 // Rutas
