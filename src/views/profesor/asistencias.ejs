@@ -71,7 +71,7 @@
                                 <%= est.nombres %> <%= est.apellidos %>
                             </td>
                             <td class="asistio">
-                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %> id_<%= est.idUsuario %>" data-index="<%= index %>">
+                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %>_<%= est.idUsuario %>" data-index="<%= index %>">
                             </td>
                         </tr>
                         <% }) %>
@@ -197,7 +197,7 @@
 
     // Recorre cada checkbox para obtener los estudiantes presentes
     document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
-        const idEstudiante = checkbox.id.split('id_')[1];
+        const idUsuario = checkbox.id.split('_')[2]; 
 
         const nombreClase = document.querySelector(".nombreClase").value;
         const descripcion = document.querySelector(".descripcion").value;
@@ -242,10 +242,10 @@ function scaner() {
             scanner.onUniqueRead = (txt, result) => {
                 // marcar asistencia
                 const idEstudiante = txt;
-                const checkbox = document.getElementById(`estudiante_${idEstudiante}`);
+                const checkbox = document.getElementById(`estudiante_${cedula}_${idUsuario}`);
                 checkbox.checked = true;
-                // console.log(idEstudiante);
-                // console.log(checkbox);
+                console.log(idEstudiante);
+                console.log(checkbox);
                 Swal.fire({
                                 icon: 'success',
                                 title: '¡Escaneado con éxito!',
