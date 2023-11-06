@@ -105,7 +105,7 @@ GROUP BY
                 return res.status(500).send("Error en la inserción");
               } else {
                 console.log("Inserción exitosa en la tabla curso_estudiante.");
-                return res.redirect("/estudiantes/cursos/${idPeriodo}");
+                return res.redirect(`estudiantes/cursos/${idPeriodo}`);
               }
             });
           }
