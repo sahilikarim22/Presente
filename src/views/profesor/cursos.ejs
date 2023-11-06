@@ -24,81 +24,69 @@
 
 
     
-        <div class="content">
-            <div class="container">
-                <div class="row mt-4">
-                    <div class="col-sm-12 col-md-12 d-flex flex-column align-items-center text-center">
-                        <span class="circulo">
-                            <i class="fas fa-user" style="font-size: 3rem;"></i>
-                        </span>
-                        <h3 class="text-white">
-                            <%= profesor.nombres %>
-                                <%= profesor.apellidos %>
-                        </h3>
-                        <h5 class="text-white">Profesor</h5>
-                        <button id="abrirModal" class="btn btn-primary">Agregar Curso</button>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-6">
-                        <h5 class="card-title text-capitalize text-white">Mis Cursos</h5>
-                    </div>
-
-                    <div class="col-12">
-                        <% cursos.forEach((curso)=> { %>
-                            <div class="card card-background">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <!-- Enlace al curso con la URL correcta -->
-                                            <a href="/profesor/curso/<%= curso.idCurso %>/<%= curso.idPeriodo %>"
-                                                class="card-link">
-                                                <p class="card-text fw-bold text-black text-capitalize tituloCurso">
-                                                    <%= curso.nombreCurso %>
-                                                </p>
-                                            </a>
-                                        </div>
-
-                                        <!-- Botón de opciones (Ellipsis) -->
-                                        <div class="col-2 text-end">
-                                            <div class="dropdown">
-                                                <button class="btn btn-dark dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <li>
-                                                        <a data-id="<%= curso.idCurso %>"
-                                                            class="dropdown-item editar-curso" href="#">Editar <i
-                                                                class="fa-solid fa-pencil"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a data-id="<%= curso.idCurso %>"
-                                                            class="dropdown-item eliminar-curso"
-                                                            href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">Eliminar
-                                                            <i class="fa-solid fa-trash"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <!-- Botón "Entrar" -->
-                                        <div class="col-12 mt-3 text-end">
-                                            <a href="/profesor/curso/<%= curso.idCurso %>/<%= curso.idPeriodo %>"
-                                                class="btn btn-primary">Entrar <i
-                                                    class="fa-solid fa-circle-arrow-right"></i></a>
-                                        </div>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-sm-12 col-md-12 d-flex flex-column align-items-center text-center">
+                <span class="circulo">
+                    <i class="fas fa-user" style="font-size: 3rem;"></i>
+                </span>
+                <h3 class="text-white">
+                    <%= profesor.nombres %>
+                    <%= profesor.apellidos %>
+                </h3>
+                <h5 class="text-white">Profesor</h5>
+                <button id="abrirModal" class="btn btn-primary mt-3">Agregar Curso</button>
+            </div>
+        </div>
+    
+        <div class="row mt-4">
+            <div class="col-12">
+                <h5 class="card-title text-capitalize text-white">Mis Cursos</h5>
+                <% cursos.forEach((curso)=> { %>
+                    <div class="card card-background mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8 col-md-10">
+                                    <a href="/profesor/curso/<%= curso.idCurso %>/<%= curso.idPeriodo %>" class="card-link">
+                                        <p class="card-text fw-bold text-black text-capitalize tituloCurso">
+                                            <%= curso.nombreCurso %>
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="col-4 col-md-2 text-end">
+                                    <div class="dropdown">
+                                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li>
+                                                <a data-id="<%= curso.idCurso %>" class="dropdown-item editar-curso" href="#">
+                                                    Editar <i class="fa-solid fa-pencil"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a data-id="<%= curso.idCurso %>" class="dropdown-item eliminar-curso"
+                                                    href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">
+                                                    Eliminar <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                                <div class="col-12 text-end">
+                                    <a href="/profesor/curso/<%= curso.idCurso %>/<%= curso.idPeriodo %>"
+                                        class="btn btn-primary">Entrar <i class="fa-solid fa-circle-arrow-right"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="masCursos"></div>
-                            <% }) %>
+                        </div>
                     </div>
-
-                </div>
+                <% }) %>
             </div>
+        </div>
+    </div>
+    
 
             <form method="POST" action="/guardarCurso">
                 <div id="modalAgregar" class="modal fade">
@@ -186,15 +174,8 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <%- include('menuMovil') %>
-
-
-
-
-
-
 
 
 
