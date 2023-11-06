@@ -229,7 +229,7 @@
 }
 
 function scaner() {
-        Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzUzNDI2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1MzQyNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOi0yMTQ2NjA0MzAzfQ==';
+        Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzU2OTMzLVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21sdHMuZHluYW1zb2Z0LmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1NjkzMyIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NsdHMuZHluYW1zb2Z0LmNvbS8iLCJjaGVja0NvZGUiOjI5NjY5OTgwM30=';
         // Initializes and uses the SDK
         (async () => {
             let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
@@ -238,19 +238,18 @@ function scaner() {
             };
             scanner.onUniqueRead = (txt, result) => {
                 // marcar asistencia
+                alert("escaneado correctamente");
                 
                 const cedula = txt;
                 console.log(cedula)
                 const checkbox = document.getElementById(`estudiante_${cedula}`);
                 checkbox.checked = true;
-                alert("escaneado correctamente");
-                console.log(checkbox);
-                Swal.fire({
-                                icon: 'success',
-                                title: '¡Escaneado con éxito!',
-                                showConfirmButton: false,
-                                timer: 3000 
-                            });
+                // Swal.fire({
+                //                 icon: 'success',
+                //                 title: '¡Escaneado con éxito!',
+                //                 showConfirmButton: false,
+                //                 timer: 3000 
+                //             });
 
             };
             await scanner.show();
