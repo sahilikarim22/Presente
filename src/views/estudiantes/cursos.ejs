@@ -89,6 +89,23 @@
                         <div class="card card-background">
                             <div class="card-body">
                                 <div class="row">
+                                    <!-- Botón de opciones (Ellipsis) -->
+                                    <div class="col-2 d-flex justify-content-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-dark dropdown-toggle" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li>
+                                                    <a data-id="<%= curso.idCurso %>"
+                                                        class="dropdown-item eliminar-curso"
+                                                        href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">Eliminar
+                                                        <i class="fa-solid fa-trash"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <!-- Enlace al curso con la URL correcta -->
                                         <p class="card-text fw-bold nombreCurso">
@@ -155,23 +172,7 @@
                                                             </div>
                                                             <% } %>
                                     </div>
-                                    <!-- Botón de opciones (Ellipsis) -->
-                                    <div class="col-2 text-end">
-                                        <div class="dropdown">
-                                            <button class="btn btn-dark dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li>
-                                                    <a data-id="<%= curso.idCurso %>"
-                                                        class="dropdown-item eliminar-curso"
-                                                        href="/profesor/eliminar/<%= curso.idCurso %>/eliminar">Eliminar
-                                                        <i class="fa-solid fa-trash"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
 
