@@ -122,19 +122,7 @@
 
     <script>
 
-        const list = document.querySelectorAll(".list");
-        function activeLink() {
-            list.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-        }
-        list.forEach((l) => l.addEventListener("click", activeLink));
-
-
-        const checkbox = document.getElementById('botonCheckbox');
-
-        checkbox.addEventListener('click', function () {
-        this.checked = !this.checked; 
-    });
+        
 
 
         jQuery(document).ready(function ($) {
@@ -194,7 +182,10 @@
 
     // Recorre cada checkbox para obtener los estudiantes presentes
     document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
-        const idUsuario = document.getElementById('idUsuario').value;
+        const idEstudiante = document.getElementById('idUsuario').value;
+
+        console.log("idUsuario")
+        console.log(idUsuario)
 
         const nombreClase = document.querySelector(".nombreClase").value;
         const descripcion = document.querySelector(".descripcion").value;
