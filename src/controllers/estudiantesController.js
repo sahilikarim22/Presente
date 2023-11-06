@@ -64,45 +64,40 @@ GROUP BY
   postInscripcionCurso: (req, res, next) => {
     const nrc = req.body.nrc;
     const idUsuario = req.session.userId;
-
+  
     // Consulta para obtener el id del curso basado en el NRC
     const query = `SELECT idCurso, idPeriodo FROM cursos WHERE nrc = '${nrc}'`;
-
+  
     conexion.query(query, (error, results, fields) => {
       if (error) {
         console.error("Error al ejecutar la consulta: ", error);
-        return res.status(500).send("Error en la consulta");
+        return next(new Error("Error en la consulta"));
       }
-
+  
       if (results.length > 0) {
         const idCurso = results[0].idCurso;
         const idPeriodo = results[0].idPeriodo;
-
+  
         // Verificar si el usuario ya está inscrito en el curso
         const checkQuery = `SELECT idCurso FROM curso_estudiante WHERE idUsuario = ${idUsuario} AND idCurso = ${idCurso}`;
-
+  
         conexion.query(checkQuery, (checkError, checkResults) => {
           if (checkError) {
             console.error("Error al verificar la inscripción: ", checkError);
-            return res
-              .status(500)
-              .send("Error en la verificación de inscripción");
+            return next(new Error("Error en la verificación de inscripción"));
           }
-
+  
           if (checkResults.length > 0) {
             // El usuario ya está inscrito en el curso, puedes mostrar un modal o enviar un mensaje
             return res.status(500).send("Ya inscribió el curso con ese nrc");
           } else {
             // El usuario no está inscrito, proceder con la inserción en la tabla curso_estudiante
             const insertQuery = `INSERT INTO curso_estudiante (idUsuario, idCurso) VALUES (${idUsuario}, ${idCurso})`;
-
+  
             conexion.query(insertQuery, (insertError, insertResults) => {
               if (insertError) {
-                console.error(
-                  "Error al insertar en la tabla curso_estudiante: ",
-                  insertError
-                );
-                return res.status(500).send("Error en la inserción");
+                console.error("Error al insertar en la tabla curso_estudiante: ", insertError);
+                return next(new Error("Error en la inserción"));
               } else {
                 console.log("Inserción exitosa en la tabla curso_estudiante.");
                 return res.redirect(`estudiantes/cursos/${idPeriodo}`);
