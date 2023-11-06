@@ -26,9 +26,9 @@
                 <h1 class="mb-1 textAsistencia">Asistencia </h1>
                 <h5 class="mt-2">Fecha: </h5>
                 <input required type="date" class="form-control fechaClase">
-                <h5 class="mt-2">Tema: </h5> 
+                <h5 class="mt-2">Tema: </h5>
                 <input required type="text" class="form-control nombreClase">
-                <h5 class="mt-2">Descripción: </h5> 
+                <h5 class="mt-2">Descripción: </h5>
                 <input type="text" class="form-control descripcion" placeholder="Opcional">
                 <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-end">
                     <form action="/escanearAsistencia" method="post">
@@ -53,7 +53,8 @@
         <input class="idPeriodo" type="hidden" value="<%= idPeriodo %>" />
 
         <div class="col-md-12 col-lg-12 fondoTabla col-xs-12 table-responsive">
-            <table id="tablaAsistencia" class="table table-bordered table-dark table-striped text-white text-center mt-4">
+            <table id="tablaAsistencia"
+                class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
                     <tr class="bg-primary text-white">
                         <th scope="col">Cédula</th>
@@ -64,15 +65,16 @@
                 <tbody>
                     <% estudiantes.forEach((est, index)=> { %>
                         <tr>
-                            <input type="hidden" id="idUsuario" value="<%= est.idUsuario %>">
                             <td class="cedula">
                                 <%= est.cedula %>
                             </td>
                             <td class="nombresApellidos">
-                                <%= est.nombres %> <%= est.apellidos %>
+                                <%= est.nombres %>
+                                    <%= est.apellidos %>
                             </td>
                             <td class="asistio">
-                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %>" data-index="<%= index %>">
+                                <input type="checkbox" class="botonCheckbox"
+                                    id="estudiante_<%= est.cedula %>_id_<%= est.idUsuario %>" data-index="<%= index %>">
                             </td>
                         </tr>
                         <% }) %>
@@ -99,140 +101,148 @@
 
 
 
-    <script src="/jquery/jquery-3.3.1.min.js"></script>
-    <script src="/popper/popper.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/jquery/jquery-3.3.1.min.js"></script>
+        <script src="/popper/popper.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- datatables JS -->
-    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+        <!-- datatables JS -->
+        <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
-    <!-- para usar botones en datatables JS -->
-    <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
-    <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
-    <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
-    <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
-    <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
-
-
-<!--Escaner -->
-    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- para usar botones en datatables JS -->
+        <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
+        <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
+        <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+        <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+        <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 
 
+        <!--Escaner -->
+        <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-
-        jQuery(document).ready(function ($) {
 
 
-            $('#tablaAsistencia').DataTable({
-                paging: false, // Desactiva la paginación
-                lengthChange: false,
-                language: {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "",
-                    "infoEmpty": "",
-                    "infoFiltered": "",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "",
-                        "sLast": "",
-                        "sNext": "",
-                        "sPrevious": ""
+        <script>
+
+            jQuery(document).ready(function ($) {
+
+
+                $('#tablaAsistencia').DataTable({
+                    paging: false, // Desactiva la paginación
+                    lengthChange: false,
+                    language: {
+                        "lengthMenu": "Mostrar _MENU_ registros",
+                        "zeroRecords": "No se encontraron resultados",
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "sSearch": "Buscar:",
+                        "oPaginate": {
+                            "sFirst": "",
+                            "sLast": "",
+                            "sNext": "",
+                            "sPrevious": ""
+                        },
+                        "sProcessing": "Procesando...",
                     },
-                    "sProcessing": "Procesando...",
-                },
-                //para usar los botones   
-                responsive: "true",
-                dom: 'Bfrtilp',
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> ',
-                        titleAttr: 'Exportar a Excel',
-                        className: 'btn btn-success'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> ',
-                        titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger'
-                    },
+                    //para usar los botones   
+                    responsive: "true",
+                    dom: 'Bfrtilp',
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fas fa-file-excel"></i> ',
+                            titleAttr: 'Exportar a Excel',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fas fa-file-pdf"></i> ',
+                            titleAttr: 'Exportar a PDF',
+                            className: 'btn btn-danger'
+                        },
 
-                ]
+                    ]
+                });
+
+
+
+
             });
 
 
+            // codigo para tomar asistencias
+
+            function enviarAsistencia() {
+                const asistencia = [];
+
+                const idCurso = document.querySelector('.idCurso').value;
+                const idPeriodo = document.querySelector('.idPeriodo').value;
+
+                // Recorre cada checkbox para obtener los estudiantes presentes
+                document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
+                    const idCompleto = checkbox.id; // Obtener el ID completo del checkbox
+                    const partes = idCompleto.split('_'); // Dividir el ID en partes usando el guion bajo ('_')
+
+                    const cedula = partes[1]; // La cédula es el segundo elemento después del split
+                    const idEstudiante = partes[3]; // El ID de usuario es el cuarto elemento después del split
+
+                    console.log('Cédula:', cedula);
+                    console.log('ID Usuario:', idEstudiante);
 
 
-        });
+                    const nombreClase = document.querySelector(".nombreClase").value;
+                    const descripcion = document.querySelector(".descripcion").value;
+                    const fechaClase = document.querySelector(".fechaClase").value;
+                    const asistio = checkbox.checked; // Verificar si el checkbox está marcado o no
 
+                    asistencia.push({ idEstudiante, nombreClase, descripcion, fechaClase, asistio });
+                });
 
-        // codigo para tomar asistencias
+                // Envío de los datos mediante una petición fetch
+                fetch(`/guardarAsistencia/${idCurso}/${idPeriodo}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(asistencia),
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Datos de asistencia enviados correctamente.');
+                            // se puede redireccionar aqui
+                            window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
 
-        function enviarAsistencia() {
-    const asistencia = [];
-    const idEstudiante = document.querySelectorAll('.idEstudiante').value;
-    const idCurso = document.querySelector('.idCurso').value;
-    const idPeriodo = document.querySelector('.idPeriodo').value;
+                        } else {
+                            throw new Error('Error al enviar los datos de asistencia.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Hubo un error:', error);
+                        // Manejo de errores, como mostrar un mensaje al usuario o realizar alguna acción específica
+                    });
+            }
 
-    // Recorre cada checkbox para obtener los estudiantes presentes
-    document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
-        const idEstudiante = document.getElementById('idUsuario').value;
+            function scaner() {
+                Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzU2OTMzLVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21sdHMuZHluYW1zb2Z0LmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1NjkzMyIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NsdHMuZHluYW1zb2Z0LmNvbS8iLCJjaGVja0NvZGUiOjI5NjY5OTgwM30=';
+                // Initializes and uses the SDK
+                (async () => {
+                    let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+                    scanner.onFrameRead = results => {
+                        if (results.length > 0) console.log(results);
+                    };
+                    scanner.onUniqueRead = (txt, result) => {
+                        // marcar asistencia
+                        alert("escaneado correctamente");
+                        const cedula = txt;
+                        const checkbox = document.getElementById(`estudiante_${cedula}`);
+                        checkbox.checked = true;
+                    };
+                    await scanner.show();
+                })();
+            }
 
-        const nombreClase = document.querySelector(".nombreClase").value;
-        const descripcion = document.querySelector(".descripcion").value;
-        const fechaClase = document.querySelector(".fechaClase").value;
-        const asistio = checkbox.checked; // Verificar si el checkbox está marcado o no
-
-        asistencia.push({ idEstudiante, nombreClase, descripcion, fechaClase, asistio });
-    });
-
-    // Envío de los datos mediante una petición fetch
-    fetch(`/guardarAsistencia/${idCurso}/${idPeriodo}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(asistencia),
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Datos de asistencia enviados correctamente.');
-            // se puede redireccionar aqui
-            window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
-
-        } else {
-            throw new Error('Error al enviar los datos de asistencia.');
-        }
-    })
-    .catch(error => {
-        console.error('Hubo un error:', error);
-        // Manejo de errores, como mostrar un mensaje al usuario o realizar alguna acción específica
-    });
-}
-
-function scaner() {
-        Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzU2OTMzLVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21sdHMuZHluYW1zb2Z0LmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1NjkzMyIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NsdHMuZHluYW1zb2Z0LmNvbS8iLCJjaGVja0NvZGUiOjI5NjY5OTgwM30=';
-        // Initializes and uses the SDK
-        (async () => {
-            let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
-            scanner.onFrameRead = results => {
-                if (results.length > 0) console.log(results);
-            };
-            scanner.onUniqueRead = (txt, result) => {
-                // marcar asistencia
-                alert("escaneado correctamente");
-                const cedula = txt;
-                const checkbox = document.getElementById(`estudiante_${cedula}`);
-                checkbox.checked = true;
-            };
-            await scanner.show();
-        })();
-}
-
-</script>
+        </script>
 
 </body>
 

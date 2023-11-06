@@ -102,9 +102,10 @@ deleteCurso: (req, res) => {
       WHERE c.idCurso = ? AND c.idPeriodo = ?;
     `;
     const clasesSQL = `
-      SELECT idClase, nombreClase, fechaClase
-      FROM clases
-      WHERE idCurso = ? AND idPeriodo = ?;
+    SELECT idClase, nombreClase, fechaClase
+    FROM clases
+    WHERE idCurso = ? AND idPeriodo = ?
+    ORDER BY fechaClase ASC;;
     `;
     const asistenciaSQL = `
       SELECT a.asistio, u.nombres, u.apellidos, u.cedula, u.id, a.idClase
@@ -137,6 +138,7 @@ deleteCurso: (req, res) => {
               console.log(error);
               return res.status(500).send("Error de servidor");
             }
+
   
             // Transformar la estructura de 'asistencia' para asociarla con clases
             const asistenciaPorClase = {};
