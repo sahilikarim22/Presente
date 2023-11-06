@@ -384,6 +384,13 @@ footer ul li.home3 {
   z-index: 3;
 }
 
+.circle {
+  display: inline-block;
+  padding: 5px; /* Ajusta el espacio alrededor del icono */
+  border-radius: 50%; /* Forma el fondo en un círculo */
+  background-color: white; /* Establece el fondo del círculo en color blanco */
+}
+
 .navegacion ul li.active a .icon {
   transform: translateY(-35px);
 }
