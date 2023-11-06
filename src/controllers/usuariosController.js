@@ -58,7 +58,7 @@ const usuariosController = {
                   return res.send("Hubo un error al enviar el correo de confirmación.");
                 } else {
                   console.log("Correo de confirmación enviado:", info.response);
-                  return res.send("Por favor, verifica tu correo electrónico para activar tu cuenta.");
+                  res.redirect('confirmarUsuario');
                 }
               });
             }
@@ -81,9 +81,7 @@ const usuariosController = {
         );
         // Manejo de errores, por ejemplo, puedes enviar una respuesta de error
       } else {
-        return res.send(
-          "Tu cuenta ha sido activada correctamente. Puedes iniciar sesión ahora."
-        );
+        return res.redirect("/iniciarSesion");
       }
     });
   },

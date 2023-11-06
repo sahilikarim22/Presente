@@ -1,11 +1,11 @@
 const conexion = require("../db/config");
 
 const adminController = {
-  getAdmin: (req, res) => {
+  getAdmin: (req, res, next) => {
     conexion.query("SELECT * FROM periodos", (err, periodos) => {
       if (err) {
         console.log(err);
-        return res.status(500).send("Error de servidor");
+        return next(err);
       }
 
       const idUsuario = req.session.userId;
