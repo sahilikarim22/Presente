@@ -48,7 +48,6 @@ router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
 router.post('/guardarCurso', cursosController.postCurso);
 router.post('/guardarUsuario', usuariosController.postUsuarios);
-router.post('/login',loginController.postLogin);
 router.post('/guardarPeriodo', adminController.postPeriodo);
 // profesor
 router.post('/guardarAsistencia/:idCurso/:idPeriodo', profesorController.postAsistencia);

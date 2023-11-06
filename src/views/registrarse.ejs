@@ -146,7 +146,7 @@
                 <input name="apellidos" type="text" class="form-input" placeholder="Apellido" required>
             </div>
             <div class="form-row">
-                <input name="correoUcab" type="email" class="form-input" placeholder="Correo electrónico" required>
+                <input name="correoUcab" type="email" class="form-input" placeholder="Correo UCAB" required>
                 <input name="cedula" type="text" class="form-input" placeholder="Cedula" required>
             </div>
             <div class="form-row">
@@ -161,7 +161,7 @@
                     <option value="estudiante">Estudiante</option>
                 </select>
             </div>
-            <button class="form-button" type="submit" id="registerButton"><img src="https://i.postimg.cc/J7BY235N/cono-check.png" alt="Checkmark"> Registrarse</button>
+            <button class="form-button" type="button" id="registerButton"><img src="https://i.postimg.cc/J7BY235N/cono-check.png" alt="Checkmark"> Registrarse</button>
             <span class="warning" id="emptyFieldWarning"></span><br>
         </form>
     </div>
@@ -172,18 +172,34 @@
         const confirmPasswordInput = document.getElementById('confirmPassword');
         const registerButton = document.getElementById('registerButton');
         const registrationForm = document.getElementById('registrationForm');
-        const emptyFieldWarning = document.getElementById('emptyFieldWarning'); // Agrega esta línea
+        const emptyFieldWarning = document.getElementById('emptyFieldWarning');
+        const correoUcabInput = document.querySelector('input[name="correoUcab"]');
+        
+        registerButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Evitar el envío automático del formulario
             
-        registerButton.addEventListener('click', () => {
             const password = passwordInput.value;
             const confirmPassword = confirmPasswordInput.value;
+            const tipoUsuario = document.querySelector('select[name="tipoUsuario"]').value;
+            const correoUcab = correoUcabInput.value;
             
-            if (password === confirmPassword) {
-                emptyFieldWarning.textContent = ''; // Limpia el mensaje de advertencia
-                //backend (enviar datos)
-                registrationForm.submit();
+            let correoValido = false;
+            
+            if (tipoUsuario === 'estudiante') {
+                correoValido = correoUcab.includes('@est.ucab.edu.ve');
+            } else if (tipoUsuario === 'administrador' || tipoUsuario === 'docente') {
+                correoValido = correoUcab.includes('@ucab.edu.ve');
+            }
+            
+            if (password === confirmPassword && correoValido) {
+                emptyFieldWarning.textContent = '';
+                registrationForm.submit(); // Envío del formulario si todos los campos están correctamente llenados
             } else {
-                emptyFieldWarning.textContent = 'Las contraseñas no coinciden.';
+                let mensajeError = 'Las contraseñas no coinciden.';
+                if (!correoValido) {
+                    mensajeError = 'Tu correo UCAB no cuenta con la estructura correcta.';
+                }
+                emptyFieldWarning.textContent = mensajeError;
             }
         });
     </script>
