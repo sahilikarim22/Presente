@@ -95,8 +95,7 @@
                 <thead>
                     <tr>
                         <th>Cédula</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
+                        <th>Nombre</th>
                         <% clases.forEach(clase=> { %>
                             <th>
                                 <%= clase.nombreClase %> (<%= clase.fechaClase %>)
@@ -112,9 +111,7 @@
                             </td>
                             <td>
                                 <%= estudiante.nombres %>
-                            </td>
-                            <td>
-                                <%= estudiante.apellidos %>
+                                    <%= estudiante.apellidos %>
                             </td>
                             <% clases.forEach(clase=> { %>
                                 <td>
@@ -125,11 +122,11 @@
                                                 <% if (asistenciaEstudiante.asistio===1) { %>
                                                     <div
                                                         style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
-                                                    </div>
+                                                        P</div>
                                                     <% } else { %>
                                                         <div
                                                             style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
-                                                        </div>
+                                                            A</div>
                                                         <% } %>
                                                             <% } %>
                                 </td>
@@ -203,7 +200,7 @@
                 });
             });
 
-           
+
 
             jQuery(document).ready(function ($) {
 
@@ -232,13 +229,20 @@
                             extend: 'excelHtml5',
                             text: '<i class="fas fa-file-excel"></i> ',
                             titleAttr: 'Exportar a Excel',
-                            className: 'btn btn-success d-inline-block'
+                            className: 'btn btn-success d-inline-block',
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Excluye la última columna
+                            }
                         },
                         {
                             extend: 'pdfHtml5',
                             text: '<i class="fas fa-file-pdf"></i> ',
                             titleAttr: 'Exportar a PDF',
-                            className: 'btn btn-danger d-inline-block'
+                            className: 'btn btn-danger d-inline-block',
+                            exportOptions: {
+                                columns: ':not(:last-child)' // Excluye la última columna
+                            }
+
                         },
 
                     ]
@@ -275,7 +279,17 @@
                             extend: 'pdfHtml5',
                             text: '<i class="fas fa-file-pdf"></i> ',
                             titleAttr: 'Exportar a PDF',
-                            className: 'btn btn-danger'
+                            className: 'btn btn-danger',
+                            customize: function (doc) {
+                                // Centra el texto en todas las celdas del PDF
+                                doc.content[1].table.body.forEach(row => {
+                                    row.forEach(cell => {
+                                        cell.alignment = 'center';
+                                    });
+                                });
+                            }
+
+
                         }
                     ],
                     paging: true // Habilitar la paginación
