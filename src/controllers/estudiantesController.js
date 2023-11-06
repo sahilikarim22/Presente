@@ -89,7 +89,10 @@ GROUP BY
   
           if (checkResults.length > 0) {
             // El usuario ya está inscrito en el curso, puedes mostrar un modal o enviar un mensaje
-            return next(new Error("Ya inscribió el curso con ese nrc"));
+            return res.json({
+              success: false,
+              message: "Ya estás inscrito en este curso",
+            });
           } else {
             // El usuario no está inscrito, proceder con la inserción en la tabla curso_estudiante
             const insertQuery = `INSERT INTO curso_estudiante (idUsuario, idCurso) VALUES (${idUsuario}, ${idCurso})`;
@@ -100,7 +103,8 @@ GROUP BY
                 return next(new Error("Error en la inserción"));
               } else {
                 console.log("Inserción exitosa en la tabla curso_estudiante.");
-                return res.redirect(`estudiantes/cursos/${idPeriodo}`);
+                // Redireccionar al usuario a la página de sus cursos
+                res.redirect(`estudiantes/cursos/${idPeriodo}`);
               }
             });
           }

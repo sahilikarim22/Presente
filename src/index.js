@@ -35,9 +35,6 @@ app.get('/manifest.json', (req, res) =>{
   res.sendFile(__dirname+'/views/manifest.json');
 });
 
-app.get('/sw.js', (req, res) =>{
-  res.sendFile(__dirname+'/views/sw.js');
-});
 
 // Rutas
 const indexRouter = require('./routes/routes');
