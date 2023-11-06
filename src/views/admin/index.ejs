@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href='/css/boxicons.min.css'>
+    <link rel="stylesheet" href='/css/admin.css'>
 
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
 
-    
+
 
 </head>
 
@@ -25,21 +25,25 @@
 
 
     <div class="sidebar">
-        <div class="logo">
-            <i class="fas fa-bars menu-icon"></i>
-        </div>
         <ul class="menu">
-            <li class="cursos"><a href="#"><i class="fa-solid fa-user"></i></a></li>
-            <li class="home"><a href="#"><i class="fas fa-home"></i></a></li>
-            <li class="salir"><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
+            <li class="user"><a href="#"><i class="fa-solid fa-user"></i></a></li>
+            <li class="home"><a href="#"><i class="fas fa-home text-black"></i></a></li>
+            <li class="salir"><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
     <div class="content">
+        <p class="text-white">
+            <%= usuarios.nombres %>
+                <%= usuarios.apellidos %>
+        </p>
+        <small class="text-white"><i>Administrador</i></small>
         <button class="burger-btn">
             <i class="fas fa-bars"></i>
         </button>
         <div class="container">
-            <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo</button>
+            <h1>Periodos</h1>
+            <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo <i
+                    class="fa-solid fa-plus"></i></button>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="col-xs-12 mt-3 table-responsive">
@@ -47,31 +51,41 @@
                             <thead>
                                 <tr class="bg-primary text-white">
                                     <th scope="col">Periodo</th>
+                                    <th scope="col">Semanas</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% periodos.forEach((periodo) => {  %>
+                                <% periodos.forEach((periodo)=> { %>
                                     <tr>
-                                      <form action="/eliminarPeriodo" method="POST">
-                                        <input type="hidden" name="id" value="<%= periodo.id %>" />
-                                        <td class="fondoTabla filaIzquierda">
-                                          <a href="/admin/cursos/<%= periodo.id %>" class="periodo-link">
-                                            <%= periodo.nombrePeriodo %>
-                                          </a>
-                                        </td>
-                                        <td class="fondoTabla filaDerecha">
-                                          <a href="/admin/editarCarrera/" class="btn btn-outline-info">
-                                            Editar
-                                          </a>
-                                          <button class="btn btn-outline-danger" type="submit">Eliminar</button>
-                                        </td>
-                                      </form>
+                                        <form action="/eliminarPeriodo" method="POST">
+                                            <input type="hidden" name="id" value="<%= periodo.id %>" />
+                                            <td class="fondoTabla nombreTabla">
+                                                <a href="/admin/cursos/<%= periodo.id %>"
+                                                    class="periodo-link text-white">
+                                                    <%= periodo.nombrePeriodo %>
+                                                </a>
+                                            </td>
+                                            <td class="fondoTabla nombreTabla">
+                                                <%= periodo.cantidadSemanas %>
+                                            </td>
+                                            <td class="fondoTabla ">
+                                                <div class="switch-container">
+                                                    <input type="checkbox" id="switch-<%= periodo.id %>"
+                                                        class="switch status-<%= periodo.status %>" />
+                                                    <label for="switch-<%= periodo.id %>"></label>
+                                                </div>
+                                                <a href="/admin/editarPeriodo/" class="btn btn-outline-info">
+                                                    Editar
+                                                </a>
+                                                <button class="btn btn-outline-danger" type="submit">Eliminar</button>
+                                            </td>
+                                        </form>
                                     </tr>
-                                  <% }) %>
-                                  
+                                    <% }) %>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -97,17 +111,21 @@
                         </div>
                         <div class="form-group">
                             <label for="semanas" class="ModalTituloCampo">Cantidad de Semanas:</label>
-                            <input name="cantidadSemanas" type="number" min="0" id="semanas" class="form-control inputModal">
+                            <input name="cantidadSemanas" type="number" min="0" id="semanas"
+                                class="form-control inputModal">
                         </div>
                     </div>
                     <div class="modal-footer text-center justify-content-center mx-auto">
                         <button id="guardar" class="btn botonGuardar">Guardar</button>
-                        <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">Cerrar</button>
+                        <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">x</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    <span class="colmenasUcab">
+        <img src="/imagenes/colmenasucab.png">
+    </span>
 
 
 
@@ -115,9 +133,8 @@
     <script src="/jquery/jquery-3.3.1.min.js"></script>
     <script src="/popper/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/js/boxicons.js"></script>
 
-    
+
 
     <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
@@ -128,8 +145,82 @@
     <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 
     <!-- código JS propio-->
-    <script type="text/javascript" src="/js/main.js"></script>
-   
+    <script>
+        $(document).ready(function () {
+
+            $('#tablaPeriodos').DataTable({
+                language: {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "sProcessing": "Procesando...",
+                },
+                //para usar los botones   
+                responsive: "true",
+                dom: 'Bfrtilp',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> ',
+                        titleAttr: 'Exportar a Excel',
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> ',
+                        titleAttr: 'Exportar a PDF',
+                        className: 'btn btn-danger',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    },
+
+                ]
+            });
+
+
+            // Abre el modal al hacer clic en el botón
+            $('#abrirModal').on('click', function () {
+                $('#modalAgregar').modal('show');
+            });
+
+            // Agrega datos al DataTable y guarda en localStorage
+            $('#guardar').on('click', function () {
+                var nombre = $('#nombre').val();
+                var semanas = $('#semanas').val();
+
+                // Agrega los datos al principio de la tabla
+                tablaPeriodos.row.add([nombre, semanas]).draw(false);
+
+                // Reordena la tabla para que el nuevo dato sea el primero
+                var nuevaFila = tablaPeriodos.row(0).node();
+                tablaPeriodos.row(nuevaFila).order([0, 'asc']).draw(false);
+
+                // Guarda en localStorage
+                var datos = JSON.parse(localStorage.getItem('periodos')) || [];
+                datos.unshift({ nombre: nombre, semanas: semanas });
+                localStorage.setItem('periodos', JSON.stringify(datos));
+
+                // Cierra el modal
+                $('#modalAgregar').modal('hide');
+            });
+        });
+
+
+    </script>
+
 
     <script>
         const sidebar = document.querySelector('.sidebar');
@@ -141,6 +232,63 @@
             content.classList.toggle('active');
         });
     </script>
+
+    <!-- Resto del código HTML -->
+
+    <script>
+        $(document).ready(function () {
+
+            const switches = $('.switch');
+            // marcar activo o inactivo cada switch
+            switches.each(function () {
+                const classes = $(this).attr('class');
+                const statusClass = classes.match(/status-(\d+)/); // Encuentra la parte de la clase que contiene el estado
+                if (statusClass) {
+                    const periodoId = statusClass[1]; // Obtiene el estado del período
+                    const label = $(this).next('label');
+
+                    // Verifica si el estado del período es 1 (activo)
+                    if (periodoId === '1') {
+                        $(this).prop('checked', true); // Marca como activo
+                    } else {
+                        $(this).prop('checked', false); // Marca como inactivo
+                    }
+                }
+            });
+
+
+
+
+
+
+            $('.switch').on('change', function () {
+                const isChecked = $(this).is(':checked');
+                const periodoId = $(this).attr('id').replace('switch-', ''); // Obtiene el ID del período
+
+                // Desactivar todos los checkboxes excepto el actualmente seleccionado
+                $('.switch').not(this).prop('checked', false);
+
+                $.ajax({
+                    method: 'POST',
+                    url: `/cambiarEstadoPeriodo`,
+                    data: { id: periodoId, status: isChecked ? 1 : 0 },
+                    success: function (response) {
+                        console.log(response)
+                        if (response.success) {
+                            console.log("actualizado correctamente el estado del periodo")
+                        } else {
+                            alert('Ocurrió un error al cambiar el estado del período.');
+                        }
+                    },
+                    error: function () {
+                        alert('Error al conectar con el servidor.');
+                    }
+                });
+            });
+
+        });
+    </script>
+
 
 
 

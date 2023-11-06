@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Asistencias</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
+    <!--datables estilo bootstrap 4 CSS-->
+    <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 cursosProf">
+                <h1 class="mb-1 textAsistencia">Asistencia </h1>
+                <h5 class="mt-2">Fecha: </h5>
+                <input required type="date" class="form-control fechaClase">
+                <h5 class="mt-2">Tema: </h5> 
+                <input required type="text" class="form-control nombreClase">
+                <h5 class="mt-2">Descripción: </h5> 
+                <input type="text" class="form-control descripcion" placeholder="Opcional">
+                <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-end">
+                    <form action="/escanearAsistencia" method="post">
+                        <button type="button" class="btn escanear" onclick="scaner()">
+                            Escanear <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill: rgba(0, 0, 0, 1);">
+                                <path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path>
+                                <path
+                                    d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z">
+                                </path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12 m-4 d-flex justify-content-center">
+            <h1 class="text-white textAsistencia">Lista de Asistencia:</h1>
+        </div>
+        <input class="idCurso" type="hidden" value="<%= idCurso %>" />
+        <input class="idPeriodo" type="hidden" value="<%= idPeriodo %>" />
+
+        <div class="col-md-12 col-lg-12 fondoTabla">
+            <table id="tablaAsistencia" class="table table-bordered table-dark table-striped text-white text-center mt-4">
+                <thead>
+                    <tr class="bg-primary text-white">
+                        <th scope="col">Cédula</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Presente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% estudiantes.forEach((est, index)=> { %>
+                        <tr>
+                            <td class="cedula">
+                                <%= est.cedula %>
+                            </td>
+                            <td class="nombresApellidos">
+                                <%= est.nombres %> <%= est.apellidos %>
+                            </td>
+                            <td class="asistio">
+                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %> id_<%= est.idUsuario %>" data-index="<%= index %>">
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    </div>
+
+    <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-center">
+        <button onclick="enviarAsistencia()" type="button" class="btn guardar">
+            Guardar <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                style="fill: rgba(0, 0, 0, 1);">
+                <path d="m12 16 4-5h-3V4h-2v7H8z"></path>
+                <path d="M20 18H4v-7H2v7c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-7h-2v7z"></path>
+            </svg>
+        </button>
+    </div>
+
+
+    <div class="navegacion">
+        <ul>
+
+
+
+            <li class="list">
+                <a href="#">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                            style="fill: rgba(0, 0, 0, 1);">
+                            <path
+                                d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z">
+                            </path>
+                        </svg>
+                    </span>
+                    <!-- <span class="text">Atrás</span> -->
+                </a>
+            </li>
+            <li class="list">
+                <a href="#">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                            style="fill: rgba(0, 0, 0, 1);">
+                            <path
+                                d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z">
+                            </path>
+                        </svg>
+                    </span>
+                    <!-- <span class="text">Home</span> -->
+                </a>
+            </li>
+            <li class="list active">
+                <a href="#">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                            style="fill: rgba(0, 0, 0, 1);">
+                            <path
+                                d="M4 7h11v2H4zm0 4h11v2H4zm0 4h7v2H4zm15.299-2.708-4.3 4.291-1.292-1.291-1.414 1.415 2.706 2.704 5.712-5.703z">
+                            </path>
+                        </svg>
+                    </span>
+                    <!-- <span class="text">Atrás</span> -->
+                </a>
+            </li>
+            <div class="indicator"></div>
+        </ul>
+    </div>
+
+
+
+    <script src="/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/popper/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- datatables JS -->
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+
+    <!-- para usar botones en datatables JS -->
+    <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+
+
+<!--Escaner -->
+    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+
+
+    <script>
+
+        const list = document.querySelectorAll(".list");
+        function activeLink() {
+            list.forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
+        }
+        list.forEach((l) => l.addEventListener("click", activeLink));
+
+
+        const checkbox = document.getElementById('botonCheckbox');
+
+        checkbox.addEventListener('click', function () {
+            if (this.checked) {
+                this.checked = false;
+            } else {
+                this.checked = true;
+            }
+        });
+
+
+        jQuery(document).ready(function ($) {
+
+
+            $('#tablaAsistencia').DataTable({
+                paging: false, // Desactiva la paginación
+                lengthChange: false,
+                language: {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "",
+                        "sLast": "",
+                        "sNext": "",
+                        "sPrevious": ""
+                    },
+                    "sProcessing": "Procesando...",
+                },
+                //para usar los botones   
+                responsive: "true",
+                dom: 'Bfrtilp',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> ',
+                        titleAttr: 'Exportar a Excel',
+                        className: 'btn btn-success'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> ',
+                        titleAttr: 'Exportar a PDF',
+                        className: 'btn btn-danger'
+                    },
+
+                ]
+            });
+
+
+
+
+        });
+
+
+        // codigo para tomar asistencias
+
+        function enviarAsistencia() {
+    const asistencia = [];
+    const idEstudiante = document.querySelectorAll('.idEstudiante').value;
+    const idCurso = document.querySelector('.idCurso').value;
+    const idPeriodo = document.querySelector('.idPeriodo').value;
+
+    // Recorre cada checkbox para obtener los estudiantes presentes
+    document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
+        const idEstudiante = checkbox.id.split('id_')[1];
+
+        const nombreClase = document.querySelector(".nombreClase").value;
+        const descripcion = document.querySelector(".descripcion").value;
+        const fechaClase = document.querySelector(".fechaClase").value;
+        const asistio = checkbox.checked; // Verificar si el checkbox está marcado o no
+
+        asistencia.push({ idEstudiante, nombreClase, descripcion, fechaClase, asistio });
+    });
+
+    // Envío de los datos mediante una petición fetch
+    fetch(`/guardarAsistencia/${idCurso}/${idPeriodo}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(asistencia),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Datos de asistencia enviados correctamente.');
+            // se puede redireccionar aqui
+            window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
+
+        } else {
+            throw new Error('Error al enviar los datos de asistencia.');
+        }
+    })
+    .catch(error => {
+        console.error('Hubo un error:', error);
+        // Manejo de errores, como mostrar un mensaje al usuario o realizar alguna acción específica
+    });
+}
+
+function scaner() {
+        Dynamsoft.DBR.BarcodeScanner.license = 'DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyMzUzNDI2LVRYbFhaV0pRY205cVgyUmljZyIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJvcmdhbml6YXRpb25JRCI6IjEwMjM1MzQyNiIsInN0YW5kYnlTZXJ2ZXJVUkwiOiJodHRwczovL3NkbHMuZHluYW1zb2Z0b25saW5lLmNvbS8iLCJjaGVja0NvZGUiOi0yMTQ2NjA0MzAzfQ==';
+        // Initializes and uses the SDK
+        (async () => {
+            let scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+            scanner.onFrameRead = results => {
+                if (results.length > 0) console.log(results);
+            };
+            scanner.onUniqueRead = (txt, result) => {
+                // marcar asistencia
+                const idEstudiante = txt;
+                const checkbox = document.getElementById(`estudiante_${idEstudiante}`);
+                checkbox.checked = true;
+            };
+            await scanner.show();
+        })();
+}
+
+</script>
+
+</body>
+
+</html>

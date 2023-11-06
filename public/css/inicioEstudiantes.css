@@ -1,0 +1,70 @@
+body {
+  background-color: #262626 !important;
+  font-family: "Poppins", sans-serif;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Estilos generales */
+
+
+/* Centrado vertical y horizontal */
+
+
+/* Imagen */
+.imagenTriangulo img {
+    width: 100%;
+    display: block;
+    max-width: 100%;
+}
+
+/* Ocultar imagen a partir de 687px */
+@media screen and (min-width: 687px) {
+    .imagenTriangulo img {
+        display: none;
+    }
+    .trianguloImg{
+        display: none;
+    }
+}
+
+
+.circuloAzul {
+  background-color: #1e90ff;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  margin-top: 20px;
+  color: #fff;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.05);
+}
+
+.botonGeneral {
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: bold;
+  border-radius: 55px;
+  padding: 20px 140px;
+  margin-bottom: 20px;
+}
+.imagenTriangulo {
+  position: absolute;
+  bottom: 0;
+}
+.imagenTriangulo img {
+  width: 100vw;
+}
+.botonFinalizar {
+  color: #000;
+  
+}
+
+
+
+
+

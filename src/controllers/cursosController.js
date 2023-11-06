@@ -31,7 +31,7 @@ const cursosController = {
             console.error('Error al insertar el curso en la base de datos:', error);
             return res.status(500).json({ error: 'Error al insertar el curso en la base de datos' });
           }
-          res.redirect("/profesor/cursosprof/"+idPeriodo);
+          res.redirect("/profesor/cursos/"+idPeriodo);
         }
       );
     }, 

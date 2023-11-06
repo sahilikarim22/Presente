@@ -2,16 +2,26 @@
 <html>
 
 <head>
-    <title>Cursos</title>
+    <title>
+
+    </title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/css/main.css">
+
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
 
+    <!--font awesome con CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -32,9 +42,11 @@
             <i class="fas fa-bars"></i>
         </button>
         <div class="container">
-            <p class="text-white TextoSemestre">Semestre <%= periodo[0].nombrePeriodo %>
+            <p class="text-white TextoSemestre">Curso: <%= curso[0].nombreCurso %>
             </p>
-            <h1 class="text-white">Cursos</h1>
+            <h1 class="text-white">Curso Dictado por: <%= curso[0].nombre_profesor %>
+                    <%= curso[0].apellido_profesor %>
+            </h1>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -43,22 +55,22 @@
                             <thead>
                                 <tr class="bg-primary text-white">
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col">Cedula</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% cursos.forEach((cursos)=> { %>
+                                <% curso.forEach((curso)=> { %>
                                     <tr>
                                         <td class="fondoTabla nombreTabla text-white">
-                                            <%= cursos.nombreCurso %>
+                                            <%= curso.nombre_estudiante %>
+                                                <%= curso.apellido_estudiante %>
                                         </td>
-                                        <td class="fondoTabla ">
-                                            <a href="/admin/verCurso/<%= cursos.idCurso %>"
-                                                class="btn btn-outline-info">
-                                                Ver
-                                            </a>
+                                        <td class="fondoTabla nombreTabla text-white">
+                                            <%= curso.cedula_estudiante %>
                                         </td>
+
                                     </tr>
+
                                     <% }) %>
 
                             </tbody>
@@ -68,10 +80,6 @@
             </div>
         </div>
     </div>
-
-    <span class="colmenasUcab">
-        <img src="/imagenes/colmenasucab.png">
-    </span>
 
     <div class="imagenTrianguloCentrado">
         <img src="/imagenes/t_abajo.svg">

@@ -19,20 +19,46 @@ const loginController = {
                         req.session.userId = usuario.id;
                         req.session.correoUcab = usuario.correoUcab;
                         req.session.clave = usuario.clave;
+                        req.session.tipoUsuario = usuario.tipoUsuario;
                         req.session.loggedin = true;
                         // Redirige a vistas diferentes según el tipo de usuario
                         if (usuario.tipoUsuario === 'administrador') {
                             res.redirect('/admin');
                         } else if (usuario.tipoUsuario === 'docente') {
-                            res.redirect('/profesor/periodos');
-                        } else if (usuario.tipoUsuario === 'estudiante') {
-                            res.redirect('/estudiantes');
+                            conexion.query("SELECT id FROM periodos WHERE status = 1", (error, idPeriodoSeleccionado) => {
+                                if (error) {
+                                    res.redirect('/profesor/periodos');
+                                } else {
+                                    if (idPeriodoSeleccionado && idPeriodoSeleccionado.length > 0) {
+                                        const idPeriodo = idPeriodoSeleccionado[0].id;
+                                        res.redirect(`profesor/cursos/${idPeriodo}`);
+                                    } else {
+                                        res.redirect('/profesor/periodos');
+                                    }
+                                }
+                            });
+                        }else if (usuario.tipoUsuario === 'estudiante') {
+
+                            // obtener idPeriodo
+                            const idPeriodoSQL = `SELECT id FROM periodos WHERE status = 1`;
+
+                            conexion.query(idPeriodoSQL, (error, idPeriodoSeleccionado) => {
+                                if (error) {
+                                    res.redirect('/estudiantes/cursos/');
+                                } else {
+                                    if (idPeriodoSeleccionado && idPeriodoSeleccionado.length > 0) {
+                                        const idPeriodo = idPeriodoSeleccionado[0].id;
+                                        res.redirect(`estudiantes/cursos/${idPeriodo}`);
+                                    } else {
+                                        res.redirect('/estudiantes/cursos/');
+                                    }
+                                }
+                            });
                         } else {
                             // Si el tipo de usuario no es "administrador," "profesor" ni "estudiante," redirige a la página principal
                             res.redirect('/');
                         }
                     } else {
-                        console.log(1);
                         res.redirect("/iniciarSesion");
                     }
                 } else {

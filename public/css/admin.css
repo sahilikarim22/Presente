@@ -1,0 +1,44 @@
+/* CSS para el botón switch */
+.switch-container {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+.switch {
+    display: none;
+}
+
+.switch + label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: background-color 0.3s;
+}
+
+.switch + label::after {
+    content: '';
+    display: block;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    transition: transform 0.3s;
+}
+
+.switch:checked + label {
+    background-color: #2ecc71;
+}
+
+.switch:checked + label::after {
+    transform: translateX(26px);
+}

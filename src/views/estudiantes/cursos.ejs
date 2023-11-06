@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Cursos Estudiantes
+    </title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/css/main.css">
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
+    <!--datables estilo bootstrap 4 CSS-->
+    <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+
+
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-sm-12 col-md-12 d-flex flex-column align-items-center text-center">
+                <span class="circulo">
+                    <i class="fas fa-user" style="font-size: 3rem;"></i>
+                </span>
+                <h3 class="text-white"><%= usuario.nombres %> <%= usuario.apellidos %><i class="fa-solid fa-browser"></i></h3>
+                <h5 class="text-white">Estudiante</h5>
+                <button id="abrirModal" class="btn btn-primary">Unirme a Curso </button>
+            </div>
+            <img class="trianguloDerecha" src="/imagenes/t_derecha.svg" />
+        </div>
+        <% if (cursos && cursos.length> 0) { %>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <h5 class="card-title text-white">Mis Cursos</h5>
+                </div>
+                <div class="col-6">
+                    <h5 class="card-title text-white">Porcentaje de asistencias</h5>
+                </div>
+                <div class="col-12">
+                    <% cursos.forEach((curso)=> { %>
+                        <div class="card card-background">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <!-- Enlace al curso con la URL correcta -->
+                                        <a href="/estudiante/cursoInfo/<%= curso.idCurso %><%= curso.idPeriodo %>"
+                                            class="card-link">
+                                            <p class="card-text fw-bold nombreCurso">
+                                                <%= curso.nombreCurso %>
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <div class="col-4 porcentaje">
+                                        <%= curso.porcentajeAsistencia %>%
+                                    </div>
+                                    <!--Boton Opciones-->
+                                    <div class="position-absolute dropdown-menu-right m-2">
+                                        <button type="button" class="btn colorOpciones botonOpciones"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </div>
+                                    <div class="ventanitaOpciones ml-auto ">
+                                        <div class="">
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <div class="">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="masCursos">
+                        </div>
+                        <% }) %>
+                </div>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+    </div>
+    <% } else { %>
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <p class="text-white">Aún no tienes cursos inscritos.</p>
+            </div>
+        </div>
+        <% } %>
+            </div>
+
+            <form method="POST" action="/inscribirCurso">
+                <div id="modalAgregar" class="modal fade">
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+                            <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
+
+                            <div class="modal-header">
+                                <h4 class="modal-title text-uppercase">AGREGAR CURSO</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                                    <input class="form-control inputModal" name="nrc" type="number" min="0" step="1">
+                                </div>
+                            </div>
+                            <div class="modal-footer text-center justify-content-center mx-auto">
+                                <button type="submit" id="guardar" class="btn botonGuardar">Guardar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <%- include('menuMovil') %>
+
+                </div>
+
+
+
+
+                <!-- jQuery, Popper.js, Bootstrap JS -->
+                <script src="/jquery/jquery-3.3.1.min.js"></script>
+                <script src="/popper/popper.min.js"></script>
+                <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+                <script>
+
+
+
+                    $(document).ready(function () {
+
+                        // Abre el modal al hacer clic en el botón
+                        $('#abrirModal').on('click', function () {
+                            $('#modalAgregar').modal('show');
+                        });
+
+                        // Agrega datos al DataTable y guarda en localStorage
+                        $('#guardar').on('click', function () {
+                            var nombrePeriodo = $('#nombrePeriodo').val();
+                            var semanas = $('#semanas').val();
+                            var idCurso = $('#idCurso').val();
+
+                            // Cierra el modal
+                            $('#modalAgregar').modal('hide');
+                        });
+
+                        // Cierra el modal al hacer clic en el botón
+                        $('#cerrar').on('click', function () {
+                            $('#modalAgregar').modal('hide');
+                            event.preventDefault();
+
+                        });
+                    });
+
+
+                    // Función para obtener la clase correspondiente al porcentaje
+                    function obtenerClasePorcentaje(porcentaje) {
+                        if (porcentaje >= 75) {
+                            return '100'; // Clase para el 100% (suponiendo que 75% y más se consideran 100% de asistencia)
+                        } else if (porcentaje >= 50) {
+                            return '75'; // Clase para el 75%
+                        } else if (porcentaje >= 25) {
+                            return '50'; // Clase para el 50%
+                        } else {
+                            return '25'; // Clase para el 25%
+                        }
+                    }
+
+
+                   
+
+
+
+
+                </script>
+
+
+
+</body>
+
+</html>
