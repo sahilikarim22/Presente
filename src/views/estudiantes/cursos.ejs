@@ -74,7 +74,7 @@
                 <h5 class="text-white">Estudiante</h5>
                 <button id="abrirModal" class="btn btn-primary">Unirme a Curso </button>
             </div>
-            <img class="trianguloDerecha" src="/imagenes/t_derecha.svg" />
+            <!-- <img class="trianguloDerecha" src="/imagenes/t_derecha.svg" /> -->
         </div>
         <% if (cursos && cursos.length> 0) { %>
             <div class="row mt-4">
@@ -89,14 +89,14 @@
                         <div class="card card-background">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <!-- Enlace al curso con la URL correcta -->
                                         <p class="card-text fw-bold nombreCurso">
                                             <%= curso.nombreCurso %>
                                         </p>
                                     </div>
 
-                                    <div class="col-4 porcentaje">
+                                    <div class="col-6 porcentaje">
                                         <% if (curso.porcentajeAsistencia>= 75) { %>
                                             <div class="progress-bar-75" role="progressbar">
                                                 <span class="sr-only">
