@@ -32,7 +32,7 @@
                 <input type="text" class="form-control descripcion" placeholder="Opcional">
                 <div class="col-xs-12 col-md-12 col-lg-12 d-flex justify-content-end">
                     <form action="/escanearAsistencia" method="post">
-                        <button type="button" class="btn escanear" onclick="scaner()">
+                        <button type="button" class="btn escanear" onclick="iniciarEscaneo()">
                             Escanear <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 style="fill: rgba(0, 0, 0, 1);">
                                 <path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path>
@@ -147,7 +147,7 @@
                     },
                     //para usar los botones   
                     responsive: "true",
-                    dom: 'Bfrtilp'
+                    dom: 'frti'
 
                 });
 
@@ -241,10 +241,11 @@
                 }
             }
 
-            // Llamar a la función de escaneo
-            function iniciarEscaneo() {
+            // Llamar a la función de inicio del escaneo
+            function iniciarEscaneoPrincipal() {
                 iniciarEscaneo();
             }
+
 
 
         </script>
