@@ -232,8 +232,6 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log("aver")
-                        console.log(cursoId)
                         $.ajax({
                             type: 'DELETE',
                             url: `/eliminarCurso/${cursoId}`,

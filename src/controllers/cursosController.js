@@ -63,14 +63,13 @@ const cursosController = {
       const deleteQuery = 'delete from curso_estudiante where idCurso=?';
 
       conexion.query(deleteQuery, [idCurso], (err, resultado) => {
-        if(err) console.log(err);
-
-        res.json({ message: 'Curso eliminado correctamente' });
-
+        if(err){
+          console.log(err)
+        }else{
+          res.json({ message: 'Curso eliminado correctamente' });
+        }
       });
-
     }
-    
   };
 
  
