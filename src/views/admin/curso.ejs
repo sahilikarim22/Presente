@@ -20,25 +20,7 @@
 
 <body>
 
-    <div class="sidebar">
-        <ul class="menu">
 
-            <li class="home"><a href="/admin"><i class="fas fa-home text-black"></i></a></li>
-            <li class="list">
-                <a href="javascript:history.back()" class="circle">
-                    <span class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                            style="fill: rgba(0, 0, 0, 1);">
-                            <path
-                                d="M21 11H6.414l5.293-5.293-1.414-1.414L2.586 12l7.707 7.707 1.414-1.414L6.414 13H21z">
-                            </path>
-                        </svg>
-                    </span>
-                    <!-- <span class="text">Atrás</span> -->
-                </a>
-            </li>
-        </ul>
-    </div>
 
     <div class="container">
         <div class="row">
@@ -59,10 +41,10 @@
         </div>
 
         <div class="col-xs-12 col-md-12 col-lg-12 m-4">
-            <h1 class="text-white">Estudiantes:</h1>
+            <h1 class="text-white">Mis Estudiantes:</h1>
         </div>
 
-        <div class="col-md-12 col-lg-12 fondoTabla table-responsive">
+        <div class="col-md-12 col-lg-12 fondoTabla">
             <table id="tablaEstudiantes"
                 class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
@@ -102,13 +84,13 @@
             <h1 class="text-white">Clases:</h1>
         </div>
 
-        <div class="col-md-12 col-lg-12 fondoTabla col-xs-12 table-responsive">
+
+        <div class="col-md-12 col-lg-12 fondoTabla table-responsive">
             <table id="tablaClases" class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
                     <tr>
                         <th>Cédula</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
+                        <th>Nombre</th>
                         <% clases.forEach(clase=> { %>
                             <th>
                                 <%= clase.nombreClase %> (<%= clase.fechaClase %>)
@@ -124,9 +106,7 @@
                             </td>
                             <td>
                                 <%= estudiante.nombres %>
-                            </td>
-                            <td>
-                                <%= estudiante.apellidos %>
+                                    <%= estudiante.apellidos %>
                             </td>
                             <% clases.forEach(clase=> { %>
                                 <td>
@@ -137,11 +117,11 @@
                                                 <% if (asistenciaEstudiante.asistio===1) { %>
                                                     <div
                                                         style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
-                                                    </div>
+                                                        P</div>
                                                     <% } else { %>
                                                         <div
                                                             style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
-                                                        </div>
+                                                            A</div>
                                                         <% } %>
                                                             <% } %>
                                 </td>
@@ -199,7 +179,7 @@
                             data: {
                                 idEstudiante: estudianteId,
                                 idCurso: idCurso
-                            }, // Datos a enviar, aquí se incluye el ID del estudiante
+                            },
                             success: function (response) {
                                 const idCurso = response.idCurso;
                                 const idPeriodo = response.idPeriodo;
@@ -216,34 +196,18 @@
             });
         });
 
-        const list = document.querySelectorAll(".list");
-        function activeLink() {
-            list.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-        }
-        list.forEach((l) => l.addEventListener("click", activeLink));
 
-
-        const checkbox = document.getElementById('botonCheckbox');
-
-        checkbox.addEventListener('click', function () {
-            if (this.checked) {
-                this.checked = false;
-            } else {
-                this.checked = true;
-            }
-        });
 
         jQuery(document).ready(function ($) {
 
 
             $('#tablaEstudiantes').DataTable({
                 language: {
-                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "lengthMenu": "Mostrar _MENU_",
                     "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
                     "sSearch": "Buscar:",
                     "oPaginate": {
                         "sFirst": "Primero",
@@ -261,13 +225,20 @@
                         extend: 'excelHtml5',
                         text: '<i class="fas fa-file-excel"></i> ',
                         titleAttr: 'Exportar a Excel',
-                        className: 'btn btn-success d-inline-block'
+                        className: 'btn btn-success d-inline-block',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger d-inline-block'
+                        className: 'btn btn-danger d-inline-block',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+
                     },
 
                 ]
@@ -276,11 +247,11 @@
 
             $('#tablaClases').DataTable({
                 language: {
-                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "lengthMenu": "Mostrar _MENU_",
                     "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
                     "sSearch": "Buscar:",
                     "oPaginate": {
                         "sFirst": "Primero",
@@ -304,7 +275,17 @@
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger'
+                        className: 'btn btn-danger',
+                        customize: function (doc) {
+                            // Centra el texto en todas las celdas del PDF
+                            doc.content[1].table.body.forEach(row => {
+                                row.forEach(cell => {
+                                    cell.alignment = 'center';
+                                });
+                            });
+                        }
+
+
                     }
                 ],
                 paging: true // Habilitar la paginación
