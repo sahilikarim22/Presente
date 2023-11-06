@@ -145,168 +145,168 @@
     <%- include('menuMovil') %>
 
 
-    <script src="/jquery/jquery-3.3.1.min.js"></script>
-    <script src="/popper/popper.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/jquery/jquery-3.3.1.min.js"></script>
+        <script src="/popper/popper.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- datatables JS -->
-    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+        <!-- datatables JS -->
+        <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
-    <!-- para usar botones en datatables JS -->
-    <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
-    <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
-    <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
-    <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
-    <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+        <!-- para usar botones en datatables JS -->
+        <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
+        <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
+        <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+        <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+        <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
 
-    <script>
+        <script>
 
-        $(document).ready(function () {
-            $('.btnEliminarEstudiante').on('click', function () {
+            $(document).ready(function () {
+                $('.btnEliminarEstudiante').on('click', function () {
 
-                var estudianteId = $(this).data('estudiante-id');
-                var idCurso = $(this).data('curso-id');
-                Swal.fire({
-                    title: '¿Seguro que quieres eliminar este estudiante de este curso?',
-                    text: '¡Esta acción no se puede deshacer!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Realizar la solicitud AJAX para eliminar al estudiante
-                        $.ajax({
-                            type: 'DELETE',
-                            url: '/eliminarEstudianteCurso',
-                            data: {
-                                idEstudiante: estudianteId,
-                                idCurso: idCurso
-                            },
-                            success: function (response) {
-                                const idCurso = response.idCurso;
-                                const idPeriodo = response.idPeriodo;
-                                window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
-                            },
-                            error: function (error) {
-                                // Manejar el error si la solicitud no se completa correctamente
-                                console.error('Error al eliminar el estudiante', error);
-                            }
-                        });
-                    }
+                    var estudianteId = $(this).data('estudiante-id');
+                    var idCurso = $(this).data('curso-id');
+                    Swal.fire({
+                        title: '¿Seguro que quieres eliminar este estudiante de este curso?',
+                        text: '¡Esta acción no se puede deshacer!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Realizar la solicitud AJAX para eliminar al estudiante
+                            $.ajax({
+                                type: 'DELETE',
+                                url: '/eliminarEstudianteCurso',
+                                data: {
+                                    idEstudiante: estudianteId,
+                                    idCurso: idCurso
+                                },
+                                success: function (response) {
+                                    const idCurso = response.idCurso;
+                                    const idPeriodo = response.idPeriodo;
+                                    window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
+                                },
+                                error: function (error) {
+                                    // Manejar el error si la solicitud no se completa correctamente
+                                    console.error('Error al eliminar el estudiante', error);
+                                }
+                            });
+                        }
+                    });
+
+                });
+            });
+
+            const list = document.querySelectorAll(".list");
+            function activeLink() {
+                list.forEach((l) => l.classList.remove("active"));
+                this.classList.add("active");
+            }
+            list.forEach((l) => l.addEventListener("click", activeLink));
+
+
+            const checkbox = document.getElementById('botonCheckbox');
+
+            checkbox.addEventListener('click', function () {
+                if (this.checked) {
+                    this.checked = false;
+                } else {
+                    this.checked = true;
+                }
+            });
+
+            jQuery(document).ready(function ($) {
+
+
+                $('#tablaEstudiantes').DataTable({
+                    language: {
+                        "lengthMenu": "Mostrar _MENU_ registros",
+                        "zeroRecords": "No se encontraron resultados",
+                        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sSearch": "Buscar:",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "sProcessing": "Procesando...",
+                    },
+                    //para usar los botones   
+                    responsive: "true",
+                    dom: 'Bfrtilp',
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fas fa-file-excel"></i> ',
+                            titleAttr: 'Exportar a Excel',
+                            className: 'btn btn-success d-inline-block'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fas fa-file-pdf"></i> ',
+                            titleAttr: 'Exportar a PDF',
+                            className: 'btn btn-danger d-inline-block'
+                        },
+
+                    ]
                 });
 
-            });
-        });
 
-        const list = document.querySelectorAll(".list");
-        function activeLink() {
-            list.forEach((l) => l.classList.remove("active"));
-            this.classList.add("active");
-        }
-        list.forEach((l) => l.addEventListener("click", activeLink));
-
-
-        const checkbox = document.getElementById('botonCheckbox');
-
-        checkbox.addEventListener('click', function () {
-            if (this.checked) {
-                this.checked = false;
-            } else {
-                this.checked = true;
-            }
-        });
-
-        jQuery(document).ready(function ($) {
-
-
-            $('#tablaEstudiantes').DataTable({
-                language: {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
+                $('#tablaClases').DataTable({
+                    language: {
+                        "lengthMenu": "Mostrar _MENU_ registros",
+                        "zeroRecords": "No se encontraron resultados",
+                        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sSearch": "Buscar:",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "sProcessing": "Procesando...",
                     },
-                    "sProcessing": "Procesando...",
-                },
-                //para usar los botones   
-                responsive: "true",
-                dom: 'Bfrtilp',
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> ',
-                        titleAttr: 'Exportar a Excel',
-                        className: 'btn btn-success d-inline-block'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> ',
-                        titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger d-inline-block'
-                    },
-
-                ]
-            });
+                    //para usar los botones   
+                    responsive: "true",
+                    dom: 'Bfrtilp',
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fas fa-file-excel"></i> ',
+                            titleAttr: 'Exportar a Excel',
+                            className: 'btn btn-success'
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fas fa-file-pdf"></i> ',
+                            titleAttr: 'Exportar a PDF',
+                            className: 'btn btn-danger'
+                        }
+                    ],
+                    paging: true // Habilitar la paginación
+                });
 
 
-            $('#tablaClases').DataTable({
-                language: {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "sProcessing": "Procesando...",
-                },
-                //para usar los botones   
-                responsive: "true",
-                dom: 'Bfrtilp',
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> ',
-                        titleAttr: 'Exportar a Excel',
-                        className: 'btn btn-success'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> ',
-                        titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger'
-                    },
 
-                ]
+
             });
 
 
 
 
-        });
 
-
-
-
-
-    </script>
+        </script>
 
 
 </body>
