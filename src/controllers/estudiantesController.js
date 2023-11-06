@@ -61,7 +61,7 @@ GROUP BY
       });
     });
   },
-  postInscripcionCurso: (req, res) => {
+  postInscripcionCurso: (req, res, next) => {
     const nrc = req.body.nrc;
     const idUsuario = req.session.userId;
 
