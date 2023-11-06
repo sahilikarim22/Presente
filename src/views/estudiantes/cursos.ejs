@@ -29,7 +29,10 @@
                 <span class="circulo">
                     <i class="fas fa-user" style="font-size: 3rem;"></i>
                 </span>
-                <h3 class="text-white"><%= usuario.nombres %> <%= usuario.apellidos %><i class="fa-solid fa-browser"></i></h3>
+                <h3 class="text-white">
+                    <%= usuario.nombres %>
+                        <%= usuario.apellidos %><i class="fa-solid fa-browser"></i>
+                </h3>
                 <h5 class="text-white">Estudiante</h5>
                 <button id="abrirModal" class="btn btn-primary">Unirme a Curso </button>
             </div>
@@ -50,46 +53,56 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <!-- Enlace al curso con la URL correcta -->
-                                        <a href="/estudiante/cursoInfo/<%= curso.idCurso %><%= curso.idPeriodo %>"
-                                            class="card-link">
-                                            <p class="card-text fw-bold nombreCurso">
-                                                <%= curso.nombreCurso %>
-                                            </p>
-                                        </a>
+                                        <p class="card-text fw-bold nombreCurso">
+                                            <%= curso.nombreCurso %>
+                                        </p>
                                     </div>
+                                    
                                     <div class="col-4 porcentaje">
-                                        <%= curso.porcentajeAsistencia %>%
-                                    </div>
-                                    <!--Boton Opciones-->
-                                    <div class="position-absolute dropdown-menu-right m-2">
-                                        <button type="button" class="btn colorOpciones botonOpciones"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                    </div>
-                                    <div class="ventanitaOpciones ml-auto ">
-                                        <div class="">
-                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                            </button>
+                                        <% if (curso.porcentajeAsistencia >= 75) { %>
+                                            <div class="progress-bar-75" role="progressbar">
+                                                <span class="sr-only">
+                                                    <%= curso.porcentajeAsistencia %>%
+                                                </span>
+                                                <%= curso.porcentajeAsistencia %>%
+                                            </div>
+                                        <% }else if (curso.porcentajeAsistencia >= 75) { %>
+                                        <div class="progress-bar-75" role="progressbar">
+                                            <span class="sr-only">
+                                                <%= curso.porcentajeAsistencia %>%
+                                            </span>
+                                            <%= curso.porcentajeAsistencia %>%
                                         </div>
-                                        <br>
-                                        <div class="">
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
+                                        <% } else if (curso.porcentajeAsistencia >= 50) { %>
+                                        <div class="progress-bar-50" role="progressbar">
+                                            <span class="sr-only">
+                                                <%= curso.porcentajeAsistencia %>%
+                                            </span>
+                                            <%= curso.porcentajeAsistencia %>%
                                         </div>
-                                    </div>
+                                        <% } else if (curso.porcentajeAsistencia >= 25) { %>
+                                        <div class="progress-bar-25" role="progressbar">
+                                            <span class="sr-only">
+                                                <%= curso.porcentajeAsistencia %>%
+                                            </span>
+                                            <%= curso.porcentajeAsistencia %>%
+                                        </div>
+                                        <% } else { %>
+                                        <div class="progress-bar-0" role="progressbar">
+                                            <span class="sr-only">
+                                                <%= curso.porcentajeAsistencia %>%
+                                            </span>
+                                            <%= curso.porcentajeAsistencia %>%
+                                        </div>
+                                        <% } %>
                                 </div>
                             </div>
                         </div>
-                        <div class="masCursos">
-                        </div>
-                        <% }) %>
-                </div>
+
+                        <% }) %>        
                 
+                    </div>
+
 
 
 
@@ -182,20 +195,22 @@
 
 
                     // Función para obtener la clase correspondiente al porcentaje
-                    function obtenerClasePorcentaje(porcentaje) {
+                    // Función para determinar la clase de ancho de la barra según el porcentaje
+                    function obtenerAnchoBarra(porcentaje) {
                         if (porcentaje >= 75) {
-                            return '100'; // Clase para el 100% (suponiendo que 75% y más se consideran 100% de asistencia)
+                            return 'barra-75'; // Asigna la clase correspondiente al 75% de la barra
                         } else if (porcentaje >= 50) {
-                            return '75'; // Clase para el 75%
+                            return 'barra-50'; // Asigna la clase correspondiente al 50% de la barra
                         } else if (porcentaje >= 25) {
-                            return '50'; // Clase para el 50%
+                            return 'barra-25'; // Asigna la clase correspondiente al 25% de la barra
                         } else {
-                            return '25'; // Clase para el 25%
+                            return 'barra-0'; // Si el porcentaje es menor que 25, asigna la clase al 0%
                         }
                     }
 
 
-                   
+
+
 
 
 
