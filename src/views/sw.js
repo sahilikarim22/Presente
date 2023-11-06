@@ -13,9 +13,9 @@ self.addEventListener('install', function (event) {
         console.log('[Service Worker] Precaching App Shell');
         cache.addAll([
           '/',
-          '/index.html',
-          '/registrarse.html',
-          '/iniciar_sesion.html',
+          '/index.ejs',
+          '/registrarse.ejs',
+          '/iniciar_sesion.ejs',
           '/src/js/app.js',
           "https://i.postimg.cc/jdDB0rxw/icono-back.png"
 
