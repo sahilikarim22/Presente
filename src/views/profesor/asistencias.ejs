@@ -242,11 +242,12 @@ function scaner() {
             };
             scanner.onUniqueRead = (txt, result) => {
                 // marcar asistencia
+                
                 const cedula = txt;
+                console.log(cedula)
                 const checkbox = document.getElementById(`estudiante_${cedula}`);
                 checkbox.checked = true;
                 alert("escaneado correctamente");
-                console.log(idEstudiante);
                 console.log(checkbox);
                 Swal.fire({
                                 icon: 'success',
