@@ -15,7 +15,6 @@
     <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <!--Iconos Font Awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
     <!--font awesome con CDN-->
 
 </head>
@@ -35,23 +34,25 @@
         <div class="container">
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <i class="fa-solid fa-user" style="font-size: 3rem;"></i>
-                    <% if (docente && docente.length > 0) { %>
+                    <span class="circulo">
+                        <i class="fas fa-user" style="font-size: 3rem;"></i>
+                    </span>
+                    <% if (docente && docente.length> 0) { %>
                         <h3 class="text-white">
                             <%= docente[0].nombres %>
-                            <%= docente[0].apellidos %>
+                                <%= docente[0].apellidos %>
                         </h3>
-                    <% } %>
-                    <h5 class="text-white">Profesor</h5>
+                        <% } %>
+                            <h5 class="text-white">Profesor</h5>
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-12">
-                    <% if (periodos.length === 0 ) { %>
+                    <% if (periodos.length===0 ) { %>
                         <h1 class="text-white text-center">Aún no se han creado Períodos Académicos</h1>
                         <% }else{ %>
-                    <h1 class="nombrePeriodo">Periodos</h1>
+                            <h1 class="nombrePeriodo">Periodos</h1>
                             <% } %>
                 </div>
                 <% if (periodos.length> 0) { %>
@@ -67,7 +68,8 @@
                                                 </p>
                                             </div>
                                             <div class="d-flex justify-content-end p-3">
-                                                <i class="fa fa-arrow-circle-right text-white" style="font-size: 24px;"></i>
+                                                <i class="fa fa-arrow-circle-right text-white"
+                                                    style="font-size: 24px;"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -76,35 +78,6 @@
                         </div>
                         <% }) %>
                             <% } %>
-
-
-
-
-                                <footer class="menuMovil">
-                                    <ul class="d-flex justify-content-between">
-                                        <li class="atras">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
-                                                <path
-                                                    d="m8.121 12 4.94-4.939-2.122-2.122L3.879 12l7.06 7.061 2.122-2.122z">
-                                                </path>
-                                                <path
-                                                    d="M17.939 4.939 10.879 12l7.06 7.061 2.122-2.122L15.121 12l4.94-4.939z">
-                                                </path>
-                                            </svg>
-                                        </li>
-
-                                        <li class="home3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
-                                                <path
-                                                    d="M12.74 2.32a1 1 0 0 0-1.48 0l-9 10A1 1 0 0 0 3 14h2v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7h2a1 1 0 0 0 1-1 1 1 0 0 0-.26-.68z">
-                                                </path>
-                                            </svg>
-                                        </li>
-                                    </ul>
-                                </footer>
-
             </div>
 
 
