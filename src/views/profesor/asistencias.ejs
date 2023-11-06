@@ -133,12 +133,8 @@
         const checkbox = document.getElementById('botonCheckbox');
 
         checkbox.addEventListener('click', function () {
-            if (this.checked) {
-                this.checked = false;
-            } else {
-                this.checked = true;
-            }
-        });
+        this.checked = !this.checked; 
+    });
 
 
         jQuery(document).ready(function ($) {
