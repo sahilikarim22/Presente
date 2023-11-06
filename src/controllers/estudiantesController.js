@@ -28,7 +28,7 @@ const estudiantesController = {
     c.seccion, 
     c.idCurso,
     ROUND(
-        (SUM(CASE WHEN a.asistio = 1 THEN 1 ELSE 0 END) / c.cantDiasSemanas) * 100,
+        (CAST(SUM(CASE WHEN a.asistio = 1 THEN 1 ELSE 0 END) AS FLOAT) / c.cantDiasSemanas) * 100,
         2
     ) AS porcentajeAsistencia
 FROM 
@@ -44,6 +44,7 @@ WHERE
     AND c.idPeriodo = ?
 GROUP BY 
     c.idCurso
+
 
 `;
 
