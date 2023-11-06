@@ -159,45 +159,43 @@
             </form>
 
 
-                <div id="modalEditarCurso" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title text-uppercase">EDITAR CURSO</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <input name="idCurso" type="hidden" id="idCursoEditar"
-                                        class="form-control inputModal">
-                                    <label for="curso" class="ModalTituloCampo">Curso</label>
-                                    <input name="nombreCurso" type="text" min="0" id="nombreCursoEditar"
-                                        class="form-control inputModal">
-                                </div>
-                                <div class="form-group">
-                                    <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
-                                    <input name="cantDiasSemanas" type="number" min="0" id="semanasEditar"
-                                        class="form-control inputModal" value="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="seccion" class="ModalTituloCampo">Seccion: </label>
-                                    <input class="form-control inputModal" name="seccion" type="text"
-                                        id="seccionEditar">
-                                </div>
-                                <div class="form-group">
-                                    <label for="nrc" class="ModalTituloCampo">NRC: </label>
-                                    <input class="form-control inputModal" name="nrc" type="number" min="0" step="1"
-                                        id="nrcEditar">
-                                </div>
-                            </div>
-                            <div class="modal-footer text-center justify-content-center mx-auto">
-                                <button type="submit" id="actualizarCambios" class="btn btn-primary">Guardar</button>
-                                <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
-                            </div>
-
+            <div id="modalEditarCurso" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-uppercase">EDITAR CURSO</h4>
                         </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input name="idCurso" type="hidden" id="idCursoEditar" class="form-control inputModal">
+                                <label for="curso" class="ModalTituloCampo">Curso</label>
+                                <input name="nombreCurso" type="text" min="0" id="nombreCursoEditar"
+                                    class="form-control inputModal">
+                            </div>
+                            <div class="form-group">
+                                <label for="semanas" class="ModalTituloCampo">Cantidad de Días por Semana:</label>
+                                <input name="cantDiasSemanas" type="number" min="0" id="semanasEditar"
+                                    class="form-control inputModal" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="seccion" class="ModalTituloCampo">Seccion: </label>
+                                <input class="form-control inputModal" name="seccion" type="text" id="seccionEditar">
+                            </div>
+                            <div class="form-group">
+                                <label for="nrc" class="ModalTituloCampo">NRC: </label>
+                                <input class="form-control inputModal" name="nrc" type="number" min="0" step="1"
+                                    id="nrcEditar">
+                            </div>
+                        </div>
+                        <div class="modal-footer text-center justify-content-center mx-auto">
+                            <button type="submit" id="actualizarCambios" class="btn btn-primary">Guardar</button>
+                            <button id="cerrar" class="btn botonCerrar" data-dismiss="modal">X</button>
+                        </div>
+
                     </div>
                 </div>
+            </div>
         </div>
 
 
@@ -247,24 +245,32 @@
                     e.preventDefault();
                     const cursoId = $(this).data('id');
 
-
-
-                    // Lógica para confirmar y eliminar el curso con AJAX
-                    if (confirm('¿Estás seguro de que deseas eliminar este curso?')) {
-                        $.ajax({
-                            type: 'DELETE', // El método HTTP DELETE es solo un ejemplo. Debes usar el método correcto que tu servidor requiere para eliminar el curso.
-                            url: `/profesores/deleteCurso/${cursoId}`, // Reemplaza con la ruta correcta en tu servidor para eliminar el curso
-                            success: function (response) {
-                                // Aquí puedes manejar la respuesta después de eliminar el curso, por ejemplo, recargar la página o actualizar la lista de cursos
-                                location.reload(); // Recarga la página después de eliminar el curso. Puedes adaptar esto según tu flujo de la aplicación.
-                            },
-                            error: function (xhr, status, error) {
-                                // Manejar errores, por ejemplo, mostrar un mensaje de error en caso de que la eliminación falle
-                                console.log('Error al eliminar el curso:', error);
-                            }
-                        });
-                    }
+                    // Utilizando SweetAlert en lugar de confirm
+                    Swal.fire({
+                        title: '¿Estás seguro de que deseas eliminar este curso?',
+                        text: 'Esta acción no se puede deshacer',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sí, eliminarlo',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: `/profesores/deleteCurso/${cursoId}`,
+                                success: function (response) {
+                                    location.reload();
+                                },
+                                error: function (xhr, status, error) {
+                                    console.log('Error al eliminar el curso:', error);
+                                }
+                            });
+                        }
+                    });
                 });
+
 
 
                 $('#actualizarCambios').on('click', function (e) {
