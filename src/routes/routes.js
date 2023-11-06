@@ -26,13 +26,13 @@ router.get('/profesor/cursos/:idPeriodo', requireLogin, checkUserType('docente')
 router.get('/profesor/curso/:idCurso/:idPeriodo',  requireLogin, checkUserType('docente'), profesorController.getCursoInfo);
 router.get('/profesor/asistencias/:idCurso/:idPeriodo',  requireLogin, checkUserType('docente'), profesorController.getAsistencias);
 router.get('/profesor/getCurso/:idCurso',  requireLogin, checkUserType('docente'), profesorController.getCurso);
-router.get('/profesores/deleteCurso/:idCurso',  requireLogin, checkUserType('docente'), profesorController.deleteCurso);
+router.delete('/profesores/deleteCurso/:idCurso',  requireLogin, checkUserType('docente'), profesorController.deleteCurso);
 
 router.get('/confirmarUsuario',usuariosController.getConfirmarUsuario);
 
 
 //estudiantes
-router.get('/estudiantes/cursos/', requireLogin, checkUserType('estudiante'),estudiantesController.getCursos);
+router.get('/estudiantes/cursos/:idPeriodo', requireLogin, checkUserType('estudiante'),estudiantesController.getCursos);
 router.get('/estudiantes/inicio/', requireLogin, checkUserType('estudiante'), estudiantesController.getInicio);
 router.get('/estudiantes/entrada/', requireLogin, checkUserType('estudiante'), estudiantesController.getEntrada);
 // router.get('/estudiantes/cursoInfo/:idCurso', requireLogin, checkUserType('estudiante'), estudiantesController.getCursoInfo);

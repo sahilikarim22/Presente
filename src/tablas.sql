@@ -118,9 +118,10 @@ CREATE TABLE IF NOT EXISTS `curso_estudiante` (
   `idCurso` int NOT NULL,
   `idUsuario` int NOT NULL,
   PRIMARY KEY (`idCursoEstudiante`),
-  KEY `idCurso` (`idCurso`),
-  KEY `idUsuario` (`idUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+  FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCursos`),
+  FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
 
 --
 -- Volcado de datos para la tabla `curso_estudiante`

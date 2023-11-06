@@ -19,6 +19,7 @@ const profesorController = {
 },
 deleteCurso: (req, res) => {
     const idCurso = req.params.idCurso;
+
     const cursoSQL = "DELETE FROM cursos WHERE idCurso = ?";
     conexion.query(cursoSQL, [idCurso], (error, curso) => {
         if (error) {
