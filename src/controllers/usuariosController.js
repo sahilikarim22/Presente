@@ -38,7 +38,7 @@ const usuariosController = {
           from: "sahilikarim22@hotmail.com",
           to: correoUcab,
           subject: "Confirmación de Registro",
-          text: `Por favor, haz clic en el siguiente enlace para confirmar tu correo: http://localhost:3000/confirmar/${token}`,
+          text: `Por favor, haz clic en el siguiente enlace para confirmar tu correo: https://presente.azurewebsites.net/confirmar/${token}`,
         };
   
         const insertQuery =
