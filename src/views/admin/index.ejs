@@ -34,16 +34,16 @@
             <li class="salir"><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
-    <div class="content">
-        <p class="text-white">
-            <%= usuarios.nombres %>
-                <%= usuarios.apellidos %>
-        </p>
+        
         <small class="text-white"><i>Secretario</i></small>
         <button class="burger-btn">
             <i class="fas fa-bars"></i>
         </button>
         <div class="container">
+            <p class="text-white">
+                <%= usuarios.nombres %>
+                    <%= usuarios.apellidos %>
+            </p>
             <h1>Periodos</h1>
             <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo <i
                     class="fa-solid fa-plus"></i></button>
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-    </div>
+   
 
     <!--Ejemplo tabla con DataTables-->
 
