@@ -245,6 +245,7 @@ function scaner() {
                 const cedula = txt;
                 const checkbox = document.getElementById(`estudiante_${cedula}`);
                 checkbox.checked = true;
+                alert("escaneado correctamente");
                 console.log(idEstudiante);
                 console.log(checkbox);
                 Swal.fire({
