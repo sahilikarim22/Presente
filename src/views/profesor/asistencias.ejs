@@ -181,14 +181,11 @@
 
                 // Recorre cada checkbox para obtener los estudiantes presentes
                 document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
-                    const idCompleto = checkbox.id; // Obtener el ID completo del checkbox
-                    const partes = idCompleto.split('_'); // Dividir el ID en partes usando el guion bajo ('_')
+                    const idCompleto = checkbox.id;
+                    const partes = idCompleto.split('_');
 
-                    const cedula = partes[1]; // La cédula es el segundo elemento después del split
-                    const idEstudiante = partes[3]; // El ID de usuario es el cuarto elemento después del split
-
-                    console.log('Cédula:', cedula);
-                    console.log('ID Usuario:', idEstudiante);
+                    const cedula = partes[1];
+                    const idEstudiante = partes[3];
 
 
                     const nombreClase = document.querySelector(".nombreClase").value;
@@ -235,8 +232,13 @@
                         // marcar asistencia
                         alert("escaneado correctamente");
                         const cedula = txt;
-                        const checkbox = document.getElementById(`estudiante_${cedula}`);
-                        checkbox.checked = true;
+
+                        const checkboxes = document.querySelectorAll(`.botonCheckbox[data-index]`);
+                        checkboxes.forEach(checkbox => {
+                            if (checkbox.id.includes(cedula)) {
+                                checkbox.checked = true;
+                            }
+                        });
                     };
                     await scanner.show();
                 })();
