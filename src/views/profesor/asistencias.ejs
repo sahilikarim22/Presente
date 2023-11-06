@@ -64,6 +64,7 @@
                 <tbody>
                     <% estudiantes.forEach((est, index)=> { %>
                         <tr>
+                            <input type="hidden" id="idUsuario" value="<%= est.idUsuario %>">
                             <td class="cedula">
                                 <%= est.cedula %>
                             </td>
@@ -71,7 +72,7 @@
                                 <%= est.nombres %> <%= est.apellidos %>
                             </td>
                             <td class="asistio">
-                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %>_<%= est.idUsuario %>" data-index="<%= index %>">
+                                <input type="checkbox" class="botonCheckbox" id="estudiante_<%= est.cedula %>" data-index="<%= index %>">
                             </td>
                         </tr>
                         <% }) %>
@@ -197,7 +198,7 @@
 
     // Recorre cada checkbox para obtener los estudiantes presentes
     document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
-        const idUsuario = checkbox.id.split('_')[2]; 
+        const idUsuario = document.getElementById('idUsuario').value;
 
         const nombreClase = document.querySelector(".nombreClase").value;
         const descripcion = document.querySelector(".descripcion").value;
@@ -241,8 +242,8 @@ function scaner() {
             };
             scanner.onUniqueRead = (txt, result) => {
                 // marcar asistencia
-                const idEstudiante = txt;
-                const checkbox = document.getElementById(`estudiante_${cedula}_${idUsuario}`);
+                const cedula = txt;
+                const checkbox = document.getElementById(`estudiante_${cedula}`);
                 checkbox.checked = true;
                 console.log(idEstudiante);
                 console.log(checkbox);
