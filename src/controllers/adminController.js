@@ -99,7 +99,8 @@ const adminController = {
     const clasesSQL = `
       SELECT idClase, nombreClase, fechaClase
       FROM clases
-      WHERE idCurso = ? AND idPeriodo = ?;
+      WHERE idCurso = ? AND idPeriodo = ?
+      ORDER BY fechaClase ASC;
     `;
     const asistenciaSQL = `
       SELECT a.asistio, u.nombres, u.apellidos, u.cedula, u.id, a.idClase

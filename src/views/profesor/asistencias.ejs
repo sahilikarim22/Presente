@@ -222,9 +222,12 @@
 
                     scanner.onUniqueRead = (txt, result) => {
                         // Acciones a realizar cuando se lee un código único
-                        alert("¡Código escaneado correctamente!");
                         const cedula = txt;
-
+                        
+                        // obtener nombre de usuario de esa cedula
+                        nombreEstudiante = document.querySelector(`.nombresApellidos[data-cedula="${cedula}"]`).innerHTML;
+                        alert("¡Código escaneado correctamente! Alumno: ",nombreEstudiante);
+                        
                         // Marcar asistencia o realizar otras acciones
                         const checkboxes = document.querySelectorAll(`.botonCheckbox[data-index]`);
                         checkboxes.forEach(checkbox => {
