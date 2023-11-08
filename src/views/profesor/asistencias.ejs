@@ -223,22 +223,33 @@
 
                     scanner.onUniqueRead = (txt, result) => {
                         // Acciones a realizar cuando se lee un código único
-                        let cedula = txt;
-                        let cedula_nombre = document.querySelector(`.nombresApellidos[data-cedula="${cedula}"]`);
+                        let cedula = txt; // Elimina espacios en blanco al inicio y final, si existen
+                        let elementosCedula = document.querySelectorAll('.nombresApellidos');
 
-                        if (cedula_nombre) {
-                            let separado = cedula_nombre.getAttribute('data-cedula').split('_');
-                            let cedulaObtenida = separado[0];
+                        let cedulaEncontrada = null;
+                        let nombreCompletoEncontrado = null;
+
+                        elementosCedula.forEach(elemento => {
+                            let separado = elemento.getAttribute('data-cedula').split('_');
+                            let cedulaObtenida = separado[0].trim(); // Se obtiene la cédula y se eliminan espacios en blanco
                             let nombreCompleto = separado[1];
 
-                            console.log("Cédula:", cedulaObtenida);
-                            console.log("Nombre Completo:", nombreCompleto);
+                            // Comprobación flexible: se comparan cédulas sin importar mayúsculas/minúsculas y sin espacios adicionales
+                            if (cedula.toLowerCase() === cedulaObtenida.toLowerCase()) {
+                                cedulaEncontrada = cedulaObtenida;
+                                nombreCompletoEncontrado = nombreCompleto;
+                            }
+                        });
 
-                            alert("¡Código escaneado correctamente! Alumno: " + nombreCompleto);
+                        if (cedulaEncontrada) {
+                            console.log("Cédula encontrada:", cedulaEncontrada);
+                            console.log("Nombre Completo:", nombreCompletoEncontrado);
+                            alert("¡Código escaneado correctamente! Alumno: " + nombreCompletoEncontrado);
                         } else {
-                            console.log("No se encontró ningún elemento con la cédula escaneada.");
+                            console.log("No se encontró ninguna coincidencia para la cédula escaneada.");
                             alert("La cédula escaneada no se encuentra disponible.");
                         }
+
 
                         // Marcar asistencia o realizar otras acciones
                         const checkboxes = document.querySelectorAll(`.botonCheckbox[data-index]`);
