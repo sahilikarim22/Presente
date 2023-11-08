@@ -242,12 +242,9 @@
                         });
 
                         if (cedulaEncontrada) {
-                            console.log("Cédula encontrada:", cedulaEncontrada);
-                            console.log("Nombre Completo:", nombreCompletoEncontrado);
-                            alert("¡Código escaneado correctamente! Alumno: " + nombreCompletoEncontrado);
+                            alert("¡Carnet escaneado correctamente! Alumno: " + nombreCompletoEncontrado);
                         } else {
-                            console.log("No se encontró ninguna coincidencia para la cédula escaneada.");
-                            alert("La cédula escaneada no se encuentra disponible.");
+                            alert("El estudiante no se encuentra inscrito al curso");
                         }
 
 
