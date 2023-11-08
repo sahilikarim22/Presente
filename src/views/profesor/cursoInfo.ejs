@@ -123,11 +123,16 @@
                                                     <div
                                                         style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
                                                         P</div>
-                                                    <% } else { %>
+                                                    <% } else if(asistenciaEstudiante.asistio===0) { %>
                                                         <div
                                                             style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
                                                             A</div>
-                                                        <% } %>
+                                                        <% }else{ %>
+                                                            <div
+                                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
+                                                            A</div>
+                                                            <% } %>
+                                                            
                                                             <% } %>
                                 </td>
                                 <% }); %>

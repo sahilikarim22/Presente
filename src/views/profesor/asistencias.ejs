@@ -68,7 +68,8 @@
                             <td class="cedula">
                                 <%= est.cedula %>
                             </td>
-                            <td class="nombresApellidos">
+                            <td class="nombresApellidos"
+                                data-cedula="<%= est.cedula %>_<%= est.nombres %> <%= est.apellidos %>">
                                 <%= est.nombres %>
                                     <%= est.apellidos %>
                             </td>
@@ -222,12 +223,23 @@
 
                     scanner.onUniqueRead = (txt, result) => {
                         // Acciones a realizar cuando se lee un código único
-                        const cedula = txt;
-                        
-                        // obtener nombre de usuario de esa cedula
-                        nombreEstudiante = document.querySelector(`.nombresApellidos[data-cedula="${cedula}"]`).innerHTML;
-                        alert("¡Código escaneado correctamente! Alumno: ",nombreEstudiante);
-                        
+                        let cedula = txt;
+                        let cedula_nombre = document.querySelector(`.nombresApellidos[data-cedula="${cedula}"]`);
+
+                        if (cedula_nombre) {
+                            let separado = cedula_nombre.getAttribute('data-cedula').split('_');
+                            let cedulaObtenida = separado[0];
+                            let nombreCompleto = separado[1];
+
+                            console.log("Cédula:", cedulaObtenida);
+                            console.log("Nombre Completo:", nombreCompleto);
+
+                            alert("¡Código escaneado correctamente! Alumno: " + nombreCompleto);
+                        } else {
+                            console.log("No se encontró ningún elemento con la cédula escaneada.");
+                            alert("La cédula escaneada no se encuentra disponible.");
+                        }
+
                         // Marcar asistencia o realizar otras acciones
                         const checkboxes = document.querySelectorAll(`.botonCheckbox[data-index]`);
                         checkboxes.forEach(checkbox => {
