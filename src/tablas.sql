@@ -17,6 +17,39 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `clases`;
+
+CREATE TABLE IF NOT EXISTS `clases` (
+  `idClase` int NOT NULL AUTO_INCREMENT,
+  `nombreClase` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
+  `idCurso` int NOT NULL,
+  `fechaClase` date NOT NULL,
+  `idPeriodo` int NOT NULL,
+  PRIMARY KEY (`idClase`),
+  CONSTRAINT `fk_clases_curso` FOREIGN KEY (`idCurso`) 
+    REFERENCES `cursos` (`idCurso`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_clases_periodo` FOREIGN KEY (`idPeriodo`) 
+    REFERENCES `periodos` (`id`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- Volcado de datos para la tabla `clases`
+--
+
+INSERT INTO `clases` (`idClase`, `nombreClase`, `descripcion`, `idCurso`, `fechaClase`, `idPeriodo`) VALUES
+(1, '', '', 10, '0000-00-00', 1),
+(2, 'cosas', '', 10, '2023-11-10', 1),
+(3, 'asdas', '', 10, '2023-11-28', 1),
+(4, 'cosas', '12', 10, '2023-11-17', 1),
+(5, 'lokeras', 'asdasd', 10, '2023-11-04', 1),
+(6, 'asdasd', '', 10, '2023-11-30', 1),
+(7, 'aaaaaa', '', 10, '2023-11-08', 1);
+
+
 --
 -- Estructura de tabla para la tabla `asistencias`
 --
@@ -31,9 +64,18 @@ CREATE TABLE IF NOT EXISTS `asistencias` (
   `idClase` int NOT NULL,
   `asistio` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`idAsistencia`),
-  CONSTRAINT `fk_asistencias_estudiante` FOREIGN KEY (`idEstudiante`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `fk_asistencias_curso` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`),
-  CONSTRAINT `fk_asistencias_clases` FOREIGN KEY (`idClase`) REFERENCES `clases` (`idClase`)
+  CONSTRAINT `fk_asistencias_estudiante` FOREIGN KEY (`idEstudiante`) 
+    REFERENCES `usuarios` (`id`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_asistencias_curso` FOREIGN KEY (`idCurso`) 
+    REFERENCES `cursos` (`idCurso`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_asistencias_clases` FOREIGN KEY (`idClase`) 
+    REFERENCES `clases` (`idClase`) 
+    ON UPDATE CASCADE 
+    ON DELETE CASCADE
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
@@ -48,38 +90,6 @@ INSERT INTO `asistencias` (`idAsistencia`, `idEstudiante`, `idCurso`, `idClase`,
 (4, 7, 11, 4, 1),
 (5, 10, 10, 7, 0),
 (6, 7, 10, 7, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `clases`
---
-
-DROP TABLE IF EXISTS `clases`;
-CREATE TABLE IF NOT EXISTS `clases` (
-  `idClase` int NOT NULL AUTO_INCREMENT,
-  `nombreClase` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
-  `idCurso` int NOT NULL,
-  `fechaClase` date NOT NULL,
-  `idPeriodo` int NOT NULL,
-  PRIMARY KEY (`idClase`),
-  KEY `fk_clases_curso` (`idCurso`),
-  KEY `fk_clases_periodo` (`idPeriodo`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `clases`
---
-
-INSERT INTO `clases` (`idClase`, `nombreClase`, `descripcion`, `idCurso`, `fechaClase`, `idPeriodo`) VALUES
-(1, '', '', 10, '0000-00-00', 1),
-(2, 'cosas', '', 10, '2023-11-10', 1),
-(3, 'asdas', '', 10, '2023-11-28', 1),
-(4, 'cosas', '12', 10, '2023-11-17', 1),
-(5, 'lokeras', 'asdasd', 10, '2023-11-04', 1),
-(6, 'asdasd', '', 10, '2023-11-30', 1),
-(7, 'aaaaaa', '', 10, '2023-11-08', 1);
 
 -- --------------------------------------------------------
 

@@ -233,15 +233,6 @@
                     dom: 'Bfrtilp',
                     buttons: [
                         {
-                            extend: 'excelHtml5',
-                            text: '<i class="fas fa-file-excel"></i> ',
-                            titleAttr: 'Exportar a Excel',
-                            className: 'btn btn-success d-inline-block',
-                            exportOptions: {
-                                columns: ':not(:last-child)' // Excluye la última columna
-                            }
-                        },
-                        {
                             extend: 'pdfHtml5',
                             text: '<i class="fas fa-file-pdf"></i> ',
                             titleAttr: 'Exportar a PDF',
@@ -258,11 +249,11 @@
 
                 $('#tablaClases').DataTable({
                     language: {
-                        "lengthMenu": "Mostrar _MENU_ registros",
+                        "lengthMenu": "Mostrar _MENU_",
                         "zeroRecords": "No se encontraron resultados",
                         "info": "",
-                        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
                         "sSearch": "Buscar:",
                         "oPaginate": {
                             "sFirst": "Primero",
@@ -276,12 +267,6 @@
                     responsive: "true",
                     dom: 'Bfrtilp',
                     buttons: [
-                        {
-                            extend: 'excelHtml5',
-                            text: '<i class="fas fa-file-excel"></i> ',
-                            titleAttr: 'Exportar a Excel',
-                            className: 'btn btn-success'
-                        },
                         {
                             extend: 'pdfHtml5',
                             text: '<i class="fas fa-file-pdf"></i> ',

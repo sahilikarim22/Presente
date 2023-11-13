@@ -15,7 +15,6 @@ const profesorController = require('../controllers/profesorController');
 
 //**************GETS***********************
 //admin 
-router.get('/pruebas', adminController.getPruebas);
 router.get('/admin', requireLogin, checkUserType('administrador'), adminController.getAdmin);
 router.get('/admin/cursos/:idPeriodo', requireLogin, checkUserType('administrador'), adminController.getAdminCursosPeriodo);
 router.get('/admin/verCurso/:idCurso/:idPeriodo', requireLogin, checkUserType('administrador'), adminController.getAdminCursoDetalle);

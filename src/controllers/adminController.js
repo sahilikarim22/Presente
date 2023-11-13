@@ -1,9 +1,6 @@
 const conexion = require("../db/config");
 
 const adminController = {
-  getPruebas: (req, res) => {
-    res.render("pruebas");
-  },
   getAdmin: (req, res, next) => {
     conexion.query("SELECT * FROM periodos", (err, periodos) => {
       if (err) {
