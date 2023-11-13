@@ -5,8 +5,6 @@
     <title>
         Admin
     </title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
@@ -30,20 +28,21 @@
 
     <div class="sidebar">
         <ul class="menu">
-            <li class="home"><a href="/admin/"><i class="fas fa-home text-black"></i></a></li>
+            <li class="home"><a href="/admin"><i class="fas fa-home text-black"></i></a></li>
             <li class="salir"><a href="/logout"><i class="fas fa-sign-out-alt"></i></a></li>
         </ul>
     </div>
-        
+    <div class="content">
+        <p class="text-white">
+            <%= usuarios.nombres %>
+                <%= usuarios.apellidos %>
+        </p>
         <small class="text-white"><i>Secretario</i></small>
         <button class="burger-btn">
             <i class="fas fa-bars"></i>
         </button>
         <div class="container">
-            <p class="text-white">
-                <%= usuarios.nombres %> <%= usuarios.apellidos %>
-            </p>
-            <h1 class="text-white">Periodos</h1>
+            <h1>Periodos</h1>
             <button id="abrirModal" class="btn btn-primary m-4">Agregar Periodo <i
                     class="fa-solid fa-plus"></i></button>
             <div class="row">
@@ -77,9 +76,6 @@
                                                         class="switch status-<%= periodo.status %>" />
                                                     <label for="switch-<%= periodo.id %>"></label>
                                                 </div>
-                                                <a href="/admin/editarPeriodo/" class="btn btn-outline-info">
-                                                    Editar
-                                                </a>
                                                 <button class="btn btn-outline-danger" type="submit">Eliminar</button>
                                             </td>
                                         </form>
@@ -92,7 +88,7 @@
                 </div>
             </div>
         </div>
-   
+    </div>
 
     <!--Ejemplo tabla con DataTables-->
 
@@ -171,10 +167,19 @@
                 dom: 'Bfrtilp',
                 buttons: [
                     {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> ',
+                        titleAttr: 'Exportar a Excel',
+                        className: 'btn btn-success',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    },
+                    {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn colorPdf',
+                        className: 'btn btn-danger',
                         exportOptions: {
                             columns: ':not(:last-child)' // Excluye la última columna
                         }
