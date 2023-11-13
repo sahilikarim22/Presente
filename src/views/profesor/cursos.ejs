@@ -295,17 +295,27 @@
 
 
                 // Abre el modal al hacer clic en el botón
+                let closeModalIntentionally = false;
                 $('#abrirModal').on('click', function () {
+                    closeModalIntentionally = false;
                     $('#modalAgregar').modal('show');
                 });
 
                 $('#guardar').on('click', function () {
                     // Cierra el modal
+                    loseModalIntentionally = true;
                     $('#modalAgregar').modal('hide');
                 });
 
                 $('#cerrar').on('click', function () {
+                    if(!closeModalIntentionally){
+                        return;
+                    }
+
+                       // Reset the flag for the next time
+        closeModalIntentionally = false;
                     $('#modalAgregar').modal('hide');
+                    
                 });
             });
 

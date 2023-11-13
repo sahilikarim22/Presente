@@ -16,50 +16,79 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+function sendConfirmationEmail(email, token) {
+  const mailOptions = {
+      from: "sahilikarim22@hotmail.com",
+      to: email,
+      subject: "Confirmación de Registro",
+      text: `Por favor, haz clic en el siguiente enlace para confirmar tu correo: https://presente.azurewebsites.net/confirmar/${token}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          console.error("Error al enviar el correo de confirmación:", error);
+          // Handle error
+      } else {
+          console.log("Correo de confirmación enviado:", info.response);
+      }
+  });
+}
+
 const usuariosController = {
   postUsuarios: (req, res, next) => {
     const { correoUcab, clave, apellidos, nombres, cedula, tipoUsuario } = req.body;
     const estatus = 0;
     // Genera un token de confirmación
     const token = generateConfirmationToken();
-  
-    // Consulta para verificar si el correo ya está registrado
-    const selectQuery = "SELECT * FROM usuarios WHERE correoUcab = ?";
-  
-    conexion.query(selectQuery, [correoUcab], (error, results) => {
+
+    // Consulta para verificar si el usuario ya está registrado
+    const selectQuery = "SELECT * FROM usuarios WHERE cedula = ?";
+
+    conexion.query(selectQuery, [cedula], (error, results) => {
         if (error) {
             console.error("Error al buscar el usuario:", error);
             return next(new Error("Error al verificar el usuario en la base de datos"));
-        } else if (results.length > 0) {
-            return next(new Error("El usuario ya está registrado, verifique su cuenta con el correo que le enviamos"));
+        }
+
+        if (results.length > 0) {
+            // Usuario ya existe, actualizar datos y enviar correo de confirmación
+            const existingUser = results[0];
+            
+            // Actualizar datos
+            const updateQuery =
+                "UPDATE usuarios SET correoUcab = ?, clave = ?, apellidos = ?, nombres = ?, estatus = ?, tipoUsuario = ?, token = ? WHERE cedula = ?";
+
+            conexion.query(
+                updateQuery,
+                [correoUcab, clave, apellidos, nombres, estatus, tipoUsuario, token, cedula],
+                (updateError, updateResults) => {
+                    if (updateError) {
+                        console.error("Error al actualizar el usuario en la base de datos:", updateError);
+                        return next(new Error("Error al actualizar el usuario en la base de datos"));
+                    }
+                    // Usuario actualizado, enviar correo de confirmación
+                    sendConfirmationEmail(correoUcab, token);
+                    return res.redirect('confirmarUsuario');
+                }
+            );
         } else {
-            // Envía un correo de confirmación al usuario
-            const mailOptions = {
-                from: "sahilikarim22@hotmail.com",
-                to: correoUcab,
-                subject: "Confirmación de Registro",
-                text: `Por favor, haz clic en el siguiente enlace para confirmar tu correo: https://presente.azurewebsites.net/confirmar/${token}`,
-            };
-        
+            // Usuario no existe, agregar como nuevo
             const insertQuery =
                 "INSERT INTO usuarios (correoUcab, clave, apellidos, nombres, cedula, estatus, tipoUsuario, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
-            conexion.query(insertQuery, [correoUcab, clave, apellidos, nombres, cedula, estatus, tipoUsuario, token], (error, resultados) => {
-                if (error) {
-                    console.error("Error al insertar el estudiante en la base de datos:", error);
-                    return next(new Error("Error al insertar el estudiante en la base de datos"));
-                } else {
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            console.error("Error al enviar el correo de confirmación:", error);
-                            return next(new Error("Hubo un error al enviar el correo de confirmación."));
-                        } else {
-                            console.log("Correo de confirmación enviado:", info.response);
-                            return res.redirect('confirmarUsuario');
-                        }
-                    });
+
+            conexion.query(
+                insertQuery,
+                [correoUcab, clave, apellidos, nombres, cedula, estatus, tipoUsuario, token],
+                (insertError, insertResults) => {
+                    if (insertError) {
+                        console.error("Error al insertar el usuario en la base de datos:", insertError);
+                        return next(new Error("Error al insertar el usuario en la base de datos"));
+                    }
+                    // Usuario agregado, enviar correo de confirmación
+                    sendConfirmationEmail(correoUcab, token);
+                    return res.redirect('confirmarUsuario');
                 }
-            });
+            );
         }
     });
 },
