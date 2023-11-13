@@ -5,31 +5,31 @@ const profesorController = {
     const idCurso = req.params.idCurso;
     const cursoSQL = "SELECT * FROM cursos WHERE idCurso = ?";
     conexion.query(cursoSQL, [idCurso], (error, curso) => {
-        if (error) {
-            console.log(error);
-            return res.status(500).json({ error: "Error de servidor" });
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Error de servidor" });
+      } else {
+        if (curso.length > 0) {
+          res.json(curso[0]); // Devuelve los detalles del curso en formato JSON
         } else {
-            if (curso.length > 0) {
-                res.json(curso[0]); // Devuelve los detalles del curso en formato JSON
-            } else {
-                res.status(404).json({ error: "Curso no encontrado" });
-            }
+          res.status(404).json({ error: "Curso no encontrado" });
         }
+      }
     });
-},
-deleteCurso: (req, res) => {
+  },
+  deleteCurso: (req, res) => {
     const idCurso = req.params.idCurso;
 
     const cursoSQL = "DELETE FROM cursos WHERE idCurso = ?";
     conexion.query(cursoSQL, [idCurso], (error, curso) => {
-        if (error) {
-            console.log(error);
-            return res.status(500).json({ error: "Error de servidor" });
-        } else {
-            res.json({ message: "Curso eliminado correctamente" });
-        }
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Error de servidor" });
+      } else {
+        res.json({ message: "Curso eliminado correctamente" });
+      }
     });
-},
+  },
   getCursos: (req, res) => {
     const idPeriodo = req.params.idPeriodo;
     const idProfesor = req.session.userId;
@@ -43,28 +43,34 @@ deleteCurso: (req, res) => {
         console.log(err);
         return res.status(500).send("Error de servidor");
       } else {
-        conexion.query("SELECT * FROM periodos WHERE status = 1", (err, periodos) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).send("Error de servidor");
-          } else {
+        conexion.query(
+          "SELECT * FROM periodos WHERE status = 1",
+          (err, periodos) => {
+            if (err) {
+              console.log(err);
+              return res.status(500).send("Error de servidor");
+            } else {
+              const idProfesor = req.session.userId;
 
-           const idProfesor = req.session.userId;
-
-            conexion.query("SELECT * FROM usuarios WHERE id = ?",[idProfesor], (err, profesor) => {
-              if (err) {
-                console.log(err);
-                return res.status(500).send("Error de servidor");
-              } else {
-                res.render("profesor/cursos", {
-                  cursos: cursos,
-                  periodos: periodos,
-                  profesor: profesor[0]
-                });
-              }
-            });
+              conexion.query(
+                "SELECT * FROM usuarios WHERE id = ?",
+                [idProfesor],
+                (err, profesor) => {
+                  if (err) {
+                    console.log(err);
+                    return res.status(500).send("Error de servidor");
+                  } else {
+                    res.render("profesor/cursos", {
+                      cursos: cursos,
+                      periodos: periodos,
+                      profesor: profesor[0],
+                    });
+                  }
+                }
+              );
+            }
           }
-        });
+        );
       }
     });
   },
@@ -77,28 +83,30 @@ deleteCurso: (req, res) => {
         console.log(error);
         return res.status(500).send("Error de servidor");
       }
-      conexion.query("SELECT * FROM periodos WHERE status=1", (error, results) => {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("profesor/periodos", {
-            docente: docente,
-            periodos: results,
-          });
+      conexion.query(
+        "SELECT * FROM periodos WHERE status=1",
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.render("profesor/periodos", {
+              docente: docente,
+              periodos: results,
+            });
+          }
         }
-      });
+      );
     });
   },
   getCursoInfo: (req, res) => {
     const idCurso = req.params.idCurso;
     const idPeriodo = req.params.idPeriodo;
 
-    const cursoSQL = 
-    `SELECT c.*, p.cantidadSemanas
+    const cursoSQL = `SELECT c.*, p.cantidadSemanas
     FROM cursos c
     INNER JOIN periodos p ON c.idPeriodo = p.id
     WHERE c.idCurso = ? AND c.idPeriodo = ?;`;
-    
+
     const estudiantesSQL = `
       SELECT u.nombres, u.apellidos, u.cedula, u.id
       FROM curso_estudiante ce
@@ -119,58 +127,95 @@ deleteCurso: (req, res) => {
       JOIN clases c ON c.idClase = a.idClase
       WHERE c.idCurso = ?;
     `;
-  
-    conexion.query(cursoSQL, [idCurso, idPeriodo], (error, curso) => {
+
+    const inasistenciasSQL = `SELECT 
+    DISTINCT u.nombres, 
+    u.apellidos, 
+    u.cedula, 
+    (COUNT(a.idEstudiante) / (p.cantidadSemanas * cu.cantDiasSemanas)) * 100 AS porcentajeInasistencias
+FROM 
+    usuarios u
+JOIN 
+    asistencias a ON u.id = a.idEstudiante
+JOIN 
+    clases c ON c.idClase = a.idClase
+JOIN 
+    periodos p ON c.idPeriodo = p.id
+JOIN 
+    cursos cu ON cu.idCurso = c.idCurso
+WHERE 
+    c.idCurso = ? 
+    AND a.asistio = 0
+GROUP BY 
+    u.id, a.idClase
+HAVING 
+    porcentajeInasistencias > 30;
+`;
+
+    conexion.query(inasistenciasSQL, [idCurso], (error, inasistencias) => {
       if (error) {
         console.log(error);
         return res.status(500).send("Error de servidor");
       }
-  
-      conexion.query(estudiantesSQL, [idCurso, idPeriodo], (error, estudiantes) => {
+
+      conexion.query(cursoSQL, [idCurso, idPeriodo], (error, curso) => {
         if (error) {
           console.log(error);
           return res.status(500).send("Error de servidor");
         }
-  
-        conexion.query(clasesSQL, [idCurso, idPeriodo], (error, clases) => {
-          if (error) {
-            console.log(error);
-            return res.status(500).send("Error de servidor");
-          }
-  
-          conexion.query(asistenciaSQL, [idCurso], (error, asistencia) => {
+
+        conexion.query(
+          estudiantesSQL,
+          [idCurso, idPeriodo],
+          (error, estudiantes) => {
             if (error) {
               console.log(error);
               return res.status(500).send("Error de servidor");
             }
 
-  
-            // Transformar la estructura de 'asistencia' para asociarla con clases
-            const asistenciaPorClase = {};
-            asistencia.forEach(registro => {
-              if (!asistenciaPorClase[registro.idClase]) {
-                asistenciaPorClase[registro.idClase] = [];
+            conexion.query(clasesSQL, [idCurso, idPeriodo], (error, clases) => {
+              if (error) {
+                console.log(error);
+                return res.status(500).send("Error de servidor");
               }
-              asistenciaPorClase[registro.idClase].push(registro);
-            });
-  
-            // Formatear la fecha en cada objeto de 'clases'
-            clases = clases.map(clase => {
-              clase.fechaClase = new Date(clase.fechaClase).toLocaleDateString("es-ES", {
-                dateStyle: "short"
-              });
-              return clase;
-            });
 
-            res.render("profesor/cursoInfo", {            
-              curso,
-              estudiantes,
-              clases,
-              asistenciaPorClase,
-              idPeriodo
+              conexion.query(asistenciaSQL, [idCurso], (error, asistencia) => {
+                if (error) {
+                  console.log(error);
+                  return res.status(500).send("Error de servidor");
+                }
+
+                // Transformar la estructura de 'asistencia' para asociarla con clases
+                const asistenciaPorClase = {};
+                asistencia.forEach((registro) => {
+                  if (!asistenciaPorClase[registro.idClase]) {
+                    asistenciaPorClase[registro.idClase] = [];
+                  }
+                  asistenciaPorClase[registro.idClase].push(registro);
+                });
+
+                // Formatear la fecha en cada objeto de 'clases'
+                clases = clases.map((clase) => {
+                  clase.fechaClase = new Date(
+                    clase.fechaClase
+                  ).toLocaleDateString("es-ES", {
+                    dateStyle: "short",
+                  });
+                  return clase;
+                });
+
+                res.render("profesor/cursoInfo", {
+                  curso,
+                  estudiantes,
+                  clases,
+                  asistenciaPorClase,
+                  idPeriodo,
+                  inasistencias,
+                });
+              });
             });
-          });
-        });
+          }
+        );
       });
     });
   },
@@ -273,32 +318,41 @@ deleteCurso: (req, res) => {
       }
     );
   },
-  deleteEstudianteCurso: (req,res) =>{
+  deleteEstudianteCurso: (req, res) => {
     const idEstudiante = req.body.idEstudiante;
     const idCurso = req.body.idCurso;
 
-  // Consulta SQL para eliminar al estudiante del curso en la tabla curso_estudiante
-  const query = 'DELETE FROM curso_estudiante WHERE idUsuario = ? AND idCurso = ?';
+    // Consulta SQL para eliminar al estudiante del curso en la tabla curso_estudiante
+    const query =
+      "DELETE FROM curso_estudiante WHERE idUsuario = ? AND idCurso = ?";
 
-  // Ejecutar la consulta con los parámetros
-  conexion.query(query, [idEstudiante, idCurso], (error, results, fields) => {
-    if (error) {
-      res.status(500).json({ message: "Error al eliminar al estudiante del curso." });
-    } else {
-      // Consulta para obtener el idPeriodo asociado al idCurso
-      const queryPeriodo = 'SELECT idPeriodo FROM cursos WHERE idCurso = ?';
+    // Ejecutar la consulta con los parámetros
+    conexion.query(query, [idEstudiante, idCurso], (error, results, fields) => {
+      if (error) {
+        res
+          .status(500)
+          .json({ message: "Error al eliminar al estudiante del curso." });
+      } else {
+        // Consulta para obtener el idPeriodo asociado al idCurso
+        const queryPeriodo = "SELECT idPeriodo FROM cursos WHERE idCurso = ?";
 
-      conexion.query(queryPeriodo, [idCurso], (errorPeriodo, resultsPeriodo) => {
-        if (errorPeriodo) {
-          res.status(500).json({ message: "Error al obtener el periodo del curso." });
-        } else {
-          const idPeriodo = resultsPeriodo[0].idPeriodo;
-          res.status(200).json({ idPeriodo: idPeriodo, idCurso: idCurso });
-        }
-      });
-    }
-  });
-  }
+        conexion.query(
+          queryPeriodo,
+          [idCurso],
+          (errorPeriodo, resultsPeriodo) => {
+            if (errorPeriodo) {
+              res
+                .status(500)
+                .json({ message: "Error al obtener el periodo del curso." });
+            } else {
+              const idPeriodo = resultsPeriodo[0].idPeriodo;
+              res.status(200).json({ idPeriodo: idPeriodo, idCurso: idCurso });
+            }
+          }
+        );
+      }
+    });
+  },
 };
 
 // exportar modulos

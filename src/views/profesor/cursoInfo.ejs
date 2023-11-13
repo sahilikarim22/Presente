@@ -56,7 +56,7 @@
 
                     <tr class="bg-primary text-white">
                         <th scope="col">Cedula</th>
-                        <th scope="col">Nombres</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Acción</th>
                     </tr>
                 </thead>
@@ -141,8 +141,42 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12 m-4">
+            <h1 class="text-white">Estudiantes con Inasistencias de más del 30%:</h1>
+        </div>
+
+
+        <div class="col-md-12 col-lg-12 fondoTabla">
+            <table id="tablaInasistencias"
+                class="table table-bordered table-dark table-striped text-white text-center mt-4">
+                <thead>
+
+                    <tr class="bg-primary text-white">
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% inasistencias.forEach((est)=>{ %>
+                        <tr>
+                            <td class="">
+                                <%= est.cedula %>
+                            </td>
+                            <td class="">
+                                <%= est.nombres %> <%= est.apellidos %>
+                            </td>
+                        </tr>
+                        <% }) %>
+
+
+                </tbody>
+            </table>
+        </div>
     </div>
     </div>
+
+    
 
     <%- include('menuMovil') %>
 
@@ -287,6 +321,46 @@
                     paging: true // Habilitar la paginación
                 });
 
+
+                $('#tablaInasistencias').DataTable({
+                    language: {
+                        "lengthMenu": "Mostrar _MENU_",
+                        "zeroRecords": "No se encontraron resultados",
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "sSearch": "Buscar:",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "sProcessing": "Procesando...",
+                    },
+                    //para usar los botones   
+                    responsive: "true",
+                    dom: 'Bfrtilp',
+                    buttons: [
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fas fa-file-pdf"></i> ',
+                            titleAttr: 'Exportar a PDF',
+                            className: 'btn colorPdf',
+                            customize: function (doc) {
+                                // Centra el texto en todas las celdas del PDF
+                                doc.content[1].table.body.forEach(row => {
+                                    row.forEach(cell => {
+                                        cell.alignment = 'center';
+                                    });
+                                });
+                            }
+
+
+                        }
+                    ],
+                    paging: true // Habilitar la paginación
+                });
 
 
 
