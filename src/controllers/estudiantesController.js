@@ -40,7 +40,8 @@ WHERE
     ce.idUsuario = ? 
     AND c.idPeriodo = ?
 GROUP BY 
-    c.idCurso
+    c.idCurso, c.nombreCurso, c.cantDiasSemanas, c.seccion
+
 
 
 `;

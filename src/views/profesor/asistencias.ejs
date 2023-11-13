@@ -74,8 +74,12 @@
                                     <%= est.apellidos %>
                             </td>
                             <td class="asistio">
-                                <input type="checkbox" class="botonCheckbox"
-                                    id="estudiante_<%= est.cedula %>_id_<%= est.idUsuario %>" data-index="<%= index %>">
+                                <label class="contenedorCheckbox">
+                                    <input type="checkbox" class="checkbox"
+                                        id="estudiante_<%= est.cedula %>_id_<%= est.idUsuario %>"
+                                        data-index="<%= index %>">
+                                    <span class="checkmark"></span>
+                                </label>
                             </td>
                         </tr>
                         <% }) %>
@@ -96,7 +100,6 @@
             </svg>
         </button>
     </div>
-
 
     <%- include('menuMovil') %>
 
@@ -167,7 +170,7 @@
                 const idPeriodo = document.querySelector('.idPeriodo').value;
 
                 // Recorre cada checkbox para obtener los estudiantes presentes
-                document.querySelectorAll('.botonCheckbox').forEach(checkbox => {
+                document.querySelectorAll('.checkbox').forEach(checkbox => {
                     const idCompleto = checkbox.id;
                     const partes = idCompleto.split('_');
 
@@ -193,7 +196,6 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log('Datos de asistencia enviados correctamente.');
                             // se puede redireccionar aqui
                             window.location.href = `/profesor/curso/${idCurso}/${idPeriodo}`;
 
@@ -249,10 +251,14 @@
 
 
                         // Marcar asistencia o realizar otras acciones
-                        const checkboxes = document.querySelectorAll(`.botonCheckbox[data-index]`);
+                        const checkboxes = document.querySelectorAll(`.checkbox[data-index]`);
                         checkboxes.forEach(checkbox => {
                             if (checkbox.id.includes(cedula)) {
+                                var checkmark = document.getElementById("checkmark" + checkbox.id.slice(-1));
+                                checkbox.classList.add('double');
                                 checkbox.checked = true;
+                            } else {
+                                checkbox.classList.add('checkbox');
                             }
                         });
                     };
@@ -268,7 +274,6 @@
             function iniciarEscaneoPrincipal() {
                 iniciarEscaneo();
             }
-
 
 
         </script>

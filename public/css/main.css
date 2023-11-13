@@ -75,15 +75,14 @@ body {
   width: 100%;
   text-align: center;
 }
-.TextoSemestre{
+.TextoSemestre {
   font-size: 25px;
   text-transform: capitalize;
 }
-.nombreTabla{
+.nombreTabla {
   text-transform: capitalize;
   color: #fff;
 }
-
 
 /*sidebar*/
 .sidebar {
@@ -126,8 +125,6 @@ h1 {
   display: flex;
   align-items: center;
 }
-
-
 
 .burger-btn {
   display: none;
@@ -453,51 +450,7 @@ footer ul li.home3 {
   transform: translateX(calc(70px * 2));
 }
 
-/*Estilos Asistencia*/
-/* Estilos para el contenedor del checkbox */
-.botonCheckbox {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid #000;
-  outline: none;
-  background-color: #fff;
-  position: relative;
-  transition: background-color 0.3s;
-}
 
-/* Pseudo-elemento que simula el tick/check */
-.botonCheckbox::before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 4px;
-  left: 8px;
-  width: 8px;
-  height: 14px;
-  border-style: solid;
-  border-color: transparent;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: border-color 0.3s;
-}
-
-/* Cambia el color del tick y el fondo al ser seleccionado */
-.botonCheckbox:checked {
-  background-color: #fff;
-}
-
-.botonCheckbox:checked::before {
-  border-color: #00ff00;
-  border-width: 0 5px 6px 0;
-}
-
-/*Estilos Estudiantes*/
-/* Estilo para el contenedor */
-/* Estilo para el contenedor */
 .circulo {
   display: flex;
   align-items: center;
@@ -553,10 +506,10 @@ p.nombreCurso {
 .dataTables_filter label {
   color: white;
 }
-.dataTables_length{
+.dataTables_length {
   color: #fff;
 }
-.fondoAzul{
+.fondoAzul {
   background-color: #002a7d;
 }
 
@@ -585,7 +538,8 @@ p.nombreCurso {
   font-weight: 600;
   letter-spacing: 1px;
 }
-.ripple-btn-wrapper .ripple-button:focus, .ripple-btn-wrapper .ripple-button:active {
+.ripple-btn-wrapper .ripple-button:focus,
+.ripple-btn-wrapper .ripple-button:active {
   outline: 0;
   box-shadow: none;
 }
@@ -610,22 +564,17 @@ p.nombreCurso {
   }
 }
 
-
-
-
 /*Estilos para profesores*/
-  .botonSeccion {
-padding: 0.3em 0.5em;
-    
-  }
-.botonContainer{
-max-width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: space-between;
+.botonSeccion {
+  padding: 0.3em 0.5em;
 }
-
+.botonContainer {
+  max-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
 
 /* Estilos para el menú ellipsis y el dropdown */
 .dropdown-menu {
@@ -647,23 +596,7 @@ max-width: 40%;
   color: black;
 }
 
-
-
 /* Definición de estilos para diferentes anchos de la barra de progreso */
-.barra-20 {
-  width: 20%;
-  background-color: #5cb85c;
-  height: 20px; 
-}
-
-.barra-40 {
-  width: 40%;
-  background-color: #5cb85c;
-  height: 20px; 
-}
-
-
-
 /* Estilos de las barras de progreso */
 .progress {
   background-color: #f5f5f5;
@@ -713,4 +646,49 @@ max-width: 40%;
   width: 100%;
   background-color: #5cb85c;
   border-radius: 55px;
+}
+
+label.contenedorCheckbox {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  background-color: #000;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 100%;
+  background-color: #eee;
+  border: 1px solid #000000;
+}
+
+.checkmark:after {
+  content: "\f058"; 
+  font-family: 'Font Awesome 6 Free';
+  position: absolute;
+  display: none;
+  color: #00A9FF;
+  text-align: center;
+}
+
+/* Agrega un segundo tick */
+.checkmark.double:after {
+  content: "\f058\f058"; 
+  margin-right:4px;
+}
+
+.checkbox:checked + .checkmark:after,
+.checkbox:checked + .checkmark.double:after {
+  display: block;
 }
