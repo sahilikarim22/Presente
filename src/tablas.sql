@@ -21,18 +21,21 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `asistencias`
 --
 
+
 DROP TABLE IF EXISTS `asistencias`;
+
 CREATE TABLE IF NOT EXISTS `asistencias` (
   `idAsistencia` int NOT NULL AUTO_INCREMENT,
   `idEstudiante` int NOT NULL,
   `idCurso` int NOT NULL,
   `idClase` int NOT NULL,
-  `asistio` tinyint(1) NOT NULL,
+  `asistio` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`idAsistencia`),
-  KEY `fk_asistencias_estudiante` (`idEstudiante`),
-  KEY `fk_asistencias_curso` (`idCurso`),
-  KEY `fk_asistencias_clases` (`idClase`)
+  CONSTRAINT `fk_asistencias_estudiante` FOREIGN KEY (`idEstudiante`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `fk_asistencias_curso` FOREIGN KEY (`idCurso`) REFERENCES `cursos` (`idCurso`),
+  CONSTRAINT `fk_asistencias_clases` FOREIGN KEY (`idClase`) REFERENCES `clases` (`idClase`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
 
 --
 -- Volcado de datos para la tabla `asistencias`
@@ -204,7 +207,3 @@ INSERT INTO `usuarios` (`id`, `correoUcab`, `clave`, `apellidos`, `nombres`, `ce
 (9, 'profesor@gmail.com', '1234', 'Helbawi Sahili', 'Karim Ali', '28161244', 1, 'docente', '2877bcf1ee2aac5239d0964b652c6e02514d8051'),
 (10, 'admin@gmail.com', '1234', 'Sahili Helbawi', 'Karim Ali', '28161244', 1, 'administrador', '2877bcf1ee2aac5239d0964b652c6e02514d8051');
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
