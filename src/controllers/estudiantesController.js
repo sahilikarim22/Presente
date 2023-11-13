@@ -144,7 +144,7 @@ GROUP BY
 
         // Consulta para obtener las asistencias del usuario en el curso
         const asistenciasSQL = 
-        `SELECT a.asistio, u.nombres, u.apellidos, u.cedula, u.id, a.idClase
+        `SELECT a.asistio, u.nombres, u.apellidos, u.cedula, u.id, a.idClase, DATE_FORMAT(c.fechaClase, '%d-%m-%Y') as fechaFormateada, c.nombreClase
         FROM usuarios u
         JOIN asistencias a ON u.id = a.idEstudiante
         JOIN clases c ON c.idClase = a.idClase
@@ -160,44 +160,16 @@ GROUP BY
               return res.status(500).send("Error de servidor");
             }
 
-            const clasesSQL = `SELECT * FROM clases WHERE idCurso = ?`;
-
-            conexion.query(clasesSQL, [idCurso], (clasesError, clases) => {
-              if (clasesError) {
-                console.log(clasesError);
-                return res.status(500).send("Error de servidor");
-              }
-
-              const asistenciaPorClase = {};
-              asistencias.forEach((registro) => {
-                if (!asistenciaPorClase[registro.idClase]) {
-                  asistenciaPorClase[registro.idClase] = [];
-                }
-                asistenciaPorClase[registro.idClase].push(registro);
-              });
-
-              // Formatear la fecha en cada objeto de 'clases'
-              clases = clases.map((clase) => {
-                clase.fechaClase = new Date(
-                  clase.fechaClase
-                ).toLocaleDateString("es-ES", {
-                  dateStyle: "short",
-                });
-                return clase;
-              });
-
+          
               res.render("estudiantes/curso", {
                 usuario,
                 curso,
                 asistencias,
-                clases,
-                asistenciaPorClase,
               });
             });
           }
         );
       });
-    });
   },
 };
 

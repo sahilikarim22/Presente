@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso <%= curso[0].nombreCurso %>
+    </title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!--datables CSS básico-->
+    <link rel="stylesheet" type="text/css" href="/datatables/datatables.min.css" />
+    <!--datables estilo bootstrap 4 CSS-->
+    <link rel="stylesheet" type="text/css" href="/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+    <!--Iconos Font Awesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 cursosProf">
+                <h1 class="mb-1">Curso <%= curso[0].nombreCurso %>
+                </h1>
+                <h5>Sección: <%= curso[0].seccion %>
+                </h5>
+                <h5>NRC: <%= curso[0].nrc %>
+                </h5>
+                <h5>Cantidad de días por semana: <%= curso[0].cantDiasSemanas %>
+                </h5>
+                <h5>Semanas: <%= curso[0].cantidadSemanas %>
+                </h5>
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12 m-4">
+            <h1 class="text-white">Clases:</h1>
+        </div>
+
+
+        <div class="col-md-12 col-lg-12 fondoTabla table-responsive">
+            <table id="tablaClases" class="table table-bordered table-dark table-striped text-white text-center mt-4">
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Fecha</th>
+                        <th>Asistecnia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% asistencias.forEach(asistencias=> { %>
+                        <tr>
+                            <td>
+                                <%= asistencias.nombreClase %>
+                            </td>
+                            <td>
+                                <%= asistencias.fechaFormateada %>
+                            </td>
+                            <td>
+                                <% if (asistencias.asistio===1) { %>
+                                    <div
+                                        style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
+                                        P</div>
+                                    <% } else { %>
+                                        <div
+                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
+                                            A</div>
+                                        <% } %>
+
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+
+    <script src="/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/popper/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- datatables JS -->
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+
+    <!-- para usar botones en datatables JS -->
+    <script src="/datatables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="/datatables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script src="/datatables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('.btnEliminarEstudiante').on('click', function () {
+
+                var estudianteId = $(this).data('estudiante-id');
+                var idCurso = $(this).data('curso-id');
+                Swal.fire({
+                    title: '¿Seguro que quieres eliminar este estudiante de este curso?',
+                    text: '¡Esta acción no se puede deshacer!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Realizar la solicitud AJAX para eliminar al estudiante
+                        $.ajax({
+                            type: 'DELETE',
+                            url: '/eliminarEstudianteCurso',
+                            data: {
+                                idEstudiante: estudianteId,
+                                idCurso: idCurso
+                            },
+                            success: function (response) {
+                                const idCurso = response.idCurso;
+                                const idPeriodo = response.idPeriodo;
+                                window.location.href = `/admin/verCurso/${idCurso}/${idPeriodo}`;
+                            },
+                            error: function (error) {
+                                // Manejar el error si la solicitud no se completa correctamente
+                                console.error('Error al eliminar el estudiante', error);
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+        jQuery(document).ready(function ($) {
+            $('#tablaEstudiantes').DataTable({
+                language: {
+                    "lengthMenu": "Mostrar _MENU_",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "sProcessing": "Procesando...",
+                },
+                //para usar los botones   
+                responsive: "true",
+                dom: 'Bfrtilp',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> ',
+                        titleAttr: 'Exportar a PDF',
+                        className: 'btn btn-danger d-inline-block',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+
+                    },
+
+                ]
+            });
+            $('#tablaClases').DataTable({
+                language: {
+                    "lengthMenu": "Mostrar _MENU_",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "sProcessing": "Procesando...",
+                },
+                //para usar los botones   
+                responsive: "true",
+                dom: 'Bfrtilp',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> ',
+                        titleAttr: 'Exportar a PDF',
+                        className: 'btn btn-danger',
+                        customize: function (doc) {
+                            // Centra el texto en todas las celdas del PDF
+                            doc.content[1].table.body.forEach(row => {
+                                row.forEach(cell => {
+                                    cell.alignment = 'center';
+                                });
+                            });
+                        }
+                    }
+                ],
+                paging: true // Habilitar la paginación
+            });
+        });
+    </script>
+</body>
+
+</html>
