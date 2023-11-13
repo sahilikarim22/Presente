@@ -19,12 +19,6 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <ul class="menu">
-
-            <li class="home"><a href="/admin"><i class="fas fa-home text-black"></i></a></li>
-        </ul>
-    </div>
 
 
 
@@ -39,51 +33,11 @@
                 </h5>
                 <h5>Cantidad de días por semana: <%= curso[0].cantDiasSemanas %>
                 </h5>
-                <h5>Clases: <%= curso[0].cantDiasSemanas %>
+                <h5>Semanas: <%= curso[0].cantidadSemanas %>
                 </h5>
 
             </div>
 
-        </div>
-
-        <div class="col-xs-12 col-md-12 col-lg-12 m-4">
-            <h1 class="text-white">Mis Estudiantes:</h1>
-        </div>
-
-        <div class="col-md-12 col-lg-12 fondoTabla">
-            <table id="tablaEstudiantes"
-                class="table table-bordered table-dark table-striped text-white text-center mt-4">
-                <thead>
-
-                    <tr class="bg-primary text-white">
-                        <th scope="col">Cedula</th>
-                        <th scope="col">Nombres</th>
-                        <th scope="col">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% estudiantes.forEach((est)=>{ %>
-                        <tr>
-                            <td class="">
-                                <%= est.cedula %>
-                            </td>
-                            <td class="">
-                                <%= est.nombres %>
-                                    <%= est.apellidos %>
-
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btnEliminarEstudiante"
-                                    data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>">
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                        <% }) %>
-
-
-                </tbody>
-            </table>
         </div>
 
         <div class="col-xs-12 col-md-12 col-lg-12 m-4">
@@ -95,45 +49,34 @@
             <table id="tablaClases" class="table table-bordered table-dark table-striped text-white text-center mt-4">
                 <thead>
                     <tr>
-                        <th>Cédula</th>
-                        <th>Nombre</th>
-                        <% clases.forEach(clase=> { %>
-                            <th>
-                                <%= clase.nombreClase %> (<%= clase.fechaClase %>)
-                            </th>
-                            <% }); %>
+                        <th>Tema</th>
+                        <th>Fecha</th>
+                        <th>Asistencia</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% estudiantes.forEach(estudiante=> { %>
+                    <% asistencias.forEach(asistencias=> { %>
                         <tr>
                             <td>
-                                <%= estudiante.cedula %>
+                                <%= asistencias.nombreClase %>
                             </td>
                             <td>
-                                <%= estudiante.nombres %>
-                                    <%= estudiante.apellidos %>
+                                <%= asistencias.fechaFormateada %>
                             </td>
-                            <% clases.forEach(clase=> { %>
-                                <td>
-                                    <% const asistencias=asistenciaPorClase[clase.idClase] || []; %>
-                                        <% const asistenciaEstudiante=asistencias.find(asistencia=> asistencia.id ===
-                                            estudiante.id); %>
-                                            <% if (asistenciaEstudiante) { %>
-                                                <% if (asistenciaEstudiante.asistio===1) { %>
-                                                    <div
-                                                        style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
-                                                        P</div>
-                                                    <% } else { %>
-                                                        <div
-                                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
-                                                            A</div>
-                                                        <% } %>
-                                                            <% } %>
-                                </td>
-                                <% }); %>
+                            <td>
+                                <% if (asistencias.asistio===1) { %>
+                                    <div
+                                        style="width: 20px; height: 20px; border-radius: 50%; background-color: green;">
+                                        P</div>
+                                    <% } else { %>
+                                        <div
+                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
+                                            A</div>
+                                        <% } %>
+
+                            </td>
                         </tr>
-                        <% }); %>
+                        <% }) %>
                 </tbody>
             </table>
         </div>
@@ -201,12 +144,7 @@
 
             });
         });
-
-
-
         jQuery(document).ready(function ($) {
-
-
             $('#tablaEstudiantes').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_",
@@ -240,8 +178,6 @@
 
                 ]
             });
-
-
             $('#tablaClases').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_",
@@ -266,7 +202,7 @@
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn colorPdf d-inline-block',
+                        className: 'btn colorPdf',
                         customize: function (doc) {
                             // Centra el texto en todas las celdas del PDF
                             doc.content[1].table.body.forEach(row => {
@@ -275,25 +211,12 @@
                                 });
                             });
                         }
-
-
                     }
                 ],
                 paging: true // Habilitar la paginación
             });
-
-
-
-
         });
-
-
-
-
-
     </script>
-
-
 </body>
 
 </html>
