@@ -51,7 +51,7 @@
                     <tr>
                         <th>Tema</th>
                         <th>Fecha</th>
-                        <th>Asistecnia</th>
+                        <th>Asistencia</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -169,7 +169,7 @@
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger d-inline-block',
+                        className: 'btn colorPdf d-inline-block',
                         exportOptions: {
                             columns: ':not(:last-child)' // Excluye la última columna
                         }
@@ -202,7 +202,7 @@
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> ',
                         titleAttr: 'Exportar a PDF',
-                        className: 'btn btn-danger',
+                        className: 'btn colorPdf',
                         customize: function (doc) {
                             // Centra el texto en todas las celdas del PDF
                             doc.content[1].table.body.forEach(row => {

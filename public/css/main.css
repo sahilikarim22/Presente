@@ -181,6 +181,11 @@ footer.menuMovil {
   margin: 15px;
 }
 
+.colorPdf{
+  color: #fff;
+  background-color: #76888d;
+}
+
 
 footer ul {
   list-style: none;
