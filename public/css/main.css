@@ -333,6 +333,57 @@ footer ul li.home3 {
 }
 
 /*MENU MOVIL*/
+/* Add this CSS to your existing stylesheet */
+
+/* Add this CSS to your existing stylesheet */
+/* Add this CSS to your existing stylesheet */
+/* Add these styles to your existing CSS */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #002a7d; /* Set your desired background color */
+  display: flex;
+  justify-content: space-around;
+  padding: 10px; /* Adjust the padding as needed */
+  z-index: 999;
+}
+
+.nav-tab {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-tab i {
+  margin-bottom: 5px; /* Adjust the spacing between icon and text */
+}
+
+/* Add the active class to the active nav-tab */
+.nav-tab.active {
+  color: #007bff; /* Set your desired color for the active state */
+}
+
+.menu-link {
+  text-decoration: none;
+  color: #000; /* Set your desired color */
+}
+
+.menu-link:hover {
+  background-color: transparent; /* Set your desired hover effect */
+}
+
+.menu-link .icon {
+  color: #000; /* Set your desired icon color */
+}
+
+.menu-link .text {
+  color: #000; /* Set your desired text color */
+}
+
 .navegacion {
   position: fixed;
   width: 100%;
@@ -388,6 +439,10 @@ footer ul li.home3 {
 .navegacion ul li.active a .icon {
   transform: translateY(-35px);
 }
+.navegacion ul li.active a .text {
+  opacity: 1;
+  transform: translateY(10px);
+}
 
 .navegacion ul li a .text {
   position: absolute;
@@ -398,10 +453,7 @@ footer ul li.home3 {
   opacity: 0;
   transform: translateY(20px);
 }
-.navegacion ul li.active a .text {
-  opacity: 1;
-  transform: translateY(10px);
-}
+
 
 .indicator {
   position: absolute;
@@ -440,17 +492,6 @@ footer ul li.home3 {
   box-shadow: 0px -10px 0 0 #262626; /* va a la derecha */
   z-index: 1;
 }
-/* Desplazamiento esfera */
-.navegacion ul li:nth-child(1).active ~ .indicator {
-  transform: translateX(calc(70px * 0));
-}
-.navegacion ul li:nth-child(2).active ~ .indicator {
-  transform: translateX(calc(70px * 1));
-}
-.navegacion ul li:nth-child(3).active ~ .indicator {
-  transform: translateX(calc(70px * 2));
-}
-
 
 .circulo {
   display: flex;
