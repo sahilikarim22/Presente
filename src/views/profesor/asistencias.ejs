@@ -244,7 +244,7 @@
                         });
 
                         if (cedulaEncontrada) {
-                            alert("¡Carnet escaneado correctamente! Alumno: " + nombreCompletoEncontrado);
+                            alert("¡Carnet escaneado correctamente!\nAlumno: " + nombreCompletoEncontrado);
                         } else {
                             alert("El estudiante no se encuentra inscrito al curso");
                         }
@@ -254,7 +254,7 @@
                         const checkboxes = document.querySelectorAll(`.checkbox[data-index]`);
                         checkboxes.forEach(checkbox => {
                             if (checkbox.id.includes(cedula)) {
-                                var checkmark = document.getElementById("checkmark" + checkbox.id.slice(-1));
+                                const checkmark = checkbox.nextElementSibling;
                                 checkbox.classList.add('double');
                                 checkbox.checked = true;
                             } else {
