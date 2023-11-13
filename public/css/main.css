@@ -670,7 +670,6 @@ label.contenedorCheckbox {
   height: 30px;
   width: 100%;
   background-color: #eee;
-  border: 1px solid #000000;
 }
 
 .checkmark:after {
