@@ -27,7 +27,7 @@ const estudiantesController = {
     c.cantDiasSemanas, 
     c.seccion, 
     c.idCurso,
-    (CAST(SUM(CASE WHEN a.asistio = 1 THEN 1 ELSE 0 END) AS INTEGER) / c.cantDiasSemanas) * 100 AS porcentajeAsistencia
+    (SUM(CASE WHEN a.asistio = 1 THEN 1 ELSE 0 END) / c.cantDiasSemanas) * 100 AS porcentajeAsistencia
 FROM 
     curso_estudiante ce
 INNER JOIN 
@@ -40,7 +40,8 @@ WHERE
     ce.idUsuario = ? 
     AND c.idPeriodo = ?
 GROUP BY 
-    c.idCurso, c.nombreCurso, c.cantDiasSemanas, c.seccion
+    c.idCurso, c.nombreCurso, c.cantDiasSemanas, c.seccion;
+
 
 
 
