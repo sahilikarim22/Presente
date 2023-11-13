@@ -353,6 +353,44 @@ HAVING
       }
     });
   },
+  putEstudiante: (req, res) => {
+    // Obtén los datos actualizados del estudiante desde el cuerpo de la solicitud
+    const { cedula, nombres, apellidos, idEstudiante } = req.body;
+
+    // Verifica que los datos necesarios estén presentes
+    if (!idEstudiante) {
+        return res.status(400).json({ error: 'El ID del estudiante es requerido' });
+    }
+
+    // Crea un objeto para almacenar los campos actualizados
+    const updateFields = {};
+
+    // Verifica y agrega los campos actualizados al objeto
+    if (cedula) updateFields.cedula = cedula;
+    if (nombres) updateFields.nombres = nombres;
+    if (apellidos) updateFields.apellidos = apellidos;
+
+    // Verifica si hay campos para actualizar
+    if (Object.keys(updateFields).length === 0) {
+        return res.status(400).json({ error: 'No hay campos para actualizar' });
+    }
+
+    // Construye la consulta SQL dinámicamente
+    const updateQuery = `UPDATE usuarios SET ${Object.keys(updateFields).map(field => `${field} = ?`).join(', ')} WHERE id = ?`;
+
+    // Ejecuta la consulta SQL con los valores actualizados
+    conexion.query(updateQuery, [...Object.values(updateFields), idEstudiante], (error, result) => {
+        if (error) {
+            console.error('Error al actualizar el estudiante:', error);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+
+        // La actualización fue exitosa
+        console.log('Estudiante actualizado exitosamente');
+        res.status(200).json({ success: true });
+    });
+}
+
 };
 
 // exportar modulos

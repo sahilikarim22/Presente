@@ -50,39 +50,41 @@
         </div>
 
         <div class="col-md-12 col-lg-12 fondoTabla">
-            <table id="tablaEstudiantes"
-                class="table table-bordered table-dark table-striped text-white text-center mt-4">
-                <thead>
-
-                    <tr class="bg-primary text-white">
-                        <th scope="col">Cedula</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% estudiantes.forEach((est)=>{ %>
+            <div class="table-responsive">
+                <table id="tablaEstudiantes"
+                    class="table table-bordered table-dark table-striped text-white text-center mt-4">
+                    <thead>
+                        <tr class="bg-primary text-white">
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Acciones</th> <!-- Nueva columna para botones -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% estudiantes.forEach((est) => { %>
                         <tr>
-                            <td class="">
-                                <%= est.cedula %>
-                            </td>
-                            <td class="">
-                                <%= est.nombres %>
-                                    <%= est.apellidos %>
-
-                            </td>
+                            <td class=""><%= est.cedula %></td>
+                            <td class=""><%= est.nombres %></td>
+                            <td class=""><%= est.apellidos %></td>
                             <td>
                                 <button type="button" class="btn btn-danger btnEliminarEstudiante"
                                     data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>">
                                     Eliminar
                                 </button>
+                                <button type="button" class="btn btn-primary btnEditarEstudiante"
+                                    data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>"
+                                    data-estudiante-cedula="<%= est.cedula %>"
+                                    data-estudiante-nombres="<%= est.nombres %>"
+                                    data-estudiante-apellidos="<%= est.apellidos %>">
+                                    Editar
+                                </button>
                             </td>
                         </tr>
                         <% }) %>
-
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="col-xs-12 col-md-12 col-lg-12 m-4">
@@ -198,7 +200,61 @@
         <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.6.31/dist/dbr.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+        <script>
+            $(document).ready(function () {
+                $('.btnEditarEstudiante').on('click', function () {
+                    const idEstudiante = $(this).data('estudiante-id');
+                    const idCurso = $(this).data('curso-id');
+                    const cedula = $(this).data('estudiante-cedula');
+                    const nombres = $(this).data('estudiante-nombres');
+                    const apellidos = $(this).data('estudiante-apellidos');
+        
+                    // Muestra un cuadro de diálogo de confirmación
+                    Swal.fire({
+                        title: 'Editar Estudiante',
+                        html: `<input type="text" id="editCedula" placeholder="Cédula" value="${cedula}">
+                               <input type="text" id="editNombres" placeholder="Nombres" value="${nombres}">
+                               <input type="text" id="editApellidos" placeholder="Apellidos" value="${apellidos}">`,
+                        showCancelButton: true,
+                        confirmButtonText: 'Guardar',
+                        cancelButtonText: 'Cancelar',
+                        preConfirm: () => {
+                            // Recoge los valores editados
+                            const editedCedula = $('#editCedula').val();
+                            const editedNombres = $('#editNombres').val();
+                            const editedApellidos = $('#editApellidos').val();
+        
+                            // Ejecutar la edición con AJAX
+                            return $.ajax({
+                                url: '/editarEstudiante',
+                                method: 'PUT',
+                                data: {
+                                    idEstudiante: idEstudiante,
+                                    cedula: editedCedula,
+                                    nombres: editedNombres,
+                                    apellidos: editedApellidos
+                                }
+                            });
+                        }
+                    }).then((result) => {
+                        if (result.value && result.value.success) {
+                            // Actualizar la tabla si la edición fue exitosa
+                            location.reload();
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Hubo un error al editar el estudiante',
+                                icon: 'error',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+        
+        
         <script>
 
             $(document).ready(function () {

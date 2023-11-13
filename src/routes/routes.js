@@ -61,6 +61,7 @@ router.post('/inscribirCurso', estudiantesController.postInscripcionCurso);
 //puts
 
 router.put('/profesor/actualizarCurso/:idCurso',cursosController.putCurso);
+router.put('/editarEstudiante', profesorController.putEstudiante);
 
 //deletes
 
