@@ -35,6 +35,7 @@ router.get('/confirmarUsuario',usuariosController.getConfirmarUsuario);
 router.get('/estudiantes/cursos/:idPeriodo', requireLogin, checkUserType('estudiante'),estudiantesController.getCursos);
 router.get('/estudiantes/inicio/', requireLogin, checkUserType('estudiante'), estudiantesController.getInicio);
 router.get('/estudiantes/entrada/', requireLogin, checkUserType('estudiante'), estudiantesController.getEntrada);
+router.get('/estudiantes/cursos/ver/:idCurso', requireLogin, checkUserType('estudiante'), estudiantesController.getCurso);
 // router.get('/estudiantes/cursoInfo/:idCurso', requireLogin, checkUserType('estudiante'), estudiantesController.getCursoInfo);
 
 router.get('/', indexController.getIndex);

@@ -58,29 +58,29 @@ GROUP BY
   postInscripcionCurso: (req, res, next) => {
     const nrc = req.body.nrc;
     const idUsuario = req.session.userId;
-  
+
     // Consulta para obtener el id del curso basado en el NRC
     const query = `SELECT idCurso, idPeriodo FROM cursos WHERE nrc = '${nrc}'`;
-  
+
     conexion.query(query, (error, results, fields) => {
       if (error) {
         console.error("Error al ejecutar la consulta: ", error);
         return next(new Error("Error en la consulta"));
       }
-  
+
       if (results.length > 0) {
         const idCurso = results[0].idCurso;
         const idPeriodo = results[0].idPeriodo;
-  
+
         // Verificar si el usuario ya está inscrito en el curso
         const checkQuery = `SELECT idCurso FROM curso_estudiante WHERE idUsuario = ${idUsuario} AND idCurso = ${idCurso}`;
-  
+
         conexion.query(checkQuery, (checkError, checkResults) => {
           if (checkError) {
             console.error("Error al verificar la inscripción: ", checkError);
             return next(new Error("Error en la verificación de inscripción"));
           }
-  
+
           if (checkResults.length > 0) {
             // El usuario ya está inscrito en el curso, puedes mostrar un modal o enviar un mensaje
             return res.json({
@@ -90,10 +90,13 @@ GROUP BY
           } else {
             // El usuario no está inscrito, proceder con la inserción en la tabla curso_estudiante
             const insertQuery = `INSERT INTO curso_estudiante (idUsuario, idCurso) VALUES (${idUsuario}, ${idCurso})`;
-  
+
             conexion.query(insertQuery, (insertError, insertResults) => {
               if (insertError) {
-                console.error("Error al insertar en la tabla curso_estudiante: ", insertError);
+                console.error(
+                  "Error al insertar en la tabla curso_estudiante: ",
+                  insertError
+                );
                 return next(new Error("Error en la inserción"));
               } else {
                 console.log("Inserción exitosa en la tabla curso_estudiante.");
@@ -105,9 +108,95 @@ GROUP BY
         });
       } else {
         console.log("No se encontró un curso con el NRC proporcionado.");
-        const err = new Error("No se encontró un curso con el NRC proporcionado.");
+        const err = new Error(
+          "No se encontró un curso con el NRC proporcionado."
+        );
         next(err);
       }
+    });
+  },
+  getCurso: (req, res, next) => {
+    const idUsuario = req.session.userId;
+    const idCurso = req.params.idCurso;
+
+    // Consulta para obtener los datos del usuario por su id
+    const usuarioSQL = `SELECT * FROM usuarios WHERE id = ?`;
+
+    conexion.query(usuarioSQL, [idUsuario], (error, usuario) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send("Error de servidor");
+      }
+
+      // Consulta para obtener los datos del curso
+      const cursoSQL = 
+      `SELECT c.*, p.cantidadSemanas
+      FROM cursos c
+      INNER JOIN periodos p ON c.idPeriodo = p.id
+      WHERE c.idCurso = ?;
+      `;
+
+      conexion.query(cursoSQL, [idCurso], (err, curso) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Error de servidor");
+        }
+
+        // Consulta para obtener las asistencias del usuario en el curso
+        const asistenciasSQL = 
+        `SELECT a.asistio, u.nombres, u.apellidos, u.cedula, u.id, a.idClase
+        FROM usuarios u
+        JOIN asistencias a ON u.id = a.idEstudiante
+        JOIN clases c ON c.idClase = a.idClase
+        WHERE u.id = ? AND
+        c.idCurso = ?`
+
+        conexion.query(
+          asistenciasSQL,
+          [idUsuario, idCurso],
+          (asistenciasError, asistencias) => {
+            if (asistenciasError) {
+              console.log(asistenciasError);
+              return res.status(500).send("Error de servidor");
+            }
+
+            const clasesSQL = `SELECT * FROM clases WHERE idCurso = ?`;
+
+            conexion.query(clasesSQL, [idCurso], (clasesError, clases) => {
+              if (clasesError) {
+                console.log(clasesError);
+                return res.status(500).send("Error de servidor");
+              }
+
+              const asistenciaPorClase = {};
+              asistencias.forEach((registro) => {
+                if (!asistenciaPorClase[registro.idClase]) {
+                  asistenciaPorClase[registro.idClase] = [];
+                }
+                asistenciaPorClase[registro.idClase].push(registro);
+              });
+
+              // Formatear la fecha en cada objeto de 'clases'
+              clases = clases.map((clase) => {
+                clase.fechaClase = new Date(
+                  clase.fechaClase
+                ).toLocaleDateString("es-ES", {
+                  dateStyle: "short",
+                });
+                return clase;
+              });
+
+              res.render("estudiantes/curso", {
+                usuario,
+                curso,
+                asistencias,
+                clases,
+                asistenciaPorClase,
+              });
+            });
+          }
+        );
+      });
     });
   },
 };

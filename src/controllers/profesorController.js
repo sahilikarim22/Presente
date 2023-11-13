@@ -93,7 +93,12 @@ deleteCurso: (req, res) => {
     const idCurso = req.params.idCurso;
     const idPeriodo = req.params.idPeriodo;
 
-    const cursoSQL = "SELECT * FROM cursos WHERE idCurso=? AND idPeriodo=?";
+    const cursoSQL = 
+    `SELECT c.*, p.cantidadSemanas
+    FROM cursos c
+    INNER JOIN periodos p ON c.idPeriodo = p.id
+    WHERE c.idCurso = ? AND c.idPeriodo = ?;`;
+    
     const estudiantesSQL = `
       SELECT u.nombres, u.apellidos, u.cedula, u.id
       FROM curso_estudiante ce

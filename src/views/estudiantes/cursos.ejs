@@ -115,60 +115,61 @@
                                         <span class="sr-only">
                                             <%= curso.porcentajeAsistencia %>%
                                         </span>
-                                        <%= curso.porcentajeAsistencia %>%
+                                        &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                     </div>
                                     <% }else if (curso.porcentajeAsistencia>= 75) { %>
                                         <div class="progress-bar-75" role="progressbar">
                                             <span class="sr-only">
                                                 <%= curso.porcentajeAsistencia %>%
                                             </span>
-                                            <%= curso.porcentajeAsistencia %>%
+                                            &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                         </div>
                                         <% } else if (curso.porcentajeAsistencia>= 50) { %>
                                             <div class="progress-bar-50" role="progressbar">
                                                 <span class="sr-only">
                                                     <%= curso.porcentajeAsistencia %>%
                                                 </span>
-                                                <%= curso.porcentajeAsistencia %>%
+                                                &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                             </div>
                                             <% } else if (curso.porcentajeAsistencia>= 25) { %>
                                                 <div class="progress-bar-25" role="progressbar">
                                                     <span class="sr-only">
                                                         <%= curso.porcentajeAsistencia %>%
                                                     </span>
-                                                    <%= curso.porcentajeAsistencia %>%
+                                                    &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                                 </div>
                                                 <% } else if (curso.porcentajeAsistencia>= 15) { %>
                                                     <div class="progress-bar-15" role="progressbar">
                                                         <span class="sr-only">
                                                             <%= curso.porcentajeAsistencia %>%
                                                         </span>
-                                                        <%= curso.porcentajeAsistencia %>%
+                                                        &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                                     </div>
                                                     <% } else if (curso.porcentajeAsistencia>= 10) { %>
                                                         <div class="progress-bar-10" role="progressbar">
                                                             <span class="sr-only">
                                                                 <%= curso.porcentajeAsistencia %>%
                                                             </span>
-                                                            <%= curso.porcentajeAsistencia %>%
+                                                            &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                                         </div>
                                                         <% } else if (curso.porcentajeAsistencia>= 5) { %>
                                                             <div class="progress-bar-5" role="progressbar">
                                                                 <span class="sr-only">
                                                                     <%= curso.porcentajeAsistencia %>%
                                                                 </span>
-                                                                <%= curso.porcentajeAsistencia %>%
+                                                                &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                                             </div>
                                                             <% } else { %>
                                                                 <div class="progress-bar-0" role="progressbar">
                                                                     <span class="sr-only">
                                                                         <%= curso.porcentajeAsistencia %>%
                                                                     </span>
-                                                                    <%= curso.porcentajeAsistencia %>%
+                                                                    &nbsp;&nbsp;&nbsp;<%= curso.porcentajeAsistencia %>%
                                                                 </div>
                                                                 <% } %>
                             </div>
-
+                            <div class="text-center mb-3 col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                               <a href="ver/<%= curso.idCurso %>"><button class="btn btn-primary">Entrar</button></a> 
                         </div>
                 </div>
 
