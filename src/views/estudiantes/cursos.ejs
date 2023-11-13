@@ -61,7 +61,7 @@
 
 
 
-    <div class="container">
+    <div class="container mb-5">
         <div class="row mt-4">
             <div class="col-sm-12 col-md-12 d-flex flex-column align-items-center text-center">
                 <span class="circulo">
@@ -77,7 +77,7 @@
             <!-- <img class="trianguloDerecha" src="/imagenes/t_derecha.svg" /> -->
         </div>
         <% if (cursos && cursos.length> 0) { %>
-            <div class="row mt-4">
+            <div class="row mt-4 mb-2">
                 <div class="col-6">
                     <h5 class="card-title text-white">Mis Cursos</h5>
                 </div>
@@ -192,7 +192,7 @@
     </div>
     </div>
     <% } else { %>
-        <div class="row mt-4">
+        <div class="row mt-4 mb-2">
             <div class="col-12 text-center">
                 <p class="text-white">Aún no tienes cursos inscritos.</p>
             </div>
@@ -225,12 +225,8 @@
                 </div>
             </form>
 
-<!-- Agregar un botón para cerrar sesión -->
-<div class="row mt-4">
-    <div class="col-12 text-center">
-        <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
-    </div>
-</div>
+<!-- menuMovil -->
+<%- include('menuMovil') %>
 
 
 
