@@ -389,7 +389,54 @@ HAVING
         console.log('Estudiante actualizado exitosamente');
         res.status(200).json({ success: true });
     });
+},
+postEstudiante: (req, res) => {
+  const { cedula, nombres, apellidos, idCurso } = req.body;
+  const tipoUsuario = 'estudiante'; // Puedes ajustar según tu modelo de datos
+
+  // Verificar si el estudiante ya existe en la tabla de usuarios
+  const checkUserQuery = 'SELECT * FROM usuarios WHERE cedula = ?';
+  conexion.query(checkUserQuery, [cedula], (err, results) => {
+    if (err) {
+      console.error('Error al verificar el estudiante:', err);
+      return res.status(500).json({ success: false, message: 'Error interno del servidor' });
+    }
+
+    // Si no existe, agregarlo a la tabla de usuarios
+    if (results.length === 0) {
+      const insertUserQuery = 'INSERT INTO usuarios (cedula, nombres, apellidos, tipoUsuario) VALUES (?, ?, ?, ?)';
+      conexion.query(insertUserQuery, [cedula, nombres, apellidos, tipoUsuario], (err, userResult) => {
+        if (err) {
+          console.error('Error al agregar el estudiante:', err);
+          return res.status(500).json({ success: false, message: 'Error interno del servidor' });
+        }
+
+        // Agregar la relación en la tabla curso_estudiante
+        const insertRelationQuery = 'INSERT INTO curso_estudiante (idCurso, idUsuario) VALUES (?, ?)';
+        conexion.query(insertRelationQuery, [idCurso, userResult.insertId], (err) => {
+          if (err) {
+            console.error('Error al agregar la relación:', err);
+            return res.status(500).json({ success: false, message: 'Error interno del servidor' });
+          }
+          // Enviar una respuesta de éxito al frontend with the correct user ID
+          res.json({ success: true, estudiante: { id: userResult.insertId, cedula, nombres, apellidos } });
+        });
+      });
+    } else {
+      // Si ya existe, solo agregar la relación en la tabla curso_estudiante
+      const insertRelationQuery = 'INSERT INTO curso_estudiante (idCurso, idUsuario) VALUES (?, ?)';
+      conexion.query(insertRelationQuery, [idCurso, results[0].id], (err) => {
+        if (err) {
+          console.error('Error al agregar la relación:', err);
+          return res.status(500).json({ success: false, message: 'Error interno del servidor' });
+        }
+        // Enviar una respuesta de éxito al frontend with the correct user ID
+        res.json({ success: true, estudiante: { id: results[0].id, cedula, nombres, apellidos } });
+      });
+    }
+  });
 }
+
 
 };
 

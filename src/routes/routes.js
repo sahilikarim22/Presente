@@ -52,6 +52,7 @@ router.post('/guardarUsuario', usuariosController.postUsuarios);
 router.post('/guardarPeriodo', adminController.postPeriodo);
 // profesor
 router.post('/guardarAsistencia/:idCurso/:idPeriodo', profesorController.postAsistencia);
+router.post('/agregarEstudiante',profesorController.postEstudiante)
 // router.post('/guardarCurso',loginController.);
 router.post('/eliminarPeriodo',adminController.deletePeriodo);
 

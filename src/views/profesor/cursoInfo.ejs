@@ -58,32 +58,76 @@
                             <th scope="col">Cedula</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
-                            <th scope="col">Acciones</th> <!-- Nueva columna para botones -->
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% estudiantes.forEach((est) => { %>
-                        <tr>
-                            <td class=""><%= est.cedula %></td>
-                            <td class=""><%= est.nombres %></td>
-                            <td class=""><%= est.apellidos %></td>
-                            <td>
-                                <button type="button" class="btn btn-danger btnEliminarEstudiante"
-                                    data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>">
-                                    Eliminar
-                                </button>
-                                <button type="button" class="btn btn-primary btnEditarEstudiante"
-                                    data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>"
-                                    data-estudiante-cedula="<%= est.cedula %>"
-                                    data-estudiante-nombres="<%= est.nombres %>"
-                                    data-estudiante-apellidos="<%= est.apellidos %>">
-                                    Editar
-                                </button>
-                            </td>
-                        </tr>
-                        <% }) %>
+                        <% estudiantes.forEach((est)=> { %>
+                            <tr id="estudiante_<%= est.id %>">
+                                <td class="">
+                                    <%= est.cedula %>
+                                </td>
+                                <td class="">
+                                    <%= est.nombres %>
+                                </td>
+                                <td class="">
+                                    <%= est.apellidos %>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btnEliminarEstudiante"
+                                        data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>">
+                                        Eliminar
+                                    </button>
+                                    <button type="button" class="btn btn-primary btnEditarEstudiante"
+                                        data-estudiante-id="<%= est.id %>" data-curso-id="<%= curso[0].idCurso %>"
+                                        data-estudiante-cedula="<%= est.cedula %>"
+                                        data-estudiante-nombres="<%= est.nombres %>"
+                                        data-estudiante-apellidos="<%= est.apellidos %>">
+                                        Editar
+                                    </button>
+                                </td>
+                            </tr>
+                            <% }) %>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Agrega el botón "Agregar Estudiante" fuera de la tabla -->
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAgregarEstudiante">
+                Agregar Estudiante
+            </button>
+        </div>
+
+        <!-- Agrega un modal para agregar estudiantes -->
+        <div class="modal fade" id="modalAgregarEstudiante" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Estudiante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Agrega el formulario para ingresar la información del estudiante -->
+                        <form id="formAgregarEstudiante">
+                            <div class="form-group">
+                                <label for="cedula">Cedula:</label>
+                                <input type="text" class="form-control" id="cedula" name="cedula" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidos">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -131,11 +175,11 @@
                                                             A</div>
                                                         <% }else{ %>
                                                             <div
-                                                            style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
-                                                            A</div>
+                                                                style="width: 20px; height: 20px; border-radius: 50%; background-color: red;">
+                                                                A</div>
                                                             <% } %>
-                                                            
-                                                            <% } %>
+
+                                                                <% } %>
                                 </td>
                                 <% }); %>
                         </tr>
@@ -166,7 +210,8 @@
                                 <%= est.cedula %>
                             </td>
                             <td class="">
-                                <%= est.nombres %> <%= est.apellidos %>
+                                <%= est.nombres %>
+                                    <%= est.apellidos %>
                             </td>
                         </tr>
                         <% }) %>
@@ -178,7 +223,7 @@
     </div>
     </div>
 
-    
+
 
     <%- include('menuMovil') %>
 
@@ -202,13 +247,97 @@
 
         <script>
             $(document).ready(function () {
+                $('#formAgregarEstudiante').submit(function (event) {
+                    event.preventDefault();
+        
+                    // Obtén los datos del formulario
+                    const cedula = $('#cedula').val();
+                    const nombres = $('#nombres').val();
+                    const apellidos = $('#apellidos').val();
+                    const idCurso = '<%= curso[0].idCurso %>';
+        
+                    // Realiza la solicitud AJAX para agregar el estudiante
+                    $.ajax({
+                        url: '/agregarEstudiante', // Reemplaza con la URL correcta del servidor
+                        method: 'POST',
+                        data: {
+                            cedula: cedula,
+                            nombres: nombres,
+                            apellidos: apellidos,
+                            idCurso: idCurso
+                        },
+                        success: function (response) {
+                            // Verifica si la respuesta tiene éxito
+                            if (response.success) {
+                                // Cierra el modal después de agregar el estudiante
+                                $('#modalAgregarEstudiante').modal('hide');
+        
+                                const nuevoEstudiante = response.estudiante;
+                                const nuevaFila = `
+                                    <tr id="estudiante_${nuevoEstudiante.id}">
+                                        <td class="">${nuevoEstudiante.cedula}</td>
+                                        <td class="">${nuevoEstudiante.nombres}</td>
+                                        <td class="">${nuevoEstudiante.apellidos}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btnEliminarEstudiante"
+                                                data-estudiante-id="${nuevoEstudiante.id}" data-curso-id="${curso[0].idCurso}">
+                                                Eliminar
+                                            </button>
+                                            <button type="button" class="btn btn-primary btnEditarEstudiante"
+                                                data-estudiante-id="${nuevoEstudiante.id}" data-curso-id="${curso[0].idCurso}"
+                                                data-estudiante-cedula="${nuevoEstudiante.cedula}"
+                                                data-estudiante-nombres="${nuevoEstudiante.nombres}"
+                                                data-estudiante-apellidos="${nuevoEstudiante.apellidos}">
+                                                Editar
+                                            </button>
+                                        </td>
+                                    </tr>`;
+        
+                                // Agrega la nueva fila a la tabla
+                                $('#tablaEstudiantes tbody').append(nuevaFila).DataTable().draw();
+        
+                                // Muestra una alerta de éxito con SweetAlert2
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Estudiante agregado con éxito',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+        
+                                // Redirect to the current page
+                                window.location.reload();
+                            } else {
+                                // Muestra una alerta de error con SweetAlert2
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error al agregar estudiante',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function (error) {
+                            // Muestra una alerta de error con SweetAlert2
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Hubo un error al procesar la solicitud'
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+        
+
+        <script>
+            $(document).ready(function () {
                 $('.btnEditarEstudiante').on('click', function () {
                     const idEstudiante = $(this).data('estudiante-id');
                     const idCurso = $(this).data('curso-id');
                     const cedula = $(this).data('estudiante-cedula');
                     const nombres = $(this).data('estudiante-nombres');
                     const apellidos = $(this).data('estudiante-apellidos');
-        
+
                     // Muestra un cuadro de diálogo de confirmación
                     Swal.fire({
                         title: 'Editar Estudiante',
@@ -223,7 +352,7 @@
                             const editedCedula = $('#editCedula').val();
                             const editedNombres = $('#editNombres').val();
                             const editedApellidos = $('#editApellidos').val();
-        
+
                             // Ejecutar la edición con AJAX
                             return $.ajax({
                                 url: '/editarEstudiante',
@@ -253,8 +382,8 @@
                 });
             });
         </script>
-        
-        
+
+
         <script>
 
             $(document).ready(function () {
